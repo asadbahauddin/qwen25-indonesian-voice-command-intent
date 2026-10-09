@@ -1,0 +1,31 @@
+# Dependensi utama (sama untuk laptop dan Raspberry Pi 5).
+# Versi di-pin dari instalasi nyata di Python 3.11 (Fase 0).
+# PENTING: pasang torch TERLEBIH DAHULU sesuai platform:
+#   laptop (CUDA) : pip install -r requirements-torch-cuda.txt
+#   RPi 5 (CPU)   : pip install -r requirements-torch-cpu.txt
+# lalu: pip install -r requirements.txt
+
+# --- Audio ---
+numpy==2.4.6
+scipy==1.17.1
+soxr==1.1.0               # resampling 44.1/48 kHz -> 16 kHz
+sounddevice==0.5.6        # akses mikrofon (PortAudio)
+soundfile==0.14.0         # tulis/baca WAV
+
+# --- VAD ---
+silero-vad==6.2.3
+onnxruntime==1.31.0       # backend ONNX opsional untuk Silero (ringan di RPi)
+
+# --- ASR ---
+faster-whisper==1.2.1
+ctranslate2==4.8.2
+openai-whisper==20250625  # hanya untuk pembanding di Fase 3
+
+# --- NLU / utilitas ---
+requests==2.34.2          # HTTP ke Ollama /api/chat
+PyYAML==6.0.3
+jsonschema==4.26.0
+
+# --- Benchmark & laporan ---
+pandas==3.0.6
+tabulate==0.10.0

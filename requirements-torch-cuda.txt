@@ -1,0 +1,3 @@
+# Laptop dengan GPU NVIDIA (CUDA 12.6 runtime; ctranslate2 4.x juga memakai CUDA 12 + cuDNN 9)
+--index-url https://download.pytorch.org/whl/cu126
+torch==2.14.1+cu126
