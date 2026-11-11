@@ -48,19 +48,21 @@ Sumber: `results/asr_MSI_20261112_010730.md`
 - Hasil faster-whisper GPU float16 dan CPU int8 identik pada 104/162 file. Kuantisasi int8 sedikit mengubah keluaran.
 
 ## WER pada pilot (set pengembangan, P01 membaca 36 kalimat, 12 Nov 2026)
-Sumber: `results/asr_pilot_MSI_20261112_040643.md`. Klip berasal dari sesi kontinu, termasuk jeda sebelum bicara.
+Sumber final: `results/asr_pilot_MSI_20261112_041011.md` (P03 sudah direkam ulang). Klip berasal dari sesi kontinu, termasuk jeda sebelum bicara.
 
 | Konfigurasi | WER (n=36) | t_asr (s) |
 |---|---|---|
-| faster GPU + prompt | **38,75%** | 0,106 ± 0,021 |
-| faster GPU tanpa prompt | 56,25% | 0,089 ± 0,018 |
-| openai GPU + prompt | 39,58% | 0,298 ± 0,075 |
-| openai GPU tanpa prompt | 57,50% | 0,269 ± 0,082 |
-| faster CPU int8 + prompt | 39,58% | 0,930 ± 0,093 |
+| faster GPU + prompt | **38,75%** | 0,092 ± 0,014 |
+| faster GPU tanpa prompt | 56,25% | 0,091 ± 0,020 |
+| openai GPU + prompt | 39,58% | 0,298 ± 0,076 |
+| openai GPU tanpa prompt | 57,50% | 0,269 ± 0,079 |
+| faster CPU int8 + prompt | 39,58% | 0,928 ± 0,096 |
+| openai CPU fp32 + prompt | 39,58% | 2,146 ± 0,345 |
 
-- n=36 masih **mengikutkan P03 yang hening** (WER 100%). Tanpa P03 (n=35), faster GPU + prompt = 37,45%. Angka final dihitung ulang setelah P03 direkam ulang.
+- P03 direkam ulang karena take sebelumnya hening. Take baru tetap salah dengar ("Talong keruan asistenia", 5 galat dari 5 kata), sehingga WER total kebetulan sama dengan run sebelumnya (`..._040643.md`).
+- Per formalitas (faster GPU + prompt): formal 33,77%, semi-formal 39,02%, informal 43,21% (n=12 masing-masing).
 - **initial_prompt menurunkan WER sekitar 17–18 poin**, dan berlaku untuk kedua backend.
-- Akurasi faster-whisper dan openai-whisper **setara** (selisih < 1 poin), sedangkan faster-whisper ±3× lebih cepat. Usulan: **backend final = faster-whisper**, dipilih dari data pengembangan, sehingga set uji tidak dipakai untuk memilih.
+- Akurasi faster-whisper dan openai-whisper **setara** (selisih < 1 poin), sedangkan faster-whisper ±3× lebih cepat. **Keputusan (disetujui peneliti 12 Nov 2026): backend final = faster-whisper** (GPU float16, CPU int8), dipilih dari data pengembangan, sehingga set uji tidak dipakai untuk memilih.
 - Galat Whisper base cukup berat pada kata umum: "Silakan temukan Ibu Vivi" → "Silatan nomukan Kus Vivi"; "Coba jalannya pelan-pelan" → "Jauhkan kembali". Sebagian kecil berupa beda pemenggalan ("keruang" vs "ke ruang"), yang tetap dihitung salah oleh WER.
 
 ## Tahap 2 (setelah koreksi transkrip)

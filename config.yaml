@@ -106,13 +106,13 @@ vad:
   threshold: 0.5              # p(ucapan) >= threshold -> ucapan (bawaan Silero)
   neg_offset: 0.15            # histeresis: diam bila p < threshold - neg_offset (sama dengan Silero)
   pre_roll_ms: 300            # audio sebelum pemicu ikut diambil (awal kata lemah)
-  min_silence_ms: 1200        # F2 final (12 Nov): dipilih aturan pra-ditetapkan pada data dev P01 (results/vad_dev_MSI_20261112_040608.md); awal 800
+  min_silence_ms: 1200        # F2 final (12 Nov): dipilih aturan pra-ditetapkan pada data dev P01 (results/vad_dev_MSI_20261112_041005.md); awal 800
   post_pad_ms: 200            # sisa diam di ekor ujaran
   min_speech_ms: 250          # ujaran lebih pendek dibuang (klik/batuk)
   max_utterance_s: 15         # potong paksa
 
 asr:
-  backend: faster             # faster = faster-whisper (CTranslate2) | openai = openai-whisper (PyTorch); final dipilih di F3 (WER + latency)
+  backend: faster             # F3 final (12 Nov): faster-whisper. WER pilot setara openai (38,75 vs 39,58%), 3x lebih cepat (results/asr_pilot_MSI_20261112_041011.md)
   model: base                 # proposal: Whisper base; /whisper base|small di CLI
   models_dir: models/whisper  # unduhan model faster-whisper; openai-whisper memakai ~/.cache/whisper
   language: id
