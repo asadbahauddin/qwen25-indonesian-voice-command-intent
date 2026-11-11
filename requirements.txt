@@ -29,3 +29,9 @@ jsonschema==4.26.0
 # --- Benchmark & laporan ---
 pandas==3.0.6
 tabulate==0.10.0
+
+# --- F4b: baseline IndoBERT + evaluasi (ditambah 11 Nov 2026) ---
+transformers==5.22.2
+scikit-learn==1.9.1
+jiwer==4.0.0              # WER (F9)
+rich==15.0.0              # tampilan CLI (F5)

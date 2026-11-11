@@ -76,3 +76,5 @@ nlu:
     num_predict: 256          # batas token keluaran
     keep_alive: 30m           # model tetap di memori antar-perintah
     timeout_s: 120
+  rule:
+    keywords: config/keywords_id.yaml   # kamus intent + penghubung klausa (entity dari domain_vocab)

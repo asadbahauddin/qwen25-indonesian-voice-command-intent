@@ -1,0 +1,25 @@
+# =====================================================================
+# Kamus baseline rule-based (keyword matching) — versi v1, 11 Nov 2026
+# Entity (ruangan/benda/orang/dokumen) TIDAK didefinisikan di sini, tetapi diambil
+# dari config/domain_id.yaml agar ketiga metode memakai kosakata yang sama.
+# Semua kata ditulis huruf kecil; pencocokan berbasis batas kata.
+# =====================================================================
+version: v1
+
+# Penghubung antar-tindakan -> kalimat dipecah menjadi beberapa klausa (combined_command)
+connectors: ["setelah itu", "sesudah itu", "habis itu", "abis itu", "habis tu", "kemudian",
+             "lalu", "terus", "trus", "lantas", "selanjutnya"]
+
+# Kata ganti orang di klausa berikutnya -> diisi orang dari klausa sebelumnya
+pronouns: ["beliau", "dia", "doi"]
+
+intent_keywords:
+  deliver_document: ["antar", "antarkan", "anter", "anterin", "bawa", "bawakan", "bawain", "kirim",
+                     "kirimkan", "kirimin", "serahkan", "serahin", "kasih", "kasihkan", "kasihin",
+                     "berikan", "kasi"]
+  find_person: ["cari", "carikan", "cariin", "temukan", "temuin", "panggil", "panggilkan", "panggilin",
+                "di mana", "dimana", "keberadaan"]
+  navigate: ["ke", "menuju", "pergi", "datangi", "samperin", "jalan", "bergerak", "hampiri", "mendekati",
+             "deketin", "dekati"]
+  general_command: ["berhenti", "stop", "tunggu", "diam", "diem", "maju", "mundur", "kembali", "balik",
+                    "pelan", "perlahan", "putar", "jangan gerak", "cepat"]
