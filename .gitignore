@@ -18,3 +18,8 @@ results/env_*.json
 /*.jpg
 /*.png
 ~$*
+
+# Repo publik: audio responden (luaran HKI, ada consent) & bobot model TIDAK di-commit
+dataset/
+models/
+*.wav
