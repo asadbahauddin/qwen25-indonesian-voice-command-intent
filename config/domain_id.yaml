@@ -1,0 +1,41 @@
+# =====================================================================
+# Kosakata domain lingkungan robot: Lab Sistem Otomasi, Teknik Mekatronika UTM
+# Sumber: peneliti (11 Nov 2026). Dipakai untuk:
+#   - pembuatan kalimat pilot / data latih IndoBERT / dataset responden
+#   - kamus baseline rule-based
+#   - nilai entity kanonik pada label ground-truth
+# Kunci = nilai kanonik di JSON label; alias = variasi ucapan (formal/informal).
+# =====================================================================
+
+rooms:
+  lab otomasi:        ["laboratorium otomasi", "lab sistem otomasi", "lab otomasi"]
+  ruang asisten:      ["ruangan asisten", "ruang asisten", "ruang asisten lab"]
+  ruang dosen:        ["ruangan dosen", "ruang dosen"]
+  ruang pak umam:     ["ruangan pak umam", "ruang pak umam", "kantor pak umam"]
+  ruang pak kus:      ["ruangan pak kus", "ruang pak kus", "kantor pak kus"]
+  ruang bu vivi:      ["ruangan bu vivi", "ruang bu vivi", "kantor bu vivi"]
+  ruang pak andi:     ["ruangan pak andi", "ruang pak andi", "kantor pak andi"]
+
+objects:
+  mesin cnc:              ["alat cnc", "mesin cnc", "cnc"]
+  lengan robot:           ["lengan robot", "robot arm", "arm robot"]
+  deretan komputer:       ["deretan komputer", "barisan komputer", "komputer-komputer", "pc"]
+  trainer plc:            ["trainer plc", "modul plc", "plc"]
+  trainer pneumatik:      ["trainer pneumatik", "trainer pneumatic", "modul pneumatik"]
+  trainer rangkaian listrik: ["trainer rangkaian listrik", "trainer rl", "modul rangkaian listrik"]   # "RL" = Rangkaian Listrik
+  trainer sistem digital: ["trainer sistem digital", "trainer digital", "modul sistem digital"]
+
+persons:
+  pak umam: ["pak umam", "bapak umam"]
+  pak kus:  ["pak kus", "bapak kus"]
+  bu vivi:  ["bu vivi", "ibu vivi"]
+  pak andi: ["pak andi", "bapak andi"]
+  asisten lab: ["asisten lab", "asisten", "mas asisten", "mbak asisten"]
+
+# Belum diberikan peneliti -> usulan umum, boleh diubah
+documents:
+  laporan praktikum: ["laporan praktikum", "laprak"]
+  berkas tugas akhir: ["berkas tugas akhir", "berkas ta", "draft skripsi"]
+  surat izin:        ["surat izin", "surat"]
+  jadwal praktikum:  ["jadwal praktikum", "jadwal"]
+  lembar nilai:      ["lembar nilai", "daftar nilai"]

@@ -1,0 +1,48 @@
+# =====================================================================
+# Konfigurasi pipeline perintah suara -> JSON robot
+# Satu file untuk laptop (dev) dan Raspberry Pi 5 (target).
+# Ganti nilai di sini, BUKAN di kode.
+# =====================================================================
+
+paths:                       # relatif terhadap folder file config ini
+  recordings: recordings
+  results: results
+  logs: logs
+
+logging:
+  level: INFO                # DEBUG | INFO | WARNING | ERROR
+  console: true              # juga cetak log ke layar
+
+# ---------------------------------------------------------------------
+# FASE 1 - Akuisisi audio
+# ---------------------------------------------------------------------
+audio:
+  # Perangkat input: indeks (int), substring nama (str), atau null = default OS.
+  # Disarankan substring nama, karena indeks berubah antar-colokan/OS.
+  # Lihat daftar: python bench/tes_mic.py --list
+  device: "USBAudio1.0"      # receiver wireless lavalier (USB VID_4C4A PID_4155), dicek 11 Nov 2026
+  # Filter host API (substring) bila nama perangkat muncul di beberapa API.
+  # Windows: "WASAPI" atau "MME" | Linux/RPi: "ALSA" | null = tanpa filter
+  hostapi: "WASAPI"
+  # null = pakai sample rate native perangkat (disarankan; 44100/48000)
+  capture_samplerate: null
+  # null = semua kanal input perangkat; downmix ke mono setelahnya
+  capture_channels: null
+  # null = rata-rata semua kanal; int = ambil satu kanal (0 = kiri)
+  mono_channel: null
+  target_samplerate: 16000   # wajib 16 kHz untuk Silero VAD & Whisper
+  block_ms: 32               # ukuran blok callback PortAudio
+  latency: low               # "low" | "high" | detik (float)
+  resample_quality: HQ       # soxr: QQ | LQ | MQ | HQ | VHQ
+  queue_max_blocks: 200      # buffer antrean callback (~6,4 s @ 32 ms)
+  wav_subtype: PCM_16        # format simpan WAV
+
+# Ambang analisis level (bench/tes_mic.py)
+levels:
+  window_ms: 100             # jendela RMS untuk statistik per-jendela
+  clip_threshold: 0.999      # |x| >= nilai ini dihitung clipping (full scale = 1.0)
+  noise_percentile: 10       # persentil RMS jendela ~ noise floor
+  speech_percentile: 90      # persentil RMS jendela ~ level ucapan
+
+bench:
+  mic_test_seconds: 5
