@@ -9,6 +9,7 @@
 | `bench/tes_vad.py` | Uji pada 162 rekaman (waktu komputasi, sapuan parameter, dampak ke Whisper) dan mode `--mic` real-time (`recordings/vad/seg_*.wav`) |
 | `config.yaml` → `vad` | threshold, histeresis, pre-roll, min_silence, post-pad, min_speech, max_utterance |
 | `results/vad_MSI_20261112_014026.{md,json}` | Hasil |
+| `bench/sesi_dev.py`, `bench/kartu_dev.json` | Sesi rekam gabungan data pengembangan (lihat bawah) |
 
 Pustaka: silero-vad 6.2.3 (`load_silero_vad(onnx=...)`), onnxruntime 1.31.0. API dicek dengan `inspect`. Model hanya menerima frame tepat 512 sampel @ 16 kHz (32 ms).
 
@@ -44,9 +45,23 @@ Makin panjang min_silence, makin sedikit ujaran terpecah, tetapi pengguna menung
 2. Noise gate transmitter membuat kondisi diam "sempurna". Pemicu palsu oleh bising lab tidak bisa diuji dari data ini, jadi perlu uji mic langsung di lab.
 3. Dataset direkam push-to-talk, sehingga diam di awal dan akhir rekaman pendek (diam akhir minimum 0,2 s). Pada min_silence ≥ 800 ms, ujaran berakhir karena file habis (`akhir`), bukan karena deteksi diam.
 
-## Usulan langkah
-- **Data pengembangan VAD:** peneliti merekam ±30 perintah bebas langsung dengan `python bench/tes_vad.py --mic --detik 300`, memakai kartu atau topik yang berbeda dari dataset. Dari data itu min_silence dipilih, sekaligus mengecek pemicu palsu di lab.
-- Di F9, WER dan NLU dilaporkan untuk dua masukan audio: rekaman utuh dan segmen VAD.
+## Data pengembangan VAD (disetujui peneliti 12 Nov 2026)
+Satu **sesi rekam gabungan** (`bench/sesi_dev.py`) supaya mic hanya dipasang sekali:
+1. **Suasana 30 s** tanpa bicara, untuk menguji pemicu palsu.
+2. **Pilot 36 kalimat dibaca** (P01). Klip per kalimat sekaligus mengisi `recordings/pilot_audio/` untuk WER pilot.
+3. **18 kartu dev kalimat bebas** (`bench/kartu_dev.json`, 3 per intent, formalitas 6/6/6). Kartu ditulis sebagai *situasi*, berbeda dari 54 kartu dataset (dicek otomatis: 0 sama).
+
+Audio direkam **terus-menerus**, dan Enter hanya menandai batas item. Aliran lengkap (`stream.wav`) dan penanda waktu (`sesi.json`) disimpan, sehingga parameter VAD dapat diuji ulang offline tanpa merekam lagi.
+
+**Aturan pemilihan parameter, ditetapkan sebelum data dev direkam:** min_silence terkecil (lalu threshold paling dekat 0,5) yang memenuhi semua syarat berikut pada item pilot + dev:
+- ujaran terpecah ≤ 5% item;
+- 0 item terlewat;
+- 0 awal/akhir terpotong;
+- 0 pemicu palsu saat suasana.
+
+Analisis dijalankan dengan `python bench/tes_vad.py --dev recordings/dev/<folder>`. Ada juga pemeriksaan konsistensi: jumlah ujaran VAD live harus sama dengan simulasi offline dengan konfigurasi yang sama.
+
+Di F9, WER dan NLU dilaporkan untuk dua masukan audio: rekaman utuh dan segmen VAD.
 
 ## Cara menjalankan
 ```powershell

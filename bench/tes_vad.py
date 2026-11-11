@@ -211,6 +211,68 @@ def run_dataset(cfg, args):
                  f"Selisih probabilitas torch vs onnx maksimum: {diff:.2e}", ""] + head + [""] + L + act
 
 
+ATURAN_PILIH = ("min_silence terkecil (lalu threshold paling dekat 0,5) dengan: ujaran terpecah <= 5% item, "
+                "0 item terlewat, 0 awal/akhir terpotong, 0 pemicu palsu saat suasana")
+
+
+def run_dev(cfg, args):
+    """Analisis offline sesi pengembangan (bench/sesi_dev.py). Aturan pilih ditetapkan sebelum data ada."""
+    vbase = {**cfg["vad"], "onnx": True}
+    L, res = [f"Aturan pemilihan (ditetapkan 12 Nov 2026 sebelum data dev direkam): {ATURAN_PILIH}.", ""], {"sesi": []}
+    data = []
+    for d in args.dev:
+        d = Path(d)
+        ses = json.load(open(d / "sesi.json", encoding="utf-8"))
+        x = sf.read(d / "stream.wav", dtype="float32")[0]
+        vad = SileroVAD(vbase)
+        vad.reset()
+        P = [vad.prob(f) for f in frames_of(x)]
+        live = simulate(x, P, ses["config_vad"])
+        res["sesi"].append({"folder": d.name, "menit": len(x) / SR / 60, "n_penanda_valid": sum(m["valid"] for m in ses["penanda"]),
+                            "vad_live": len(ses["vad_live"]), "vad_offline_config_sama": len(live)})
+        data.append((ses, x, P))
+    L += ["| Sesi | Durasi (menit) | Item valid | Ujaran VAD live | Simulasi offline (config sama) |", "|---|---|---|---|---|"]
+    L += [f"| {r['folder']} | {r['menit']:.1f} | {r['n_penanda_valid']} | {r['vad_live']} | {r['vad_offline_config_sama']} |"
+          for r in res["sesi"]]
+    L += ["", "| threshold | min_silence (ms) | tepat 1 (pilot) | tepat 1 (dev) | terpecah | terlewat | pemicu palsu (suasana) | "
+          "awal terpotong | akhir terpotong | lolos |", "|---|---|---|---|---|---|---|---|---|---|"]
+    rows = []
+    for th in TH:
+        for sil in SIL:
+            vc = {**vbase, "threshold": th, "min_silence_ms": sil}
+            c = Counter()
+            for ses, x, P in data:
+                segs = simulate(x, P, vc)
+                for m in ses["penanda"]:
+                    if not m["valid"]:
+                        continue
+                    inw = [g for g in segs if m["t0"] <= (g["start_s"] + g["end_s"]) / 2 < m["t1"]]
+                    if m["fase"] == "suasana":
+                        c["palsu"] += len(inw)
+                        continue
+                    c["n_" + m["fase"]] += 1
+                    c["satu_" + m["fase"]] += len(inw) == 1
+                    c["pecah"] += len(inw) > 1
+                    c["lewat"] += len(inw) == 0
+                    i0, i1 = int(m["t0"] * SR), int(m["t1"] * SR)
+                    r = energy_span(x[i0:i1], args.ambang_db)
+                    if r and inw:
+                        c["cut0"] += inw[0]["start_s"] > m["t0"] + r[0] + 1e-9
+                        c["cut1"] += inw[-1]["end_s"] < m["t0"] + r[1] - 1e-9
+            n = c["n_pilot"] + c["n_dev"]
+            row = {"threshold": th, "min_silence_ms": sil, **c, "n": n}
+            row["lolos"] = (n > 0 and c["pecah"] <= 0.05 * n and c["lewat"] == 0 and c["cut0"] == 0 and c["cut1"] == 0
+                            and c["palsu"] == 0)
+            rows.append(row)
+            L.append(f"| {th} | {sil} | {c['satu_pilot']}/{c['n_pilot']} | {c['satu_dev']}/{c['n_dev']} | {c['pecah']} | "
+                     f"{c['lewat']} | {c['palsu']} | {c['cut0']} | {c['cut1']} | {'ya' if row['lolos'] else '–'} |")
+    ok = sorted([r for r in rows if r["lolos"]], key=lambda r: (r["min_silence_ms"], abs(r["threshold"] - 0.5)))
+    res["sapuan"], res["terpilih"] = rows, ok[0] if ok else None
+    L += ["", f"**Terpilih:** threshold {ok[0]['threshold']}, min_silence {ok[0]['min_silence_ms']} ms" if ok
+          else "**Tidak ada kombinasi yang lolos aturan**: perlu dibahas dengan peneliti."]
+    return res, L
+
+
 def run_mic(cfg, args):
     from src.audio_io import AudioSource
     vcfg = cfg["vad"]
@@ -252,14 +314,19 @@ def main():
     ap.add_argument("--mic", action="store_true")
     ap.add_argument("--detik", type=float, default=60)
     ap.add_argument("--tanpa-asr", action="store_true")
+    ap.add_argument("--dev", nargs="+", help="folder sesi dari bench/sesi_dev.py (recordings/dev/<ID>_<ts>)")
     ap.add_argument("--ambang-db", type=float, default=-45.0, help="ambang energi frame untuk acuan ucapan")
     args = ap.parse_args()
     cfg = load_config()
     setup_logging(cfg, "tes_vad")
     host, ts = socket.gethostname(), datetime.now().strftime("%Y%m%d_%H%M%S")
-    res, lines = run_mic(cfg, args) if args.mic else run_dataset(cfg, args)
+    if args.dev:
+        res, lines = run_dev(cfg, args)
+    else:
+        res, lines = run_mic(cfg, args) if args.mic else run_dataset(cfg, args)
     lines = [f"# F2 Uji Silero VAD ({host}, {ts})", ""] + lines
-    md = ROOT / "results" / f"vad_{'mic_' if args.mic else ''}{host}_{ts}.md"
+    tag = "dev_" if args.dev else ("mic_" if args.mic else "")
+    md = ROOT / "results" / f"vad_{tag}{host}_{ts}.md"
     md.write_text("\n".join(lines) + "\n", encoding="utf-8")
     (md.with_suffix(".json")).write_text(json.dumps(copy.deepcopy(res), indent=2, default=float), encoding="utf-8")
     print("\n".join(lines))
