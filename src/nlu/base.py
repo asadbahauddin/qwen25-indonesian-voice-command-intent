@@ -75,6 +75,22 @@ COMMAND_SCHEMA_V2 = {
     ]
 }
 SCHEMAS = {"v1": COMMAND_SCHEMA_V1, "v2": COMMAND_SCHEMA_V2}
+
+
+def with_plan_field(schema, key="tindakan"):
+    """Skema generasi Qwen: tambahkan field `key` (daftar tindakan, string) PALING DEPAN di setiap
+    varian objek, agar model menuliskan rencananya sebelum memilih intent (structured reasoning).
+    Field ini dibuang sebelum validasi/normalisasi, sehingga keluaran akhir tetap mengikuti `schema`."""
+    plan = {"type": "array", "items": {"type": "string"}, "minItems": 1, "maxItems": 5}
+
+    def add(obj):
+        o = dict(obj)
+        o["properties"] = {key: plan, **obj["properties"]}
+        o["required"] = [key, *obj["required"]]
+        return o
+    if "anyOf" in schema:
+        return {"anyOf": [add(v) for v in schema["anyOf"]]}
+    return add(schema)
 COMMAND_SCHEMA = COMMAND_SCHEMA_V2          # skema resmi untuk validasi semua metode
 SCHEMA_VERSION = "v2"
 _validators = {k: Draft202012Validator(v) for k, v in SCHEMAS.items()}

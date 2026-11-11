@@ -67,8 +67,10 @@ nlu:
   qwen:
     host: http://localhost:11434        # Ollama HTTP API
     model: qwen2.5:1.5b                 # Q4_K_M (cek: ollama show qwen2.5:1.5b)
-    system_prompt: prompts/system_id.txt
-    prompt_version: v1
+    prompt_version: v1        # versi aktif (final 11 Nov: EM dan latency lebih baik dari v2); daftar di bawah
+    prompts:
+      v1: {file: prompts/system_id.txt, plan_field: false}      # F4, 6 contoh
+      v2: {file: prompts/system_id_v2.txt, plan_field: true}    # F6: field 'tindakan' dulu, 8 contoh
     use_schema: true          # true = structured output Ollama (keluaran dibatasi JSON schema)
     schema_version: v2        # v1 = longgar (F4/F6 awal), v2 = struktur dikunci per intent
     temperature: 0            # deterministik untuk evaluasi

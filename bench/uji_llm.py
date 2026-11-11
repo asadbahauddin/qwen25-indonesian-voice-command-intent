@@ -97,12 +97,16 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--metode", nargs="+", default=["qwen", "rule", "indobert"], choices=["qwen", "rule", "indobert"])
     ap.add_argument("--data", default="bench/pilot_set.json")
+    ap.add_argument("--qwen-prompt", choices=["v1", "v2"], default=None,
+                    help="override nlu.qwen.prompt_version (untuk perbandingan)")
     ap.add_argument("--qwen-schema", choices=["v1", "v2"], default=None,
                     help="override nlu.qwen.schema_version (untuk perbandingan)")
     args = ap.parse_args()
 
     cfg = load_config()
     setup_logging(cfg, "uji_llm")
+    if args.qwen_prompt:
+        cfg["nlu"]["qwen"]["prompt_version"] = args.qwen_prompt
     if args.qwen_schema:
         cfg["nlu"]["qwen"]["schema_version"] = args.qwen_schema
     domain = Domain(ROOT / cfg["nlu"]["domain_vocab"])
@@ -121,7 +125,7 @@ def main():
         meta = {"warmup": warm}
         if mname == "qwen":
             meta.update(model=m.q["model"], prompt_version=m.prompt_version, prompt_sha=m.prompt_sha,
-                        use_schema=m.q["use_schema"], schema_version=m.schema_version)
+                        use_schema=m.q["use_schema"], schema_version=m.schema_version, plan_field=m.plan_field)
         elif mname == "rule":
             meta.update(keywords_version=m.version)
         else:
@@ -139,7 +143,7 @@ def main():
                  "load_s": info.get("load_s"), "prompt_eval_s": info.get("prompt_eval_s"),
                  "prompt_tokens": info.get("prompt_tokens"), "eval_s": info.get("eval_s"),
                  "eval_tokens": info.get("eval_tokens"), "tokens_per_s": info.get("tokens_per_s"),
-                 "error": info.get("error"),
+                 "error": info.get("error"), "tindakan": json.dumps(info.get("tindakan"), ensure_ascii=False),
                  "pred_json": json.dumps(pred, ensure_ascii=False), "gold_json": json.dumps(gold, ensure_ascii=False)}
             rows.append(r)
             log.info("%s %s intent=%s EM=%s t=%.3f", mname, it["id"], r["intent_ok"], r["exact_match"], r["t_nlu"])

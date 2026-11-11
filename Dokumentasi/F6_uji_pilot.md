@@ -66,5 +66,20 @@ Per formalitas v2 (intent/EM): formal 83,3/75,0 · semi-formal 91,7/75,0 · info
 - **Perintah gabungan masih gagal** (P25, P26, P29, P30). Dengan grammar yang terkunci, model memilih intent tindakan pertama di token awal, sehingga tidak bisa menulis `steps` lagi. Ini keterbatasan model 1,5B dalam merencanakan struktur sebelum menulis.
 - Mulai sekarang set pilot berfungsi sebagai **set pengembangan** (*development set*): boleh dipakai untuk memperbaiki skema/prompt. Pengujian hipotesis hanya dilakukan pada data responden (F9) yang tidak pernah dipakai untuk pengembangan.
 
+## Lanjutan: prompt v2 (structured reasoning), disetujui peneliti 11 Nov 2026
+`prompts/system_id_v2.txt`: Qwen lebih dulu menulis field `tindakan` (daftar tindakan) sebelum intent. Field ini dibuang sebelum validasi. Isi lainnya: aturan combined dipindah ke atas, 8 contoh (+2 combined, +1 "dulu" bukan combined), dan singkatan domain (laprak, TA, trainer RL). Singkatan ini ditambahkan setelah melihat kesalahan P24 di pilot (pilot = set pengembangan). Contoh di prompt v2 tidak ada yang sama dengan pilot maupun data latih (dicek otomatis).
+
+| Qwen2.5 (skema v2) | Intent Accuracy | Exact Match | F1 weighted | t_nlu (s), n=36 | Sumber |
+|---|---|---|---|---|---|
+| Prompt v1 | 80,56% | **69,44%** | 0,7931 | **0,678 ± 0,239** | `results/summary_MSI_20261111_230143.md` |
+| Prompt v2 | **86,11%** | 66,67% | 0,8538 | 1,024 ± 0,515 | `results/summary_MSI_20261111_230453.md` |
+
+Temuan prompt v2:
+- Daftar `tindakan` umumnya benar, tetapi model **tidak konsisten mengikuti rencananya sendiri**. Contohnya P09, P10, P12: satu tindakan, tetapi intent ditulis combined.
+- Model **meniru isi contoh few-shot**. P27 mendapat langkah tambahan "kembali ke posisi awal", dan P28 menulis "bu vivi"; keduanya berasal dari contoh.
+- Combined membaik (P25, P30 menjadi benar), tetapi kalimat sederhana menurun (P02, P04).
+
+**Keputusan: prompt v1 dipakai sebagai versi final** (`nlu.qwen.prompt_version: v1`). Alasannya, Exact Match sedikit lebih tinggi dan latency 34% lebih rendah (penting untuk H3 di RPi 5, karena v2 menghasilkan lebih banyak token). Selisih akurasi 1–2 kalimat dari 36 belum bermakna. Iterasi prompt **dihentikan** untuk mencegah overfitting ke 36 kalimat pilot. Prompt v2 tetap tersedia untuk ablation (`--qwen-prompt v2`).
+
 ## Kalimat logbook
 > Melakukan uji pendahuluan teks pada 36 kalimat pilot untuk tiga metode NLU; Qwen2.5 mencapai intent accuracy 80,56% dan exact match 63,89% dengan JSON valid 100% (latency 0,786 ± 0,387 s di laptop), sedangkan rule-based dan IndoBERT 100% pada set pilot yang disusun dengan kosakata yang sama sehingga belum dapat dipakai untuk menguji hipotesis.

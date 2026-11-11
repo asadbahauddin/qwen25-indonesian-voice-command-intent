@@ -15,7 +15,7 @@ from pathlib import Path
 
 import requests
 
-from .base import SCHEMAS, Domain, NLUMethod, normalize_command, parse_json, validate_command
+from .base import SCHEMAS, Domain, with_plan_field, NLUMethod, normalize_command, parse_json, validate_command
 
 log = logging.getLogger(__name__)
 ROOT = Path(__file__).resolve().parents[2]
@@ -36,10 +36,14 @@ class QwenNLU(NLUMethod):
         ncfg = cfg["nlu"]
         self.q = ncfg["qwen"]
         self.domain = domain or Domain(ROOT / ncfg["domain_vocab"])
-        tmpl = (ROOT / self.q["system_prompt"]).read_text(encoding="utf-8")
-        self.system_prompt = render_prompt(tmpl, self.domain)
         self.prompt_version = self.q["prompt_version"]
+        pcfg = self.q["prompts"][self.prompt_version]
+        tmpl = (ROOT / pcfg["file"]).read_text(encoding="utf-8")
+        self.system_prompt = render_prompt(tmpl, self.domain)
+        self.plan_field = bool(pcfg.get("plan_field"))
         self.schema_version = self.q.get("schema_version", "v2")
+        schema = SCHEMAS[self.schema_version]
+        self.gen_schema = with_plan_field(schema) if self.plan_field else schema
         self.prompt_sha = hashlib.sha256(self.system_prompt.encode("utf-8")).hexdigest()[:12]
         self.url = self.q["host"].rstrip("/") + "/api/chat"
         self.session = requests.Session()
@@ -57,7 +61,7 @@ class QwenNLU(NLUMethod):
             "options": {"temperature": self.q["temperature"], "seed": self.q["seed"],
                         "num_ctx": self.q["num_ctx"], "num_predict": self.q["num_predict"]},
         }
-        p["format"] = SCHEMAS[self.schema_version] if self.q["use_schema"] else "json"
+        p["format"] = self.gen_schema if self.q["use_schema"] else "json"
         return p
 
     def warmup(self):
@@ -100,6 +104,8 @@ class QwenNLU(NLUMethod):
         except (json.JSONDecodeError, TypeError) as e:
             info["error"] = f"json: {e}"
             return None, info
+        if self.plan_field and isinstance(obj, dict):
+            info["tindakan"] = obj.pop("tindakan", None)
         info["schema_valid"], err = validate_command(obj)
         cmd = normalize_command(obj, self.domain)
         if not info["schema_valid"]:
