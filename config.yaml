@@ -94,3 +94,16 @@ nlu:
     warmup_ratio: 0.1
     val_ratio: 0.15           # dari data latih, untuk memilih epoch terbaik (BUKAN data uji)
     seed: 42
+
+# ---------------------------------------------------------------------
+# FASE 8 - Perekaman dataset (bench/rekam_dataset.py)
+# ---------------------------------------------------------------------
+dataset:
+  skenario: bench/skenario_dataset.json   # mode skenario (kalimat bebas responden)
+  pilot: bench/pilot_set.json             # mode baca (membaca kalimat pilot)
+  out_skenario: dataset                   # audio + metadata responden (TIDAK di-push: privasi)
+  out_baca: recordings/pilot_audio        # audio pilot yang dibacakan
+  max_record_s: 15          # rekaman otomatis berhenti setelah ini
+  min_record_s: 0.6         # lebih pendek dari ini -> diminta ulang
+  tail_ms: 300              # tetap merekam sebentar setelah Enter kedua (ujung kata tidak terpotong)
+  min_peak_dbfs: -30        # puncak di bawah ini -> peringatan terlalu pelan

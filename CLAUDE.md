@@ -126,7 +126,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | F5 | Belum | – | Tidak ada `src/pipeline.py`, `src/cli.py`. |
 | F6 | **Selesai** (11 Nov) | `bench/uji_llm.py`, `results/summary_MSI_20261111_225631.md` (+csv/json), `Dokumentasi/F6_uji_pilot.md` | Qwen intent 80,56% / EM 63,89%; rule & IndoBERT 100%. **Ancaman validitas:** pilot, templat, dan kamus disusun bersamaan dengan kosakata sama, jadi hasil F6 bukan uji hipotesis. Kesalahan Qwen dominan pada konsistensi struktur combined. |
 | F7 | Belum | – | Tidak ada bukti RPi 5. |
-| F8 | Belum | – | Tidak ada alat rekam dataset, `dataset/` tidak ada. |
+| F8 | Sebagian (alat siap) | `bench/rekam_dataset.py`, `bench/skenario_dataset.json` v1 (48 kartu), `Dokumentasi/F8_*.md` (alat, persetujuan, data card) | Uji fungsi OK (input simulasi). **Belum ada rekaman:** pilot dibaca (P01) dan responden R01–R04. |
 | F9 | Belum | – | – |
 | F10 | Belum | – | – |
 
