@@ -46,3 +46,13 @@ levels:
 
 bench:
   mic_test_seconds: 5
+  mic_countdown_seconds: 3   # hitung mundur sebelum tiap rekaman
+  # Kondisi uji mikrofon F1 (nama -> instruksi untuk penutur)
+  mic_conditions:
+    diam:   "DIAM, jangan bicara (mengukur noise ruangan)"
+    normal: "Bicara NORMAL seperti memberi perintah ke robot"
+    keras:  "Bicara KERAS / setengah berteriak (cek clipping)"
+  # Batas peringatan kualitas rekaman
+  mic_warn:
+    min_snr_db: 20           # SNR normal-vs-diam di bawah ini -> peringatan
+    min_speech_peak_dbfs: -30   # puncak ucapan normal di bawah ini -> terlalu pelan

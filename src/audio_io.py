@@ -156,6 +156,19 @@ class AudioSource:
         out = mono if self._resampler is None else self._resampler.resample_chunk(mono)
         return mono, out
 
+    def drain(self):
+        """Buang blok yang menumpuk di antrean (mis. selama menunggu input pengguna)
+        dan reset resampler, agar rekaman berikutnya mulai dari audio terbaru."""
+        n = 0
+        while True:
+            try:
+                self._q.get_nowait()
+                n += 1
+            except queue.Empty:
+                break
+        self._resampler = self._new_resampler()
+        return n
+
     def flush(self):
         """Keluarkan sisa sampel di resampler (panggil sekali di akhir rekaman)."""
         if self._resampler is None:
