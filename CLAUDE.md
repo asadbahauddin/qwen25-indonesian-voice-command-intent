@@ -140,10 +140,14 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - **Skema JSON final** (disetujui 11 Nov): `combined_command` → field tingkat atas null, sub-perintah di `steps[]` (tiap langkah: intent selain combined + 4 entity). Skema didefinisikan di `src/nlu/base.py: COMMAND_SCHEMA`.
 - F4: Qwen dipanggil lewat Ollama HTTP API (`requests`, tanpa paket `ollama`), `format`=JSON schema (grammar-constrained), temperature 0, seed 42, num_ctx 2048. Normalisasi entity (alias → kanonik) sama untuk semua metode. Contoh few-shot di prompt dihitung sebagai data latih Qwen, jadi tidak boleh muncul di pilot atau dataset.
 - F4b: entity untuk rule-based dan IndoBERT memakai kamus bersama (`src/nlu/entities.py`, alias terpanjang, tanpa tumpang tindih). IndoBERT hanya mengklasifikasi intent; combined dipecah per klausa lalu diklasifikasi ulang. Data latih sintetis dari templat (seed 42), dicek tanpa kebocoran ke pilot dan contoh prompt. **Kamus rule-based tidak boleh disetel memakai pilot atau dataset.**
+- **Skema v2** (disetujui 11 Nov) = skema resmi untuk validasi semua metode dan untuk `format` Qwen (`nlu.qwen.schema_version: v2`). Struktur dikunci per intent; v1 disimpan untuk pembanding.
+- **Pilot = set pengembangan** (boleh dipakai memperbaiki prompt/skema). **Data responden = set uji** (tidak boleh dipakai untuk pengembangan apa pun).
+- **Desain data responden (disetujui 11 Nov):** responden bicara langsung ke mic (alat rekam seperti `tes_mic`) dengan **kalimat bebas** berdasarkan **kartu skenario** (intent + entity target + gaya formalitas), bukan membaca kalimat. Transkrip dicek manual, lalu label disusun. Rekaman diuji untuk ketiga metode (teks ground-truth dan transkrip Whisper).
 - Rencana responden: 4 orang × 48 kalimat = 192 sampel. Kalimat dataset wajib dicek tidak sama dengan pilot, data latih, dan contoh prompt.
 - Belum diputuskan: faster-whisper vs openai-whisper, threshold VAD, versi system prompt.
 
 **Angka yang sudah terukur:**
 - F1 mic (`results/mic_MSI_20261111_222034.md`): diam RMS -90,94 dBFS; normal RMS -17,35 / p90 -13,21 dBFS; keras RMS -13,34 / p90 -7,87 dBFS; clipping native 0 untuk semua kondisi.
 - F6 pilot teks, laptop (`results/summary_MSI_20261111_225631.md`): Qwen intent 80,56%, EM 63,89%, F1w 0,7931, JSON valid 100%, t_nlu 0,786 ± 0,387 s (n=36); rule-based 100%/100%, 0,0002 s; IndoBERT 100%/100%, 0,0174 ± 0,0240 s. Per formalitas Qwen (intent/EM): formal 83,3/75,0, semi 91,7/66,7, informal 66,7/50,0.
+- F6 Qwen skema v2 (`results/summary_MSI_20261111_230143.md`): intent 80,56%, EM 69,44%, t_nlu 0,678 ± 0,239 s (n=36). Combined P25/P26/P29/P30 masih salah.
 - Belum ada metrik ASR (WER) dan latency end-to-end.

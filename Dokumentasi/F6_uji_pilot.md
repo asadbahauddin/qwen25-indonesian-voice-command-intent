@@ -52,5 +52,19 @@ Rule-based dan IndoBERT mendapat 100% **bukan bukti bahwa keduanya lebih baik da
 - Qwen menghasilkan JSON valid 100% (berkat structured output), tetapi konsistensi struktur combined dan kepatuhan pada field null masih lemah. Penurunan pada kalimat informal (66,7% intent) **berlawanan** dengan H2, tetapi belum dapat disimpulkan karena alasan validitas di atas.
 - Latency NLU Qwen di laptop ±0,8 s.
 
+## Lanjutan: skema v2 (disetujui peneliti 11 Nov 2026)
+Skema v2 mengunci struktur per intent: field yang tidak relevan wajib null, dan `steps` hanya ada pada `combined_command` (≥ 2 langkah). Field utama tetap boleh null supaya model tidak dipaksa mengarang. Prompt tidak diubah (tetap v1), jadi efeknya murni dari skema. Ke-336 label (pilot + data latih) valid terhadap v2.
+
+| Qwen2.5 (prompt v1) | Intent Accuracy | Exact Match | F1 weighted | t_nlu (s), n=36 | Sumber |
+|---|---|---|---|---|---|
+| Skema v1 | 80,56% | 63,89% | 0,7931 | 0,786 ± 0,387 | `results/summary_MSI_20261111_225631.md` |
+| **Skema v2** | 80,56% | **69,44%** | 0,7931 | **0,678 ± 0,239** | `results/summary_MSI_20261111_230143.md` |
+
+Per formalitas v2 (intent/EM): formal 83,3/75,0 · semi-formal 91,7/75,0 · informal 66,7/58,3.
+
+- Kesalahan struktur (P23, P28, P35, field liar) hilang, dan latency turun karena token keluaran lebih sedikit.
+- **Perintah gabungan masih gagal** (P25, P26, P29, P30). Dengan grammar yang terkunci, model memilih intent tindakan pertama di token awal, sehingga tidak bisa menulis `steps` lagi. Ini keterbatasan model 1,5B dalam merencanakan struktur sebelum menulis.
+- Mulai sekarang set pilot berfungsi sebagai **set pengembangan** (*development set*): boleh dipakai untuk memperbaiki skema/prompt. Pengujian hipotesis hanya dilakukan pada data responden (F9) yang tidak pernah dipakai untuk pengembangan.
+
 ## Kalimat logbook
 > Melakukan uji pendahuluan teks pada 36 kalimat pilot untuk tiga metode NLU; Qwen2.5 mencapai intent accuracy 80,56% dan exact match 63,89% dengan JSON valid 100% (latency 0,786 ± 0,387 s di laptop), sedangkan rule-based dan IndoBERT 100% pada set pilot yang disusun dengan kosakata yang sama sehingga belum dapat dipakai untuk menguji hipotesis.

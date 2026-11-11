@@ -97,10 +97,14 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--metode", nargs="+", default=["qwen", "rule", "indobert"], choices=["qwen", "rule", "indobert"])
     ap.add_argument("--data", default="bench/pilot_set.json")
+    ap.add_argument("--qwen-schema", choices=["v1", "v2"], default=None,
+                    help="override nlu.qwen.schema_version (untuk perbandingan)")
     args = ap.parse_args()
 
     cfg = load_config()
     setup_logging(cfg, "uji_llm")
+    if args.qwen_schema:
+        cfg["nlu"]["qwen"]["schema_version"] = args.qwen_schema
     domain = Domain(ROOT / cfg["nlu"]["domain_vocab"])
     data = json.load(open(ROOT / args.data, encoding="utf-8"))
     items = data["items"]
@@ -109,7 +113,7 @@ def main():
 
     all_rows, summary = [], {"host": host, "waktu": stamp, "platform": platform.platform(),
                              "data": args.data, "data_versi": data["_meta"].get("versi"), "n_kalimat": len(items),
-                             "masukan": "teks ground-truth", "metode": {}}
+                             "masukan": "teks ground-truth", "skema_validasi": "v2", "metode": {}}
     for mname in args.metode:
         m = make_method(mname, cfg, domain)
         warm = m.warmup()
@@ -117,7 +121,7 @@ def main():
         meta = {"warmup": warm}
         if mname == "qwen":
             meta.update(model=m.q["model"], prompt_version=m.prompt_version, prompt_sha=m.prompt_sha,
-                        use_schema=m.q["use_schema"])
+                        use_schema=m.q["use_schema"], schema_version=m.schema_version)
         elif mname == "rule":
             meta.update(keywords_version=m.version)
         else:

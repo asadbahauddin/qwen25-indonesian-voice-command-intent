@@ -1,7 +1,7 @@
 """Metode utama: Qwen2.5 1.5B (Q4_K_M) via Ollama HTTP API, prompt engineering + JSON schema.
 
-Keluaran dibatasi dengan structured output Ollama (`format` = COMMAND_SCHEMA) bila
-`nlu.qwen.use_schema: true`, sehingga model hanya bisa menghasilkan JSON yang sesuai skema.
+Keluaran dibatasi dengan structured output Ollama (`format` = skema versi `nlu.qwen.schema_version`)
+bila `nlu.qwen.use_schema: true`, sehingga model hanya bisa menghasilkan JSON yang sesuai skema.
 
 Uji cepat dari terminal:
     python -m src.nlu.qwen "Tolong antarkan surat izin ke Pak Umam"
@@ -15,7 +15,7 @@ from pathlib import Path
 
 import requests
 
-from .base import COMMAND_SCHEMA, Domain, NLUMethod, normalize_command, parse_json, validate_command
+from .base import SCHEMAS, Domain, NLUMethod, normalize_command, parse_json, validate_command
 
 log = logging.getLogger(__name__)
 ROOT = Path(__file__).resolve().parents[2]
@@ -39,12 +39,13 @@ class QwenNLU(NLUMethod):
         tmpl = (ROOT / self.q["system_prompt"]).read_text(encoding="utf-8")
         self.system_prompt = render_prompt(tmpl, self.domain)
         self.prompt_version = self.q["prompt_version"]
+        self.schema_version = self.q.get("schema_version", "v2")
         self.prompt_sha = hashlib.sha256(self.system_prompt.encode("utf-8")).hexdigest()[:12]
         self.url = self.q["host"].rstrip("/") + "/api/chat"
         self.session = requests.Session()
-        log.info("QwenNLU: model=%s prompt=%s (sha %s, %d karakter) schema=%s",
+        log.info("QwenNLU: model=%s prompt=%s (sha %s, %d karakter) schema=%s (%s)",
                  self.q["model"], self.prompt_version, self.prompt_sha, len(self.system_prompt),
-                 self.q["use_schema"])
+                 self.q["use_schema"], self.schema_version)
 
     def _payload(self, text):
         p = {
@@ -56,7 +57,7 @@ class QwenNLU(NLUMethod):
             "options": {"temperature": self.q["temperature"], "seed": self.q["seed"],
                         "num_ctx": self.q["num_ctx"], "num_predict": self.q["num_predict"]},
         }
-        p["format"] = COMMAND_SCHEMA if self.q["use_schema"] else "json"
+        p["format"] = SCHEMAS[self.schema_version] if self.q["use_schema"] else "json"
         return p
 
     def warmup(self):
@@ -66,7 +67,7 @@ class QwenNLU(NLUMethod):
 
     def predict(self, text):
         info = {"method": self.name, "model": self.q["model"], "prompt_version": self.prompt_version,
-                "prompt_sha": self.prompt_sha, "json_valid": False, "schema_valid": False,
+                "prompt_sha": self.prompt_sha, "schema_version": self.schema_version, "json_valid": False, "schema_valid": False,
                 "error": None, "raw": None}
         t0 = time.perf_counter()
         try:

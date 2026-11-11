@@ -31,7 +31,9 @@ _step = {
     "required": ["intent", *ENTITY_FIELDS],
     "additionalProperties": False,
 }
-COMMAND_SCHEMA = {
+# --- Skema v1 (F4): struktur longgar; steps boleh terisi pada intent apa pun.
+#     Disimpan untuk pembanding (hasil F6 v1).
+COMMAND_SCHEMA_V1 = {
     "type": "object",
     "properties": {
         "intent": {"type": "string", "enum": INTENTS},
@@ -41,14 +43,59 @@ COMMAND_SCHEMA = {
     "required": ["intent", *ENTITY_FIELDS, "steps"],
     "additionalProperties": False,
 }
-_validator = Draft202012Validator(COMMAND_SCHEMA)
+
+# --- Skema v2 (11 Nov 2026, disetujui peneliti): struktur dikunci per intent sesuai definisinya.
+#     Field utama intent boleh null (tidak memaksa model mengarang bila tidak disebut);
+#     field yang tidak relevan WAJIB null; steps hanya ada pada combined_command (>= 2 langkah).
+_null = {"type": "null"}
+ALLOWED_FIELDS = {"navigate_room": ["room"], "navigate_object": ["object"], "find_person": ["person"],
+                  "deliver_document": ["document", "person", "room"], "general_command": []}
 
 
-def validate_command(obj):
-    """Return (valid: bool, pesan galat pertama atau None)."""
-    errs = sorted(_validator.iter_errors(obj), key=lambda e: list(e.path))
-    if not errs:
+def _variant(intent, with_steps_key):
+    props = {"intent": {"type": "string", "enum": [intent]}}
+    for f in ENTITY_FIELDS:
+        props[f] = _nullable_str if f in ALLOWED_FIELDS[intent] else _null
+    req = ["intent", *ENTITY_FIELDS]
+    if with_steps_key:
+        props["steps"] = _null
+        req.append("steps")
+    return {"type": "object", "properties": props, "required": req, "additionalProperties": False}
+
+
+COMMAND_SCHEMA_V2 = {
+    "anyOf": [
+        *[_variant(i, True) for i in STEP_INTENTS],
+        {"type": "object",
+         "properties": {"intent": {"type": "string", "enum": ["combined_command"]},
+                        **{f: _null for f in ENTITY_FIELDS},
+                        "steps": {"type": "array", "minItems": 2,
+                                  "items": {"anyOf": [_variant(i, False) for i in STEP_INTENTS]}}},
+         "required": ["intent", *ENTITY_FIELDS, "steps"], "additionalProperties": False},
+    ]
+}
+SCHEMAS = {"v1": COMMAND_SCHEMA_V1, "v2": COMMAND_SCHEMA_V2}
+COMMAND_SCHEMA = COMMAND_SCHEMA_V2          # skema resmi untuk validasi semua metode
+SCHEMA_VERSION = "v2"
+_validators = {k: Draft202012Validator(v) for k, v in SCHEMAS.items()}
+
+
+def validate_command(obj, version=SCHEMA_VERSION):
+    """Return (valid: bool, pesan galat atau None) terhadap skema `version` (default: resmi v2)."""
+    v = _validators[version]
+    if v.is_valid(obj):
         return True, None
+    if version == "v2" and isinstance(obj, dict):
+        # pesan yang mudah dibaca: bandingkan dengan varian sesuai intent yang diklaim
+        intent = obj.get("intent")
+        if intent in INTENTS:
+            variants = COMMAND_SCHEMA_V2["anyOf"]
+            sub = variants[-1] if intent == "combined_command" else variants[STEP_INTENTS.index(intent)]
+            errs = sorted(Draft202012Validator(sub).iter_errors(obj), key=lambda e: list(e.path))
+            if errs:
+                e = errs[0]
+                return False, f"{'/'.join(map(str, e.path)) or '<root>'}: {e.message}"
+    errs = sorted(v.iter_errors(obj), key=lambda e: list(e.path))
     e = errs[0]
     return False, f"{'/'.join(map(str, e.path)) or '<root>'}: {e.message}"
 
