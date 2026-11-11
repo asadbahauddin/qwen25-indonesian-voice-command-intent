@@ -130,6 +130,11 @@ def main():
     ap.add_argument("--pemanasan", type=int, default=3, help="item awal dijalankan dulu dan TIDAK dihitung, per perangkat")
     ap.add_argument("--batas", type=int, help="hanya N item pertama (uji alat)")
     a = ap.parse_args()
+    try:
+        from transformers.utils import logging as hf_logging
+        hf_logging.disable_progress_bar()
+    except Exception:
+        pass
     cfg = load_config()
     setup_logging(cfg, "evaluasi")
     for h in logging.getLogger().handlers:

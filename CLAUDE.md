@@ -127,7 +127,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | F6 | **Selesai** (11 Nov) | `bench/uji_llm.py`, `results/summary_MSI_20261111_225631.md` (+csv/json), `Dokumentasi/F6_uji_pilot.md` | Qwen intent 80,56% / EM 63,89%; rule & IndoBERT 100%. **Ancaman validitas:** pilot, templat, dan kamus disusun bersamaan dengan kosakata sama, jadi hasil F6 bukan uji hipotesis. Kesalahan Qwen dominan pada konsistensi struktur combined. |
 | F7 | **Dibatalkan** (12 Nov, keputusan peneliti) | – | RPi 5 diganti laptop. Penyimpangan dari proposal (RM1, RM2, H1, H3 menyebut RPi 5) wajib dijelaskan di Kendala & Solusi laporan akhir. |
 | F8 | **Rekaman selesai** (12 Nov); transkrip & label belum | `bench/rekam_dataset.py`, `bench/cek_dataset.py`, `results/kualitas_dataset_MSI_20261112_005606.md`, `dataset/` (lokal, tidak di-push) | 3 responden × 54 = **162 WAV** lengkap, format 16 kHz mono PCM_16 semua benar, total 13,4 menit. Clipping ringan (limiter transmitter): R01 13/54, R02 1/54, R03 42/54 file, maks 0,051% sampel. Sisa: transkrip manual + label final + cek kebocoran. |
-| F9 | Belum | – | – |
+| F9 | **Alat selesai, uji coba pilot** (12 Nov); set uji menunggu transkrip+label | `bench/evaluasi.py`, `results/eval_pilot_MSI_20261112_042305.md`, `Dokumentasi/F9_evaluasi.md` | 3 metode × teks/utuh/vad × GPU/CPU, pemanasan 3 item dibuang, cek versi Ollama + berhenti bila Ollama mati. Qwen GPU≠CPU (EM teks 69,44 vs 72,22) → akurasi dilaporkan per platform. |
 | F10 | Belum | – | – |
 
 **Keputusan teknis yang sudah diambil:**
@@ -156,6 +156,8 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - Data pilot audio (P01) = set pengembangan: boleh dipakai memilih backend Whisper.
 - **F3 final (12 Nov, disetujui):** backend faster-whisper (`asr.backend: faster`), dipilih dari WER pilot (set pengembangan).
 - Belum diputuskan: tidak ada untuk F2/F3. Prompt Qwen tetap v1 (iterasi dihentikan).
+- **Ollama:** versi penelitian 0.30.6. Aplikasi Ollama sudah mengunduh v0.40.16 (belum terpasang) → jalankan `ollama serve`, jangan buka aplikasi sampai pengujian selesai.
+- F9: waktu respons memakai jeda tunggu = min_silence (rekaman file bisa habis sebelum jeda tercapai).
 
 **Angka yang sudah terukur:**
 - F1 mic (`results/mic_MSI_20261111_222034.md`): diam RMS -90,94 dBFS; normal RMS -17,35 / p90 -13,21 dBFS; keras RMS -13,34 / p90 -7,87 dBFS; clipping native 0 untuk semua kondisi.
@@ -166,4 +168,5 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - F2 VAD (`results/vad_MSI_20261112_014026.md`, n=162 file / 25.202 frame): onnx 0,237 ± 0,154 ms/frame, torch 0,329 ± 0,594; terpecah pada threshold 0,5: 800 ms 28/162, 1200 ms 7/162, 1500 ms 1/162; Whisper segmen VAD vs utuh identik 69/162 (WER antar keduanya 21,54%).
 - F2 dev (`results/vad_dev_MSI_20261112_041005.md`, 54 item + 90 s suasana): th 0,5 terpecah 800 ms 6, 1000 ms 4, 1200 ms 2, 1500 ms 1 (+3 tergabung); pemicu palsu 0.
 - F3 WER pilot (`results/asr_pilot_MSI_20261112_041011.md`, n=36, P01 dibaca): faster GPU+prompt 38,75% (formal 33,77 / semi 39,02 / informal 43,21), faster GPU tanpa prompt 56,25%, openai GPU+prompt 39,58%, openai tanpa prompt 57,50%, faster CPU int8+prompt 39,58% (0,928 s), openai CPU fp32+prompt 39,58% (2,146 s).
-- Belum ada WER dataset dan latency end-to-end.
+- F9 uji coba pilot (`results/eval_pilot_MSI_20261112_042305.md`, n=36): waktu respons Qwen GPU 2,496 ± 0,407 s (total komputasi 1,384 ± 0,433), CPU 4,880 ± 1,205 s (maks 9,497); WER GPU utuh 38,75% / vad 35,00%; EM vad GPU: Qwen 44,44, rule 63,89, IndoBERT 55,56; intent vad GPU: 80,56 / 69,44 / 91,67.
+- Belum ada WER dataset dan evaluasi set uji.
