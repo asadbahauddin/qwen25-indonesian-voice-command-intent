@@ -18,7 +18,7 @@ $PY = "C:\Users\indie\.conda\envs\mbkm-nlu\python.exe"
 ## Konvensi transkrip
 Kata yang diucapkan ditulis apa adanya, termasuk partikel dan kata gaul. Bunyi ragu (eh, em) tidak ditulis. Nama mengikuti kamus, dan angka ditulis dengan huruf.
 
-**Kata depan ditulis terpisah (EYD)**: "ke ruang dosen", "ke lengan robot". Temuan 12 Nov: 11/54 transkrip R01 memakai bentuk tersambung ("keruang", "kelengan", "kemesin", "ketrainer"), 3 di antaranya berasal dari draf Whisper yang diterima apa adanya. Alat koreksi sekarang memperingatkan bentuk itu (juga pada draf 1/2) dan mengusulkan bentuk EYD.
+**Kata depan ditulis terpisah (EYD)**: "ke ruang dosen", "ke lengan robot". Temuan 12 Nov: 11/54 transkrip R01 memakai bentuk tersambung ("keruang", "kelengan", "kemesin", "ketrainer"), 3 di antaranya berasal dari draf Whisper yang diterima apa adanya. Alat koreksi sekarang memperingatkan bentuk itu (juga pada draf 1/2) dan mengusulkan bentuk EYD. **Keputusan peneliti (12 Nov):** ke-11 transkrip R01 dipisahkan otomatis (`ke ruang`, dst.), dan R01_S07 "andu" dikoreksi menjadi "andi" (salah ketik). Cadangan: `dataset/metadata.bak_20261112_044408.csv`; perubahan dicatat di `catatan` (`rapikan=EYD-kata-depan`).
 
 ## Prinsip label
 - Label menggambarkan **apa yang diucapkan** (transkrip), **bukan isi kartu**:

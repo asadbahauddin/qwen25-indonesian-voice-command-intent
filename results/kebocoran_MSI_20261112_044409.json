@@ -1,0 +1,24 @@
+{
+  "n_dataset": 54,
+  "ambang": 0.8,
+  "sumber": {
+    "pilot": {
+      "n": 36,
+      "sama_persis": [],
+      "mirip": [],
+      "jaccard_maks": 0.571
+    },
+    "latih_indobert": {
+      "n": 300,
+      "sama_persis": [],
+      "mirip": [],
+      "jaccard_maks": 0.75
+    },
+    "prompt_qwen": {
+      "n": 6,
+      "sama_persis": [],
+      "mirip": [],
+      "jaccard_maks": 0.714
+    }
+  }
+}
