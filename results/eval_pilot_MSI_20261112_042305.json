@@ -1,0 +1,2833 @@
+{
+  "host": "MSI",
+  "waktu": "20261112_042305",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "data": "pilot",
+  "n_item": 36,
+  "dilewati_belum_final": 0,
+  "pemanasan_dibuang": 3,
+  "durasi_s": {
+    "gpu": 185.38075609999987,
+    "cpu": 442.316961
+  },
+  "asr": {
+    "backend": "faster",
+    "model": "base",
+    "beam_size": 5,
+    "use_initial_prompt": true
+  },
+  "vad": {
+    "threshold": 0.5,
+    "min_silence_ms": 1200,
+    "pre_roll_ms": 300
+  },
+  "qwen": {
+    "model": "qwen2.5:1.5b",
+    "prompt_version": "v1",
+    "schema_version": "v2"
+  },
+  "ollama": {
+    "versi": "0.30.6",
+    "model": "qwen2.5:1.5b",
+    "digest": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b"
+  },
+  "ram_tersedia_gb_min": 0.3874626159667969,
+  "wer": {
+    "gpu/utuh": {
+      "semua": {
+        "wer": 0.3875,
+        "sub": 66,
+        "del": 22,
+        "ins": 5,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      },
+      "formality=formal": {
+        "wer": 0.33766233766233766,
+        "sub": 18,
+        "del": 5,
+        "ins": 3,
+        "n_ref_kata": 77,
+        "n_kalimat": 12
+      },
+      "formality=informal": {
+        "wer": 0.43209876543209874,
+        "sub": 28,
+        "del": 7,
+        "ins": 0,
+        "n_ref_kata": 81,
+        "n_kalimat": 12
+      },
+      "formality=semi-formal": {
+        "wer": 0.3902439024390244,
+        "sub": 20,
+        "del": 10,
+        "ins": 2,
+        "n_ref_kata": 82,
+        "n_kalimat": 12
+      },
+      "penutur=P01": {
+        "wer": 0.3875,
+        "sub": 66,
+        "del": 22,
+        "ins": 5,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      }
+    },
+    "gpu/vad": {
+      "semua": {
+        "wer": 0.35,
+        "sub": 62,
+        "del": 18,
+        "ins": 4,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      },
+      "formality=formal": {
+        "wer": 0.2987012987012987,
+        "sub": 18,
+        "del": 3,
+        "ins": 2,
+        "n_ref_kata": 77,
+        "n_kalimat": 12
+      },
+      "formality=informal": {
+        "wer": 0.4567901234567901,
+        "sub": 29,
+        "del": 8,
+        "ins": 0,
+        "n_ref_kata": 81,
+        "n_kalimat": 12
+      },
+      "formality=semi-formal": {
+        "wer": 0.2926829268292683,
+        "sub": 15,
+        "del": 7,
+        "ins": 2,
+        "n_ref_kata": 82,
+        "n_kalimat": 12
+      },
+      "penutur=P01": {
+        "wer": 0.35,
+        "sub": 62,
+        "del": 18,
+        "ins": 4,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      }
+    },
+    "cpu/utuh": {
+      "semua": {
+        "wer": 0.39166666666666666,
+        "sub": 68,
+        "del": 20,
+        "ins": 6,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      },
+      "formality=formal": {
+        "wer": 0.37662337662337664,
+        "sub": 20,
+        "del": 5,
+        "ins": 4,
+        "n_ref_kata": 77,
+        "n_kalimat": 12
+      },
+      "formality=informal": {
+        "wer": 0.41975308641975306,
+        "sub": 28,
+        "del": 6,
+        "ins": 0,
+        "n_ref_kata": 81,
+        "n_kalimat": 12
+      },
+      "formality=semi-formal": {
+        "wer": 0.3780487804878049,
+        "sub": 20,
+        "del": 9,
+        "ins": 2,
+        "n_ref_kata": 82,
+        "n_kalimat": 12
+      },
+      "penutur=P01": {
+        "wer": 0.39166666666666666,
+        "sub": 68,
+        "del": 20,
+        "ins": 6,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      }
+    },
+    "cpu/vad": {
+      "semua": {
+        "wer": 0.37083333333333335,
+        "sub": 65,
+        "del": 18,
+        "ins": 6,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      },
+      "formality=formal": {
+        "wer": 0.35064935064935066,
+        "sub": 20,
+        "del": 3,
+        "ins": 4,
+        "n_ref_kata": 77,
+        "n_kalimat": 12
+      },
+      "formality=informal": {
+        "wer": 0.4567901234567901,
+        "sub": 29,
+        "del": 8,
+        "ins": 0,
+        "n_ref_kata": 81,
+        "n_kalimat": 12
+      },
+      "formality=semi-formal": {
+        "wer": 0.3048780487804878,
+        "sub": 16,
+        "del": 7,
+        "ins": 2,
+        "n_ref_kata": 82,
+        "n_kalimat": 12
+      },
+      "penutur=P01": {
+        "wer": 0.37083333333333335,
+        "sub": 65,
+        "del": 18,
+        "ins": 6,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      }
+    }
+  },
+  "akurasi": {
+    "gpu/teks/qwen": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.8055555555555556,
+        "exact_match": 0.6944444444444444,
+        "f1_weighted": 0.793109668109668,
+        "f1_macro": 0.7931096681096682,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.75,
+        "f1_weighted": 0.7777777777777777,
+        "f1_macro": 0.7777777777777777,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.6666666666666666,
+        "exact_match": 0.5833333333333334,
+        "f1_weighted": 0.6,
+        "f1_macro": 0.6,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.75,
+        "f1_weighted": 0.9111111111111111,
+        "f1_macro": 0.9111111111111111,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.8055555555555556,
+        "exact_match": 0.6944444444444444,
+        "f1_weighted": 0.793109668109668,
+        "f1_macro": 0.7931096681096682,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "gpu/teks/rule": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "gpu/teks/indobert": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "gpu/utuh/qwen": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.75,
+        "exact_match": 0.4444444444444444,
+        "f1_weighted": 0.7388888888888889,
+        "f1_macro": 0.7388888888888889,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.5833333333333334,
+        "f1_weighted": 0.7666666666666666,
+        "f1_macro": 0.7666666666666666,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.5833333333333334,
+        "exact_match": 0.25,
+        "f1_weighted": 0.4666666666666666,
+        "f1_macro": 0.4666666666666666,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.5,
+        "f1_weighted": 0.8222222222222223,
+        "f1_macro": 0.8222222222222223,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.75,
+        "exact_match": 0.4444444444444444,
+        "f1_weighted": 0.7388888888888889,
+        "f1_macro": 0.7388888888888889,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "gpu/utuh/rule": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.6944444444444444,
+        "exact_match": 0.6111111111111112,
+        "f1_weighted": 0.6911976911976913,
+        "f1_macro": 0.6911976911976913,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.6666666666666666,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.623015873015873,
+        "f1_macro": 0.623015873015873,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.5833333333333334,
+        "exact_match": 0.5,
+        "f1_weighted": 0.611111111111111,
+        "f1_macro": 0.611111111111111,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.8222222222222223,
+        "f1_macro": 0.8222222222222223,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.6944444444444444,
+        "exact_match": 0.6111111111111112,
+        "f1_weighted": 0.6911976911976913,
+        "f1_macro": 0.6911976911976913,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "gpu/utuh/indobert": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.8611111111111112,
+        "exact_match": 0.5833333333333334,
+        "f1_weighted": 0.8537018537018537,
+        "f1_macro": 0.8537018537018537,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.9111111111111111,
+        "f1_macro": 0.9111111111111111,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.75,
+        "exact_match": 0.4166666666666667,
+        "f1_weighted": 0.7333333333333333,
+        "f1_macro": 0.7333333333333333,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.9111111111111111,
+        "f1_macro": 0.9111111111111111,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.8611111111111112,
+        "exact_match": 0.5833333333333334,
+        "f1_weighted": 0.8537018537018537,
+        "f1_macro": 0.8537018537018537,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "gpu/vad/qwen": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.8055555555555556,
+        "exact_match": 0.4444444444444444,
+        "f1_weighted": 0.7944444444444445,
+        "f1_macro": 0.7944444444444444,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.6666666666666666,
+        "exact_match": 0.4166666666666667,
+        "f1_weighted": 0.6333333333333333,
+        "f1_macro": 0.6333333333333333,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.3333333333333333,
+        "f1_weighted": 0.8222222222222223,
+        "f1_macro": 0.8222222222222223,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.5833333333333334,
+        "f1_weighted": 0.9111111111111111,
+        "f1_macro": 0.9111111111111111,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.8055555555555556,
+        "exact_match": 0.4444444444444444,
+        "f1_weighted": 0.7944444444444445,
+        "f1_macro": 0.7944444444444444,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "gpu/vad/rule": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.6944444444444444,
+        "exact_match": 0.6388888888888888,
+        "f1_weighted": 0.6713564213564214,
+        "f1_macro": 0.6713564213564213,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.6666666666666666,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.623015873015873,
+        "f1_macro": 0.623015873015873,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.5833333333333334,
+        "exact_match": 0.5,
+        "f1_weighted": 0.5396825396825397,
+        "f1_macro": 0.5396825396825397,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.75,
+        "f1_weighted": 0.8222222222222223,
+        "f1_macro": 0.8222222222222223,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.6944444444444444,
+        "exact_match": 0.6388888888888888,
+        "f1_weighted": 0.6713564213564214,
+        "f1_macro": 0.6713564213564213,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "gpu/vad/indobert": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.5555555555555556,
+        "f1_weighted": 0.9078144078144077,
+        "f1_macro": 0.9078144078144078,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.5833333333333334,
+        "f1_weighted": 0.9111111111111111,
+        "f1_macro": 0.9111111111111111,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.3333333333333333,
+        "f1_weighted": 0.7666666666666666,
+        "f1_macro": 0.7666666666666666,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 0.75,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.5555555555555556,
+        "f1_weighted": 0.9078144078144077,
+        "f1_macro": 0.9078144078144078,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "cpu/teks/qwen": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.8055555555555556,
+        "exact_match": 0.7222222222222222,
+        "f1_weighted": 0.7701964701964702,
+        "f1_macro": 0.7701964701964702,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.7777777777777777,
+        "f1_macro": 0.7777777777777777,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.75,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.6777777777777779,
+        "f1_macro": 0.6777777777777779,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.8333333333333334,
+        "f1_weighted": 0.8277777777777778,
+        "f1_macro": 0.8277777777777778,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.8055555555555556,
+        "exact_match": 0.7222222222222222,
+        "f1_weighted": 0.7701964701964702,
+        "f1_macro": 0.7701964701964702,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "cpu/teks/rule": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "cpu/teks/indobert": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "cpu/utuh/qwen": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.7222222222222222,
+        "exact_match": 0.4444444444444444,
+        "f1_weighted": 0.7223484848484848,
+        "f1_macro": 0.7223484848484848,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.6666666666666666,
+        "exact_match": 0.4166666666666667,
+        "f1_weighted": 0.6333333333333333,
+        "f1_macro": 0.6333333333333333,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.6666666666666666,
+        "exact_match": 0.25,
+        "f1_weighted": 0.6,
+        "f1_macro": 0.6,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.8222222222222223,
+        "f1_macro": 0.8222222222222223,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.7222222222222222,
+        "exact_match": 0.4444444444444444,
+        "f1_weighted": 0.7223484848484848,
+        "f1_macro": 0.7223484848484848,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "cpu/utuh/rule": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.6944444444444444,
+        "exact_match": 0.5833333333333334,
+        "f1_weighted": 0.6911976911976913,
+        "f1_macro": 0.6911976911976913,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.6666666666666666,
+        "exact_match": 0.5833333333333334,
+        "f1_weighted": 0.623015873015873,
+        "f1_macro": 0.623015873015873,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.5833333333333334,
+        "exact_match": 0.5,
+        "f1_weighted": 0.611111111111111,
+        "f1_macro": 0.611111111111111,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.8222222222222223,
+        "f1_macro": 0.8222222222222223,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.6944444444444444,
+        "exact_match": 0.5833333333333334,
+        "f1_weighted": 0.6911976911976913,
+        "f1_macro": 0.6911976911976913,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "cpu/utuh/indobert": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.8888888888888888,
+        "exact_match": 0.5555555555555556,
+        "f1_weighted": 0.8816738816738816,
+        "f1_macro": 0.8816738816738817,
+        "json_valid": 1.0,
+        "schema_valid": 0.9722222222222222
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.5833333333333334,
+        "f1_weighted": 0.9111111111111111,
+        "f1_macro": 0.9111111111111111,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.4166666666666667,
+        "f1_weighted": 0.8222222222222223,
+        "f1_macro": 0.8222222222222223,
+        "json_valid": 1.0,
+        "schema_valid": 0.9166666666666666
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.9111111111111111,
+        "f1_macro": 0.9111111111111111,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.8888888888888888,
+        "exact_match": 0.5555555555555556,
+        "f1_weighted": 0.8816738816738816,
+        "f1_macro": 0.8816738816738817,
+        "json_valid": 1.0,
+        "schema_valid": 0.9722222222222222
+      }
+    },
+    "cpu/vad/qwen": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.5277777777777778,
+        "f1_weighted": 0.8166666666666668,
+        "f1_macro": 0.8166666666666665,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.5,
+        "f1_weighted": 0.8333333333333334,
+        "f1_macro": 0.8333333333333334,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.75,
+        "exact_match": 0.3333333333333333,
+        "f1_weighted": 0.688888888888889,
+        "f1_macro": 0.688888888888889,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.75,
+        "f1_weighted": 0.9111111111111111,
+        "f1_macro": 0.9111111111111111,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.5277777777777778,
+        "f1_weighted": 0.8166666666666668,
+        "f1_macro": 0.8166666666666665,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "cpu/vad/rule": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.6666666666666666,
+        "exact_match": 0.6111111111111112,
+        "f1_weighted": 0.6478317004632794,
+        "f1_macro": 0.6478317004632794,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.6666666666666666,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.623015873015873,
+        "f1_macro": 0.623015873015873,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.5833333333333334,
+        "exact_match": 0.5,
+        "f1_weighted": 0.5396825396825397,
+        "f1_macro": 0.5396825396825397,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 0.75,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 0.75,
+        "f1_macro": 0.75,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.6666666666666666,
+        "exact_match": 0.6111111111111112,
+        "f1_weighted": 0.6478317004632794,
+        "f1_macro": 0.6478317004632794,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    },
+    "cpu/vad/indobert": {
+      "semua": {
+        "n": 36,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.5277777777777778,
+        "f1_weighted": 0.9078144078144077,
+        "f1_macro": 0.9078144078144078,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=formal": {
+        "n": 12,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.5833333333333334,
+        "f1_weighted": 0.9111111111111111,
+        "f1_macro": 0.9111111111111111,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=informal": {
+        "n": 12,
+        "intent_acc": 0.8333333333333334,
+        "exact_match": 0.3333333333333333,
+        "f1_weighted": 0.7666666666666666,
+        "f1_macro": 0.7666666666666666,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "formality=semi-formal": {
+        "n": 12,
+        "intent_acc": 1.0,
+        "exact_match": 0.6666666666666666,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "penutur=P01": {
+        "n": 36,
+        "intent_acc": 0.9166666666666666,
+        "exact_match": 0.5277777777777778,
+        "f1_weighted": 0.9078144078144077,
+        "f1_macro": 0.9078144078144078,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      }
+    }
+  },
+  "latency": {
+    "gpu/teks/qwen": {
+      "t_vad": null,
+      "t_asr": null,
+      "t_nlu": {
+        "mean": 1.1219203277777676,
+        "sd": 0.6193330992997492,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 1.1219203277777676,
+        "sd": 0.6193330992997492,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": {
+        "mean": 72.70192736019092,
+        "sd": 8.174525872710149,
+        "n": 36
+      }
+    },
+    "gpu/teks/rule": {
+      "t_vad": null,
+      "t_asr": null,
+      "t_nlu": {
+        "mean": 0.001337650000007468,
+        "sd": 0.0013935335831167816,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 0.001337650000007468,
+        "sd": 0.0013935335831167816,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": null
+    },
+    "gpu/teks/indobert": {
+      "t_vad": null,
+      "t_asr": null,
+      "t_nlu": {
+        "mean": 0.04808634166665292,
+        "sd": 0.02497147129042642,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 0.04808634166665292,
+        "sd": 0.02497147129042642,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": null
+    },
+    "gpu/utuh/qwen": {
+      "t_vad": null,
+      "t_asr": {
+        "mean": 0.1896056944445061,
+        "sd": 0.039105188644095214,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 1.1194614916666852,
+        "sd": 0.35539832259467874,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 1.3090671861111913,
+        "sd": 0.37321479182714523,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": {
+        "mean": 73.25367901676684,
+        "sd": 5.833136985077042,
+        "n": 36
+      }
+    },
+    "gpu/utuh/rule": {
+      "t_vad": null,
+      "t_asr": {
+        "mean": 0.1896056944445061,
+        "sd": 0.039105188644095214,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 0.001504777777793404,
+        "sd": 0.0017395680524809175,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 0.1911104722222995,
+        "sd": 0.0390510444192485,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": null
+    },
+    "gpu/utuh/indobert": {
+      "t_vad": null,
+      "t_asr": {
+        "mean": 0.1896056944445061,
+        "sd": 0.039105188644095214,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 0.05695087777778301,
+        "sd": 0.049766588786993936,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 0.2465565722222891,
+        "sd": 0.06888853532675515,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": null
+    },
+    "gpu/vad/qwen": {
+      "t_vad": {
+        "mean": 0.0883159972220508,
+        "sd": 0.061908652841857925,
+        "n": 36
+      },
+      "t_asr": {
+        "mean": 0.1996473888888709,
+        "sd": 0.050241699289461844,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 1.0960369250000843,
+        "sd": 0.3778216721967372,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 1.3840003111110062,
+        "sd": 0.4326131670461689,
+        "n": 36
+      },
+      "t_respons": {
+        "mean": 2.4956843138889555,
+        "sd": 0.40715526026281557,
+        "n": 36
+      },
+      "qwen_tokens_per_s": {
+        "mean": 72.09455912515686,
+        "sd": 7.185753865168082,
+        "n": 36
+      }
+    },
+    "gpu/vad/rule": {
+      "t_vad": {
+        "mean": 0.0883159972220508,
+        "sd": 0.061908652841857925,
+        "n": 36
+      },
+      "t_asr": {
+        "mean": 0.1996473888888709,
+        "sd": 0.050241699289461844,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 0.0016451138889124195,
+        "sd": 0.001649972536443127,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 0.2896084999998341,
+        "sd": 0.09836290443262657,
+        "n": 36
+      },
+      "t_respons": {
+        "mean": 1.4012925027777834,
+        "sd": 0.05028586270967023,
+        "n": 36
+      },
+      "qwen_tokens_per_s": null
+    },
+    "gpu/vad/indobert": {
+      "t_vad": {
+        "mean": 0.0883159972220508,
+        "sd": 0.061908652841857925,
+        "n": 36
+      },
+      "t_asr": {
+        "mean": 0.1996473888888709,
+        "sd": 0.050241699289461844,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 0.049843361111116896,
+        "sd": 0.02529109883472446,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 0.33780674722203863,
+        "sd": 0.11342279297477739,
+        "n": 36
+      },
+      "t_respons": {
+        "mean": 1.4494907499999878,
+        "sd": 0.06374481656094097,
+        "n": 36
+      },
+      "qwen_tokens_per_s": null
+    },
+    "cpu/teks/qwen": {
+      "t_vad": null,
+      "t_asr": null,
+      "t_nlu": {
+        "mean": 2.6087907555555856,
+        "sd": 0.7307744707219519,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 2.6087907555555856,
+        "sd": 0.7307744707219519,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": {
+        "mean": 17.971451514935012,
+        "sd": 0.9968425020471572,
+        "n": 36
+      }
+    },
+    "cpu/teks/rule": {
+      "t_vad": null,
+      "t_asr": null,
+      "t_nlu": {
+        "mean": 0.0005468388888958645,
+        "sd": 0.0003422976209083298,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 0.0005468388888958645,
+        "sd": 0.0003422976209083298,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": null
+    },
+    "cpu/teks/indobert": {
+      "t_vad": null,
+      "t_asr": null,
+      "t_nlu": {
+        "mean": 0.0736268972222231,
+        "sd": 0.03481367166567233,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 0.0736268972222231,
+        "sd": 0.03481367166567233,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": null
+    },
+    "cpu/utuh/qwen": {
+      "t_vad": null,
+      "t_asr": {
+        "mean": 1.1028173222222095,
+        "sd": 0.35770412459736944,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 2.5917686638889816,
+        "sd": 1.0198165702196516,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 3.694585986111191,
+        "sd": 1.137152176075311,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": {
+        "mean": 18.11776556945136,
+        "sd": 1.3214922996171794,
+        "n": 36
+      }
+    },
+    "cpu/utuh/rule": {
+      "t_vad": null,
+      "t_asr": {
+        "mean": 1.1028173222222095,
+        "sd": 0.35770412459736944,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 0.0005910500000254615,
+        "sd": 0.0005057939532711124,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 1.103408372222235,
+        "sd": 0.35774633060890093,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": null
+    },
+    "cpu/utuh/indobert": {
+      "t_vad": null,
+      "t_asr": {
+        "mean": 1.1028173222222095,
+        "sd": 0.35770412459736944,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 0.12711849722223986,
+        "sd": 0.3483372160771926,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 1.2299358194444494,
+        "sd": 0.5813186536141209,
+        "n": 36
+      },
+      "t_respons": null,
+      "qwen_tokens_per_s": null
+    },
+    "cpu/vad/qwen": {
+      "t_vad": {
+        "mean": 0.06911058055543941,
+        "sd": 0.1320566190820871,
+        "n": 36
+      },
+      "t_asr": {
+        "mean": 1.0771631222222595,
+        "sd": 0.47253042770627784,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 2.602539236111132,
+        "sd": 1.0522344351760158,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 3.7488129388888307,
+        "sd": 1.2656997533662007,
+        "n": 36
+      },
+      "t_respons": {
+        "mean": 4.879702358333391,
+        "sd": 1.205306896690444,
+        "n": 36
+      },
+      "qwen_tokens_per_s": {
+        "mean": 17.78686364715136,
+        "sd": 1.5925844181164128,
+        "n": 36
+      }
+    },
+    "cpu/vad/rule": {
+      "t_vad": {
+        "mean": 0.06911058055543941,
+        "sd": 0.1320566190820871,
+        "n": 36
+      },
+      "t_asr": {
+        "mean": 1.0771631222222595,
+        "sd": 0.47253042770627784,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 0.0005496194444529263,
+        "sd": 0.0005651434006663701,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 1.1468233222221518,
+        "sd": 0.5755956037609453,
+        "n": 36
+      },
+      "t_respons": {
+        "mean": 2.2777127416667127,
+        "sd": 0.4729527072967305,
+        "n": 36
+      },
+      "qwen_tokens_per_s": null
+    },
+    "cpu/vad/indobert": {
+      "t_vad": {
+        "mean": 0.06911058055543941,
+        "sd": 0.1320566190820871,
+        "n": 36
+      },
+      "t_asr": {
+        "mean": 1.0771631222222595,
+        "sd": 0.47253042770627784,
+        "n": 36
+      },
+      "t_nlu": {
+        "mean": 0.07986072222222952,
+        "sd": 0.04602033173695261,
+        "n": 36
+      },
+      "t_total": {
+        "mean": 1.2261344249999284,
+        "sd": 0.6016058649731039,
+        "n": 36
+      },
+      "t_respons": {
+        "mean": 2.3570238444444893,
+        "sd": 0.4996359845654926,
+        "n": 36
+      },
+      "qwen_tokens_per_s": null
+    }
+  },
+  "confusion": {
+    "gpu/teks/qwen": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          5,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          1,
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "gpu/teks/rule": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "gpu/teks/indobert": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "gpu/utuh/qwen": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          4,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          2,
+          0,
+          1,
+          2,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "gpu/utuh/rule": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          2,
+          0,
+          1,
+          0,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          5,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          4,
+          0,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          2,
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "gpu/utuh/indobert": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          3,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          5,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          5,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "gpu/vad/qwen": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          5,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "gpu/vad/rule": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          1,
+          0,
+          1,
+          0,
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          5,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          5,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          2,
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "gpu/vad/indobert": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          1,
+          2,
+          0,
+          0,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "cpu/teks/qwen": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          5,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "cpu/teks/rule": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "cpu/teks/indobert": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "cpu/utuh/qwen": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          5,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          5,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          5,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          2,
+          0,
+          1,
+          2,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "cpu/utuh/rule": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          2,
+          0,
+          1,
+          0,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          5,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          4,
+          0,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          2,
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "cpu/utuh/indobert": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          3,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          5,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "cpu/vad/qwen": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          3,
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "cpu/vad/rule": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          1,
+          0,
+          1,
+          0,
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          4,
+          0,
+          0,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          5,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          2,
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "cpu/vad/indobert": {
+      "label": [
+        "navigate_room",
+        "navigate_object",
+        "find_person",
+        "deliver_document",
+        "combined_command",
+        "general_command",
+        "INVALID"
+      ],
+      "matriks": [
+        [
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          1,
+          2,
+          0,
+          0,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    }
+  }
+}

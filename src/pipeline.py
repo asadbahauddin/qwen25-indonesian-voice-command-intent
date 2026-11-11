@@ -11,7 +11,8 @@ Hasil `rec`: dict {sumber, transkrip, t_vad, t_tunggu_vad, t_asr, asr, hasil: {m
 
 Definisi latency (dicatat terpisah, agar tidak tercampur):
   t_vad        = waktu KOMPUTASI Silero untuk frame-frame ujaran itu (tabel laporan kolom "VAD").
-  t_tunggu_vad = jeda diam yang ditunggu VAD sebelum menyatakan ujaran selesai (~min_silence).
+  t_tunggu_vad = jeda diam yang ditunggu VAD sebelum menyatakan ujaran selesai (~min_silence;
+                 mode file: = min_silence, karena file bisa habis sebelum jeda itu tercapai).
   t_asr, t_nlu = waktu komputasi Whisper dan metode NLU.
   t_total      = t_vad + t_asr + t_nlu   (kolom "Total" tabel laporan; komputasi saja)
   t_respons    = t_tunggu_vad + t_asr + t_nlu  (waktu yang dirasakan pengguna setelah selesai bicara)
@@ -159,7 +160,10 @@ class Pipeline:
                        "asr": None, "hasil": {}}
                 return rec
             # file berisi satu perintah: segmen disambung (sama dengan analisis F2)
-            ev = {"t_vad": sum(s["t_vad"] for s in segs), "tunggu_akhir_s": segs[-1]["tunggu_akhir_s"]}
+            # Jeda tunggu: rekaman file sering habis sebelum diam min_silence tercapai (alasan 'akhir'), sehingga
+            # sisa diam di file < jeda yang dialami pengguna. Pada pemakaian langsung VAD selalu menunggu
+            # min_silence penuh setelah ucapan terakhir -> itu yang dipakai untuk t_respons.
+            ev = {"t_vad": sum(s["t_vad"] for s in segs), "tunggu_akhir_s": self.cfg["vad"]["min_silence_ms"] / 1000}
             x = np.concatenate([s["audio"] for s in segs])
         rec = self.from_audio(x, methods, vad_ev=ev, sumber="file", file=str(path))
         if pakai_vad:
