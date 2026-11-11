@@ -1,0 +1,110 @@
+{
+  "responden": [
+    {
+      "penutur": "R01",
+      "usia": "21",
+      "jenis_kelamin": "P",
+      "bahasa_ibu": "madura",
+      "persetujuan": "ya",
+      "tanggal": "2026-11-11"
+    },
+    {
+      "penutur": "R02",
+      "usia": "20",
+      "jenis_kelamin": "L",
+      "bahasa_ibu": "jawa",
+      "persetujuan": "ya",
+      "tanggal": "2026-11-11"
+    },
+    {
+      "penutur": "R03",
+      "usia": "21",
+      "jenis_kelamin": "L",
+      "bahasa_ibu": "jawa",
+      "persetujuan": "ya",
+      "tanggal": "2026-11-12"
+    }
+  ],
+  "per_penutur": {
+    "R01": {
+      "n": 54,
+      "hilang": [],
+      "format_salah": [],
+      "durasi_mean": 4.4965925925925925,
+      "durasi_sd": 1.1436636020531021,
+      "durasi_min": 2.88,
+      "durasi_max": 7.616,
+      "total_menit": 4.0469333333333335,
+      "peak_mean": -0.010740740740740742,
+      "rms_mean": -16.601851851851855,
+      "file_clip": 13,
+      "clip_max": 33,
+      "clip_pct_max": 0.012637867647058822,
+      "file_clip_ge50": [],
+      "take_ulang": 7,
+      "diam_awal_mean": 1.1296296296296295,
+      "diam_akhir_min": 0.30000000000000004,
+      "formalitas": {
+        "informal": 18,
+        "semi-formal": 18,
+        "formal": 18
+      }
+    },
+    "R02": {
+      "n": 54,
+      "hilang": [],
+      "format_salah": [],
+      "durasi_mean": 5.888592592592592,
+      "durasi_sd": 1.453886794774465,
+      "durasi_min": 3.744,
+      "durasi_max": 10.784,
+      "total_menit": 5.299733333333333,
+      "peak_mean": -0.798148148148148,
+      "rms_mean": -21.91629629629629,
+      "file_clip": 1,
+      "clip_max": 17,
+      "clip_pct_max": 0.007632902298850576,
+      "file_clip_ge50": [],
+      "take_ulang": 9,
+      "diam_awal_mean": 1.2314814814814818,
+      "diam_akhir_min": 0.5,
+      "formalitas": {
+        "semi-formal": 18,
+        "informal": 18,
+        "formal": 18
+      }
+    },
+    "R03": {
+      "n": 54,
+      "hilang": [],
+      "format_salah": [],
+      "durasi_mean": 4.549333333333334,
+      "durasi_sd": 1.2965235373948552,
+      "durasi_min": 2.784,
+      "durasi_max": 8.256,
+      "total_menit": 4.094400000000001,
+      "peak_mean": 0.1448148148148148,
+      "rms_mean": -15.432592592592593,
+      "file_clip": 42,
+      "clip_max": 108,
+      "clip_pct_max": 0.05092306105610561,
+      "file_clip_ge50": [
+        "S03",
+        "S06",
+        "S35",
+        "S39",
+        "S40",
+        "S45",
+        "S52"
+      ],
+      "take_ulang": 4,
+      "diam_awal_mean": 0.7740740740740741,
+      "diam_akhir_min": 0.2,
+      "formalitas": {
+        "formal": 18,
+        "informal": 18,
+        "semi-formal": 18
+      }
+    }
+  }
+}

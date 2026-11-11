@@ -107,7 +107,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | F5 | Integrasi pipeline + CLI interaktif + log CSV |
 | F6 | Uji pendahuluan teks (pilot 36 kalimat, 3 metode) → tabel laporan |
 | F7 | Deployment & benchmark Raspberry Pi 5 (suhu, throttling) |
-| F8 | Alat perekaman dataset responden (daftar kalimat, metadata, consent) |
+| F8 | **Rekaman selesai** (12 Nov); transkrip & label belum | `bench/rekam_dataset.py`, `bench/cek_dataset.py`, `results/kualitas_dataset_MSI_20261112_005606.md`, `dataset/` (lokal, tidak di-push) | 3 responden × 54 = **162 WAV** lengkap, format 16 kHz mono PCM_16 semua benar, total 13,4 menit. Clipping ringan (limiter transmitter): R01 13/54, R02 1/54, R03 42/54 file, maks 0,051% sampel. Sisa: transkrip manual + label final + cek kebocoran. |
 | F9 | Evaluasi penuh: WER, EM, F1, confusion matrix, teks vs transkrip, laptop vs RPi 5 |
 | F10 | Bahan luaran: grafik untuk artikel/poster, paket dataset + data card untuk HKI |
 
@@ -151,4 +151,5 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - F1 mic (`results/mic_MSI_20261111_222034.md`): diam RMS -90,94 dBFS; normal RMS -17,35 / p90 -13,21 dBFS; keras RMS -13,34 / p90 -7,87 dBFS; clipping native 0 untuk semua kondisi.
 - F6 pilot teks, laptop (`results/summary_MSI_20261111_225631.md`): Qwen intent 80,56%, EM 63,89%, F1w 0,7931, JSON valid 100%, t_nlu 0,786 ± 0,387 s (n=36); rule-based 100%/100%, 0,0002 s; IndoBERT 100%/100%, 0,0174 ± 0,0240 s. Per formalitas Qwen (intent/EM): formal 83,3/75,0, semi 91,7/66,7, informal 66,7/50,0.
 - F6 Qwen skema v2 (`results/summary_MSI_20261111_230143.md`): intent 80,56%, EM 69,44%, t_nlu 0,678 ± 0,239 s (n=36). Combined P25/P26/P29/P30 masih salah.
+- F8 kualitas rekaman (`results/kualitas_dataset_MSI_20261112_005606.md`): durasi R01 4,50 ± 1,14 s, R02 5,89 ± 1,45 s, R03 4,55 ± 1,30 s (n=54 masing-masing); RMS rata-rata -16,6 / -21,9 / -15,4 dBFS.
 - Belum ada metrik ASR (WER) dan latency end-to-end.
