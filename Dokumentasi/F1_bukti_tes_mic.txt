@@ -1,0 +1,19 @@
+$ python bench/tes_mic.py --list
+idx | nama                                               | host API             | ch | sr_native
+-----------------------------------------------------------------------------------------------
+  1 | Microphone (USBAudio1.0)                           | MME                  |  1 | 44100
+  6 | Microphone (USBAudio1.0)                           | Windows DirectSound  |  1 | 44100
+ 11 | Microphone (USBAudio1.0)                           | Windows WASAPI       |  2 | 48000
+ 13 | Microphone (USBAudio1.0)                           | Windows WDM-KS       |  1 | 48000
+
+$ python bench/tes_mic.py --from 20261111_222034   # analisis rekaman uji 11 Nov 2026 22:20
+| kondisi   |   RMS (dBFS) |   Peak (dBFS) |   RMS p90 jendela (dBFS) |   clip native (|x|>=0.999) |   sentuh limiter (|x|>=0.98) |   overshoot 16k |
+|-----------|--------------|---------------|--------------------------|----------------------------|------------------------------|-----------------|
+| diam      |      -90.937 |       -71.224 |                  -88.301 |                          0 |                            0 |               0 |
+| normal    |      -17.351 |        -0     |                  -13.211 |                          0 |                           53 |               1 |
+| keras     |      -13.339 |         0     |                   -7.87  |                          0 |                          101 |               2 |
+
+SNR (win_p90_dbfs(kondisi) - rms_dbfs(diam), sinyal 16 kHz): normal: 77.73 dB, keras: 83.07 dB (noise gate aktif -> tidak representatif)
+Peringatan:
+  - Rekaman diam -90.937 dBFS < -85 dBFS: noise gate perangkat aktif, SNR TIDAK mewakili noise ruangan
+

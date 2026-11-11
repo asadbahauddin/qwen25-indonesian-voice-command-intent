@@ -43,6 +43,8 @@ levels:
   clip_threshold: 0.999      # |x| >= nilai ini dihitung clipping (full scale = 1.0)
   noise_percentile: 10       # persentil RMS jendela ~ noise floor
   speech_percentile: 90      # persentil RMS jendela ~ level ucapan
+  near_full_scale: 0.98      # |x| >= nilai ini = menyentuh limiter (dihitung pada sinyal native)
+  gate_floor_dbfs: -85       # RMS rekaman diam di bawah ini -> noise gate aktif, SNR tidak representatif
 
 bench:
   mic_test_seconds: 5

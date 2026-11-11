@@ -118,7 +118,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | Fase | Status | Bukti | Catatan |
 |---|---|---|---|
 | F0 | **Selesai** (ulang 11 Nov) | `environment.yml`, `Dokumentasi/F0_lingkungan.md`, `Dokumentasi/F0_bukti_cek_env.{txt,png}` | Env conda `mbkm-nlu` (Py 3.11.18), torch 2.14.1+cu126 CUDA True, ctranslate2 4.8.2 CUDA, Ollama 0.30.6 + `qwen2.5:1.5b`. `.venv` lama (rusak) dihapus. |
-| F1 | Sebagian | `src/audio_io.py`, `src/utils.py`, `config.yaml` (commit `468fa3a`) | Modul akuisisi + resampling soxr sudah ada. `audio.device` = `USBAudio1.0` (receiver lavalier). **Belum ada `bench/tes_mic.py`** dan belum ada WAV. |
+| F1 | **Selesai** (11 Nov) | `bench/tes_mic.py`, `results/mic_MSI_20261111_222034.{md,json}`, `Dokumentasi/F1_tes_mic.md` | WASAPI 48 kHz → mono 16 kHz PCM_16 terverifikasi. Tidak ada clipping native. Transmitter punya **limiter + noise gate** (diam ±-91 dBFS), sehingga SNR akustik tidak terukur. Level ucapan normal p90 -13 dBFS (tinggi). |
 | F2 | Belum | – | Tidak ada `src/vad.py`, `bench/tes_vad.py`, `recordings/seg_*.wav`. |
 | F3 | Belum | – | Tidak ada `src/asr.py`. |
 | F4 | Belum | – | Tidak ada `src/nlu/`, `prompts/` kosong. Model `qwen2.5:1.5b` sudah ter-pull di Ollama. |
@@ -135,9 +135,12 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - Konfigurasi terpusat di `config.yaml`; log ke `logs/<nama>_<host>_<tanggal>.log` (`src/utils.py`).
 - Lingkungan: conda `mbkm-nlu` + pip (versi ter-pin), PyTorch 2.14.1+cu126. CUDA toolkit sistem (11.2/11.8/12.1) dibiarkan; faster-whisper memakai `cublas64_12.dll` (v12.1) dan `cudnn64_9.dll` (v11.8), jadi **CUDA 11.8 jangan dihapus**. Cache pip laptop sengaja dinonaktifkan.
 - Mic: receiver wireless lavalier `USBAudio1.0` (USB VID_4C4A PID_4155). Jangan pakai input "NVIDIA Broadcast" karena audionya diolah.
+- F1: capture WASAPI 48 kHz (bukan dipaksa 16 kHz). Clipping diukur pada sinyal native, karena resampling soxr menimbulkan overshoot semu. Transmitter lavalier memakai limiter dan noise gate: SNR dari rekaman diam tidak boleh dilaporkan sebagai SNR akustik. Pre-roll VAD di F2 tidak bisa mengembalikan audio yang sudah dipotong gate.
 - Kosakata domain lab (ruangan/benda/orang/dokumen) ada di `config/domain_id.yaml`. "Trainer RL" = trainer Rangkaian Listrik; ejaan "Pak Andi".
 - Usulan skema `combined_command`: field tingkat atas null, sub-perintah di `steps[]` (menunggu persetujuan peneliti).
 - Rencana responden: 4 orang × 48 kalimat = 192 sampel.
 - Belum diputuskan: faster-whisper vs openai-whisper, threshold VAD, versi system prompt.
 
-**Angka yang sudah terukur:** belum ada (selain info lingkungan di `results/env_MSI_20261009_235828.json`, bukan metrik penelitian).
+**Angka yang sudah terukur:**
+- F1 mic (`results/mic_MSI_20261111_222034.md`): diam RMS -90,94 dBFS; normal RMS -17,35 / p90 -13,21 dBFS; keras RMS -13,34 / p90 -7,87 dBFS; clipping native 0 untuk semua kondisi.
+- Belum ada metrik NLU/ASR/latency.

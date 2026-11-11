@@ -1,0 +1,108 @@
+{
+  "host": "MSI",
+  "waktu_rekam": "20261111_222034",
+  "waktu_analisis": "20261111_222300",
+  "perangkat": {
+    "index": null,
+    "nama": "(analisis ulang dari WAV)",
+    "hostapi": null,
+    "samplerate_native": 48000,
+    "channels": 1,
+    "samplerate_target": 16000
+  },
+  "config_audio": {
+    "device": "USBAudio1.0",
+    "hostapi": "WASAPI",
+    "capture_samplerate": null,
+    "capture_channels": null,
+    "mono_channel": null,
+    "target_samplerate": 16000,
+    "block_ms": 32,
+    "latency": "low",
+    "resample_quality": "HQ",
+    "queue_max_blocks": 200,
+    "wav_subtype": "PCM_16"
+  },
+  "config_levels": {
+    "window_ms": 100,
+    "clip_threshold": 0.999,
+    "noise_percentile": 10,
+    "speech_percentile": 90,
+    "near_full_scale": 0.98,
+    "gate_floor_dbfs": -85
+  },
+  "detik_per_kondisi": 5,
+  "kondisi": {
+    "diam": {
+      "stats_16k": {
+        "rms_dbfs": -90.937,
+        "peak_dbfs": -71.224,
+        "win_p10_dbfs": -93.308,
+        "win_p90_dbfs": -88.301
+      },
+      "clip_native": 0,
+      "clip_native_pct": 0.0,
+      "sentuh_limiter_native": 0,
+      "overshoot_16k_setelah_resample": 0,
+      "wav_16k": "mic_diam_MSI_20261111_222034_16k.wav",
+      "wav_native": "mic_diam_MSI_20261111_222034_48000.wav",
+      "wav_16k_info": {
+        "samplerate": 16000,
+        "channels": 1,
+        "subtype": "PCM_16",
+        "durasi_s": 5.0
+      }
+    },
+    "normal": {
+      "stats_16k": {
+        "rms_dbfs": -17.351,
+        "peak_dbfs": -0.0,
+        "win_p10_dbfs": -85.298,
+        "win_p90_dbfs": -13.211
+      },
+      "clip_native": 0,
+      "clip_native_pct": 0.0,
+      "sentuh_limiter_native": 53,
+      "overshoot_16k_setelah_resample": 1,
+      "wav_16k": "mic_normal_MSI_20261111_222034_16k.wav",
+      "wav_native": "mic_normal_MSI_20261111_222034_48000.wav",
+      "wav_16k_info": {
+        "samplerate": 16000,
+        "channels": 1,
+        "subtype": "PCM_16",
+        "durasi_s": 5.0
+      }
+    },
+    "keras": {
+      "stats_16k": {
+        "rms_dbfs": -13.339,
+        "peak_dbfs": 0.0,
+        "win_p10_dbfs": -90.3,
+        "win_p90_dbfs": -7.87
+      },
+      "clip_native": 0,
+      "clip_native_pct": 0.0,
+      "sentuh_limiter_native": 101,
+      "overshoot_16k_setelah_resample": 2,
+      "wav_16k": "mic_keras_MSI_20261111_222034_16k.wav",
+      "wav_native": "mic_keras_MSI_20261111_222034_48000.wav",
+      "wav_16k_info": {
+        "samplerate": 16000,
+        "channels": 1,
+        "subtype": "PCM_16",
+        "durasi_s": 5.0
+      }
+    }
+  },
+  "callback_status": null,
+  "blok_dibuang": null,
+  "snr_db": {
+    "normal": 77.73,
+    "keras": 83.07
+  },
+  "snr_definisi": "win_p90_dbfs(kondisi) - rms_dbfs(diam), sinyal 16 kHz",
+  "noise_gate_terdeteksi": true,
+  "peringatan": [
+    "Rekaman diam -90.937 dBFS < -85 dBFS: noise gate perangkat aktif, SNR TIDAK mewakili noise ruangan"
+  ]
+}
