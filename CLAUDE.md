@@ -101,32 +101,32 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | F0 | Cek lingkungan, conda env, CUDA, Ollama |
 | F1 | Tes mikrofon: daftar perangkat, rekam diam/normal/keras, RMS/peak/clipping/SNR |
 | F2 | Silero VAD real-time + pre-roll, `bench/tes_vad.py` |
-| F3 | **Tahap 1 selesai** (12 Nov): latency + draf transkrip. WER menunggu koreksi manual | `src/asr.py`, `bench/tes_asr.py`, `bench/koreksi_transkrip.py`, `prompts/whisper_initial_id.txt` (sha `555a3d3569c8`), `results/asr_MSI_20261112_010730.md`, `Dokumentasi/F3_whisper.md` | faster-whisper ≈3× lebih cepat dari openai-whisper. initial_prompt memperbaiki nama entity, tapi 1/162 halusinasi pengulangan. Backend final belum dipilih (perlu WER). |
+| F3 | Whisper base: openai-whisper vs faster-whisper, initial_prompt domain |
 | F4 | Qwen2.5 via Ollama, JSON schema, `prompts/system_id.txt` |
 | F4b | Baseline rule-based + IndoBERT (antarmuka sama) |
 | F5 | Integrasi pipeline + CLI interaktif + log CSV |
 | F6 | Uji pendahuluan teks (pilot 36 kalimat, 3 metode) → tabel laporan |
 | F7 | Deployment & benchmark Raspberry Pi 5 (suhu, throttling) |
-| F8 | **Rekaman selesai** (12 Nov); transkrip & label belum | `bench/rekam_dataset.py`, `bench/cek_dataset.py`, `results/kualitas_dataset_MSI_20261112_005606.md`, `dataset/` (lokal, tidak di-push) | 3 responden × 54 = **162 WAV** lengkap, format 16 kHz mono PCM_16 semua benar, total 13,4 menit. Clipping ringan (limiter transmitter): R01 13/54, R02 1/54, R03 42/54 file, maks 0,051% sampel. Sisa: transkrip manual + label final + cek kebocoran. |
+| F8 | Alat perekaman dataset responden (daftar kalimat, metadata, consent) |
 | F9 | Evaluasi penuh: WER, EM, F1, confusion matrix, teks vs transkrip, laptop vs RPi 5 |
 | F10 | Bahan luaran: grafik untuk artikel/poster, paket dataset + data card untuk HKI |
 
 ## Status Proyek
 > Diperbarui oleh Claude Code di akhir setiap fase. Format: fase | status | bukti (file/commit) | catatan.
-> **Audit terakhir: 11 Nov 2026 (sesi baru, riwayat chat lama hilang).**
+> **Audit terakhir: 11 Nov 2026 (sesi baru, riwayat chat lama hilang). Pembaruan terakhir: 12 Nov 2026 (F8 rekaman, F3 tahap 1).**
 
 | Fase | Status | Bukti | Catatan |
 |---|---|---|---|
 | F0 | **Selesai** (ulang 11 Nov) | `environment.yml`, `Dokumentasi/F0_lingkungan.md`, `Dokumentasi/F0_bukti_cek_env.{txt,png}` | Env conda `mbkm-nlu` (Py 3.11.18), torch 2.14.1+cu126 CUDA True, ctranslate2 4.8.2 CUDA, Ollama 0.30.6 + `qwen2.5:1.5b`. `.venv` lama (rusak) dihapus. |
 | F1 | **Selesai** (11 Nov) | `bench/tes_mic.py`, `results/mic_MSI_20261111_222034.{md,json}`, `Dokumentasi/F1_tes_mic.md` | WASAPI 48 kHz → mono 16 kHz PCM_16 terverifikasi. Tidak ada clipping native. Transmitter punya **limiter + noise gate** (diam ±-91 dBFS), sehingga SNR akustik tidak terukur. Level ucapan normal p90 -13 dBFS (tinggi). |
 | F2 | Belum | – | Tidak ada `src/vad.py`, `bench/tes_vad.py`, `recordings/seg_*.wav`. |
-| F3 | Belum | – | Tidak ada `src/asr.py`. |
+| F3 | **Tahap 1 selesai** (12 Nov): latency + draf transkrip. WER menunggu koreksi manual | `src/asr.py`, `bench/tes_asr.py`, `bench/koreksi_transkrip.py`, `prompts/whisper_initial_id.txt` (sha `555a3d3569c8`), `results/asr_MSI_20261112_010730.md`, `Dokumentasi/F3_whisper.md` | faster-whisper ≈3× lebih cepat dari openai-whisper. initial_prompt memperbaiki nama entity, tapi 1/162 halusinasi pengulangan. Backend final belum dipilih (perlu WER). |
 | F4 | **Selesai** (11 Nov) | `src/nlu/base.py`, `src/nlu/qwen.py`, `prompts/system_id.txt` v1 (sha `114d424e5d61`), `results/qwen_uji_cepat_MSI_*.txt`, `Dokumentasi/F4_qwen.md` | Ollama HTTP + structured output (JSON schema). Uji cepat 2 kalimat (sederhana + combined): JSON & skema valid, entity tepat. `load_s` 0,3–0,5 s per permintaan perlu diselidiki di F6. |
 | F4b | **Selesai** (11 Nov) | `src/nlu/{rule,indobert,entities}.py`, `config/keywords_id.yaml` v1, `data/indobert_train.jsonl` (300), `results/indobert_train_MSI_20261111_225006.json`, `results/f4b_uji_cepat_*.txt`, `Dokumentasi/F4b_baseline.md` | Val acc IndoBERT 1,0 (val dari templat yang sama, jadi **bukan hasil uji**). Model di `models/indobert_intent` (tidak di-push, bisa dibuat ulang). Uji cepat 2 kalimat: kedua baseline benar. |
 | F5 | Belum | – | Tidak ada `src/pipeline.py`, `src/cli.py`. |
 | F6 | **Selesai** (11 Nov) | `bench/uji_llm.py`, `results/summary_MSI_20261111_225631.md` (+csv/json), `Dokumentasi/F6_uji_pilot.md` | Qwen intent 80,56% / EM 63,89%; rule & IndoBERT 100%. **Ancaman validitas:** pilot, templat, dan kamus disusun bersamaan dengan kosakata sama, jadi hasil F6 bukan uji hipotesis. Kesalahan Qwen dominan pada konsistensi struktur combined. |
 | F7 | Belum | – | Tidak ada bukti RPi 5. |
-| F8 | Sebagian (alat siap) | `bench/rekam_dataset.py`, `bench/skenario_dataset.json` v2 (54 kartu), `Dokumentasi/F8_*.md` (alat, persetujuan, data card) | Uji fungsi OK (input simulasi). **Belum ada rekaman:** pilot dibaca (P01) dan responden R01–R03 (R01 = peneliti). |
+| F8 | **Rekaman selesai** (12 Nov); transkrip & label belum | `bench/rekam_dataset.py`, `bench/cek_dataset.py`, `results/kualitas_dataset_MSI_20261112_005606.md`, `dataset/` (lokal, tidak di-push) | 3 responden × 54 = **162 WAV** lengkap, format 16 kHz mono PCM_16 semua benar, total 13,4 menit. Clipping ringan (limiter transmitter): R01 13/54, R02 1/54, R03 42/54 file, maks 0,051% sampel. Sisa: transkrip manual + label final + cek kebocoran. |
 | F9 | Belum | – | – |
 | F10 | Belum | – | – |
 
