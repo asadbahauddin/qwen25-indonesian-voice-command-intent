@@ -60,11 +60,14 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--konfig", nargs="+", default=KONFIG_STD, help="backend:device:prompt|noprompt")
     ap.add_argument("--hanya-wer", help="CSV hipotesis yang sudah ada; lewati transkripsi")
+    ap.add_argument("--data", choices=["dataset", "pilot"], default="dataset",
+                    help="dataset = rekaman responden (set uji); pilot = 36 kalimat pilot dibaca (set pengembangan)")
     args = ap.parse_args()
     cfg = load_config()
     setup_logging(cfg, "tes_asr")
     dcfg = cfg["dataset"]
-    droot = ROOT / dcfg["out_skenario"]
+    droot = ROOT / dcfg["out_baca" if args.data == "pilot" else "out_skenario"]
+    tag = "pilot_" if args.data == "pilot" else ""
     meta = list(csv.DictReader(open(droot / "metadata.csv", encoding="utf-8")))
     host, ts = socket.gethostname(), datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -94,7 +97,7 @@ def main():
             if dev == "cuda":
                 import torch
                 torch.cuda.empty_cache()
-        hp = droot / f"asr_hipotesis_{host}_{ts}.csv"
+        hp = droot / f"asr_hipotesis_{tag}{host}_{ts}.csv"
         with open(hp, "w", encoding="utf-8", newline="") as f:
             w = csv.DictWriter(f, fieldnames=list(hyp_rows[0]))
             w.writeheader()
@@ -107,8 +110,9 @@ def main():
     for r in hyp_rows:
         by[r["konfig"]].append(r)
     out = {"host": host, "waktu": ts, "n_file": len(meta), "n_referensi": len(ref), "konfig": {}}
+    out["data"] = args.data
     L = [f"# F3 Benchmark Whisper base ({host}, {ts})", "",
-         f"Data: rekaman responden, n = {len(meta)} file. Referensi transkrip final: {len(ref)} file. "
+         f"Data: {'pilot dibaca (set pengembangan), klip sesi kontinu termasuk jeda sebelum bicara' if args.data == 'pilot' else 'rekaman responden'}, n = {len(meta)} file. Referensi transkrip final: {len(ref)} file. "
          "Latency = waktu `transcribe()` per file setelah 1 pemanasan; RTF = t_asr / durasi audio.", "",
          "| Konfigurasi | Perangkat | Load (s) | t_asr (s) rata-rata ± SD | RTF rata-rata | n | WER |",
          "|---|---|---|---|---|---|---|"]
@@ -139,9 +143,9 @@ def main():
             if "wer_per" in v:
                 L.append(f"- **{k}**: " + "; ".join(f"{g} {x['wer'] * 100:.2f}% (n={x['n_kalimat']})"
                                                      for g, x in v["wer_per"].items()))
-    md = ROOT / "results" / f"asr_{host}_{ts}.md"
+    md = ROOT / "results" / f"asr_{tag}{host}_{ts}.md"
     md.write_text("\n".join(L) + "\n", encoding="utf-8")
-    (ROOT / "results" / f"asr_{host}_{ts}.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+    (ROOT / "results" / f"asr_{tag}{host}_{ts}.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
     print("\n".join(L))
     print("->", md.relative_to(ROOT))
 

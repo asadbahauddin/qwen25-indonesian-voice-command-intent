@@ -1,0 +1,259 @@
+{
+  "host": "MSI",
+  "waktu": "20261112_040643",
+  "n_file": 36,
+  "n_referensi": 36,
+  "konfig": {
+    "faster:cuda:prompt": {
+      "t_asr_mean": 0.10550277777777778,
+      "t_asr_sd": 0.02090574064852743,
+      "n": 36,
+      "rtf_mean": 0.021198335106860627,
+      "load_s": 8.232122000000118,
+      "compute": "float16",
+      "wer": {
+        "wer": 0.3875,
+        "sub": 63,
+        "del": 25,
+        "ins": 5,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      },
+      "wer_per": {
+        "formalitas=formal": {
+          "wer": 0.33766233766233766,
+          "sub": 18,
+          "del": 5,
+          "ins": 3,
+          "n_ref_kata": 77,
+          "n_kalimat": 12
+        },
+        "formalitas=informal": {
+          "wer": 0.43209876543209874,
+          "sub": 28,
+          "del": 7,
+          "ins": 0,
+          "n_ref_kata": 81,
+          "n_kalimat": 12
+        },
+        "formalitas=semi-formal": {
+          "wer": 0.3902439024390244,
+          "sub": 17,
+          "del": 13,
+          "ins": 2,
+          "n_ref_kata": 82,
+          "n_kalimat": 12
+        },
+        "penutur=P01": {
+          "wer": 0.3875,
+          "sub": 63,
+          "del": 25,
+          "ins": 5,
+          "n_ref_kata": 240,
+          "n_kalimat": 36
+        }
+      }
+    },
+    "faster:cuda:noprompt": {
+      "t_asr_mean": 0.0893111111111111,
+      "t_asr_sd": 0.017639286959637693,
+      "n": 36,
+      "rtf_mean": 0.01780340831829265,
+      "load_s": 0.93561469999986,
+      "compute": "float16",
+      "wer": {
+        "wer": 0.5625,
+        "sub": 96,
+        "del": 29,
+        "ins": 10,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      },
+      "wer_per": {
+        "formalitas=formal": {
+          "wer": 0.44155844155844154,
+          "sub": 23,
+          "del": 7,
+          "ins": 4,
+          "n_ref_kata": 77,
+          "n_kalimat": 12
+        },
+        "formalitas=informal": {
+          "wer": 0.6296296296296297,
+          "sub": 44,
+          "del": 6,
+          "ins": 1,
+          "n_ref_kata": 81,
+          "n_kalimat": 12
+        },
+        "formalitas=semi-formal": {
+          "wer": 0.6097560975609756,
+          "sub": 29,
+          "del": 16,
+          "ins": 5,
+          "n_ref_kata": 82,
+          "n_kalimat": 12
+        },
+        "penutur=P01": {
+          "wer": 0.5625,
+          "sub": 96,
+          "del": 29,
+          "ins": 10,
+          "n_ref_kata": 240,
+          "n_kalimat": 36
+        }
+      }
+    },
+    "openai:cuda:prompt": {
+      "t_asr_mean": 0.2978972222222222,
+      "t_asr_sd": 0.07471580626848115,
+      "n": 36,
+      "rtf_mean": 0.058836214006761374,
+      "load_s": 3.6237140999999156,
+      "compute": "float16",
+      "wer": {
+        "wer": 0.3958333333333333,
+        "sub": 63,
+        "del": 27,
+        "ins": 5,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      },
+      "wer_per": {
+        "formalitas=formal": {
+          "wer": 0.36363636363636365,
+          "sub": 19,
+          "del": 5,
+          "ins": 4,
+          "n_ref_kata": 77,
+          "n_kalimat": 12
+        },
+        "formalitas=informal": {
+          "wer": 0.43209876543209874,
+          "sub": 26,
+          "del": 9,
+          "ins": 0,
+          "n_ref_kata": 81,
+          "n_kalimat": 12
+        },
+        "formalitas=semi-formal": {
+          "wer": 0.3902439024390244,
+          "sub": 18,
+          "del": 13,
+          "ins": 1,
+          "n_ref_kata": 82,
+          "n_kalimat": 12
+        },
+        "penutur=P01": {
+          "wer": 0.3958333333333333,
+          "sub": 63,
+          "del": 27,
+          "ins": 5,
+          "n_ref_kata": 240,
+          "n_kalimat": 36
+        }
+      }
+    },
+    "openai:cuda:noprompt": {
+      "t_asr_mean": 0.2690222222222222,
+      "t_asr_sd": 0.08245734866709183,
+      "n": 36,
+      "rtf_mean": 0.05265609299949505,
+      "load_s": 1.0770563000000948,
+      "compute": "float16",
+      "wer": {
+        "wer": 0.575,
+        "sub": 99,
+        "del": 29,
+        "ins": 10,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      },
+      "wer_per": {
+        "formalitas=formal": {
+          "wer": 0.4675324675324675,
+          "sub": 25,
+          "del": 7,
+          "ins": 4,
+          "n_ref_kata": 77,
+          "n_kalimat": 12
+        },
+        "formalitas=informal": {
+          "wer": 0.6419753086419753,
+          "sub": 45,
+          "del": 6,
+          "ins": 1,
+          "n_ref_kata": 81,
+          "n_kalimat": 12
+        },
+        "formalitas=semi-formal": {
+          "wer": 0.6097560975609756,
+          "sub": 29,
+          "del": 16,
+          "ins": 5,
+          "n_ref_kata": 82,
+          "n_kalimat": 12
+        },
+        "penutur=P01": {
+          "wer": 0.575,
+          "sub": 99,
+          "del": 29,
+          "ins": 10,
+          "n_ref_kata": 240,
+          "n_kalimat": 36
+        }
+      }
+    },
+    "faster:cpu:prompt": {
+      "t_asr_mean": 0.9299305555555556,
+      "t_asr_sd": 0.09310390760387616,
+      "n": 36,
+      "rtf_mean": 0.18868012683225333,
+      "load_s": 1.073876200000086,
+      "compute": "int8",
+      "wer": {
+        "wer": 0.3958333333333333,
+        "sub": 68,
+        "del": 22,
+        "ins": 5,
+        "n_ref_kata": 240,
+        "n_kalimat": 36
+      },
+      "wer_per": {
+        "formalitas=formal": {
+          "wer": 0.37662337662337664,
+          "sub": 21,
+          "del": 5,
+          "ins": 3,
+          "n_ref_kata": 77,
+          "n_kalimat": 12
+        },
+        "formalitas=informal": {
+          "wer": 0.41975308641975306,
+          "sub": 28,
+          "del": 6,
+          "ins": 0,
+          "n_ref_kata": 81,
+          "n_kalimat": 12
+        },
+        "formalitas=semi-formal": {
+          "wer": 0.3902439024390244,
+          "sub": 19,
+          "del": 11,
+          "ins": 2,
+          "n_ref_kata": 82,
+          "n_kalimat": 12
+        },
+        "penutur=P01": {
+          "wer": 0.3958333333333333,
+          "sub": 68,
+          "del": 22,
+          "ins": 5,
+          "n_ref_kata": 240,
+          "n_kalimat": 36
+        }
+      }
+    }
+  },
+  "data": "pilot"
+}

@@ -1,6 +1,6 @@
 # F2 — Silero VAD real-time + pre-roll
 
-**Tanggal:** 12 November 2026 · **Status:** implementasi dan karakterisasi selesai. Parameter akhir (min_silence) menunggu data pengembangan (lihat "Masalah").
+**Tanggal:** 12 November 2026 · **Status:** selesai. Parameter final **threshold 0,5 / min_silence 1200 ms**, dipilih dengan aturan pra-ditetapkan pada data pengembangan (lihat "Hasil data pengembangan").
 
 ## File
 | File | Isi |
@@ -62,6 +62,29 @@ Audio direkam **terus-menerus**, dan Enter hanya menandai batas item. Aliran len
 Analisis dijalankan dengan `python bench/tes_vad.py --dev recordings/dev/<folder>`. Ada juga pemeriksaan konsistensi: jumlah ujaran VAD live harus sama dengan simulasi offline dengan konfigurasi yang sama.
 
 Di F9, WER dan NLU dilaporkan untuk dua masukan audio: rekaman utuh dan segmen VAD.
+
+## Hasil data pengembangan (sesi P01, 12 Nov 2026)
+Sumber: `results/vad_dev_MSI_20261112_040608.md`. Folder sesi `recordings/dev/P01_20261112_{035400,035458,035546,040351}` (lokal).
+
+- **Data:** 6,6 menit audio kontinu. 35 kalimat pilot dan 18 kartu dev dianalisis (53 item), ditambah 3 rekaman suasana × 30 s.
+- **Dikeluarkan sebelum sapuan** (aturan kualitas data yang tidak bergantung parameter):
+  - P01 dan P02 dari percobaan pertama: klip 0,03 s karena Enter dari paste perintah. Sudah direkam ulang.
+  - P03: rekaman hening (puncak −60 dBFS), perlu direkam ulang.
+- **Koreksi alat ukur** (setelah sapuan pertama, sebelum memilih parameter): kriteria "awal terpotong" semula menghitung **ekor ucapan item sebelumnya** yang melewati Enter sebagai awal ucapan item berikutnya. Contohnya D12 dan D14: ucapan sebenarnya baru mulai 3,5–4 s kemudian dan tertangkap utuh. Ini terlihat dari nilai yang sama (2) pada **semua** kombinasi parameter. Definisi dikoreksi: audio yang sudah tercakup segmen item sebelumnya tidak dihitung. Angka mentah tetap dilaporkan di kolom "(mentah)". Sapuan pertama tanpa koreksi: `results/vad_dev_MSI_20261112_040500.md` (tidak ada kombinasi yang lolos).
+
+| threshold 0,5, min_silence | 500 | 800 | 1000 | **1200** | 1500 |
+|---|---|---|---|---|---|
+| terpecah (dari 53 item) | 8 | 6 | 4 | **2 (3,8%)** | 1 |
+| terlewat / tergabung | 0 | 0 | 0 | **0** | 3 |
+| pemicu palsu (3 × 30 s suasana) | 0 | 0 | 0 | **0** | 0 |
+| awal / akhir terpotong | 0/0 | 0/0 | 0/0 | **0/0** | 0/0 |
+
+**Terpilih menurut aturan: threshold 0,5, min_silence 1200 ms.** Pada 1500 ms, dua perintah berurutan bergabung menjadi satu segmen (3 item "terlewat"). Konsekuensinya, jeda tunggu setelah selesai bicara naik dari 0,8 menjadi 1,2 s (masuk ke `t_respons`).
+
+Hasil ini konsisten dengan karakterisasi set uji yang dibuat sebelumnya: pada 1200 ms, 7/162 terpecah (4,3%). Set uji tidak dipakai untuk memilih.
+
+- **Konsistensi live vs offline:** pada config yang sama, live 55 dan offline 56 ujaran. Selisih 1 karena simulasi offline memanggil `flush()` di akhir aliran, sedangkan live tidak.
+- **Pemicu palsu = 0** pada 90 s suasana lab. Catatan: noise gate transmitter ikut membantu.
 
 ## Cara menjalankan
 ```powershell

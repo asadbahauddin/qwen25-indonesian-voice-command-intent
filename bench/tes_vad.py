@@ -234,8 +234,28 @@ def run_dev(cfg, args):
     L += ["| Sesi | Durasi (menit) | Item valid | Ujaran VAD live | Simulasi offline (config sama) |", "|---|---|---|---|---|"]
     L += [f"| {r['folder']} | {r['menit']:.1f} | {r['n_penanda_valid']} | {r['vad_live']} | {r['vad_offline_config_sama']} |"
           for r in res["sesi"]]
+    # Kualitas data (tidak bergantung parameter VAD): item yang direkam di beberapa sesi -> take terakhir;
+    # item tanpa ucapan (tidak ada frame > ambang energi, mis. Enter tak sengaja) dikeluarkan dan dicatat.
+    last = {}
+    for k, (ses, x, P) in enumerate(data):
+        for m in ses["penanda"]:
+            if m["valid"] and m["fase"] != "suasana":
+                last[m["item_id"]] = (k, m["t0"])
+    keluar = []
+    for k, (ses, x, P) in enumerate(data):
+        for m in ses["penanda"]:
+            if not m["valid"] or m["fase"] == "suasana":
+                continue
+            if last[m["item_id"]] != (k, m["t0"]):
+                m["valid"] = False
+                keluar.append(f"{m['item_id']} ({res['sesi'][k]['folder']}): ada take lebih baru")
+            elif energy_span(x[int(m["t0"] * SR):int(m["t1"] * SR)], args.ambang_db) is None:
+                m["valid"] = False
+                keluar.append(f"{m['item_id']} ({res['sesi'][k]['folder']}): tanpa ucapan (tidak ada frame > {args.ambang_db} dBFS)")
+    res["dikeluarkan"] = keluar
+    L += ["", f"Item dikeluarkan sebelum sapuan ({len(keluar)}): " + ("; ".join(keluar) if keluar else "tidak ada")]
     L += ["", "| threshold | min_silence (ms) | tepat 1 (pilot) | tepat 1 (dev) | terpecah | terlewat | pemicu palsu (suasana) | "
-          "awal terpotong | akhir terpotong | lolos |", "|---|---|---|---|---|---|---|---|---|---|"]
+          "awal terpotong | (mentah) | akhir terpotong | lolos |", "|---|---|---|---|---|---|---|---|---|---|---|"]
     rows = []
     for th in TH:
         for sil in SIL:
@@ -254,20 +274,30 @@ def run_dev(cfg, args):
                     c["satu_" + m["fase"]] += len(inw) == 1
                     c["pecah"] += len(inw) > 1
                     c["lewat"] += len(inw) == 0
-                    i0, i1 = int(m["t0"] * SR), int(m["t1"] * SR)
-                    r = energy_span(x[i0:i1], args.ambang_db)
+                    # Acuan energi item: mulai setelah ekor segmen item SEBELUMNYA yang melewati Enter
+                    # (koreksi 12 Nov: tanpa ini, ekor ucapan sebelumnya terhitung "awal terpotong").
+                    t_a = max([m["t0"], *[g["end_s"] for g in segs if g["start_s"] < m["t0"] < g["end_s"]]])
+                    i0, i1 = int(t_a * SR), int(m["t1"] * SR)
+                    r = energy_span(x[i0:i1], args.ambang_db) if i1 > i0 else None
+                    r_mentah = energy_span(x[int(m["t0"] * SR):i1], args.ambang_db)
+                    if r_mentah and inw:
+                        c["cut0_mentah"] += inw[0]["start_s"] > m["t0"] + r_mentah[0] + 1e-9
                     if r and inw:
-                        c["cut0"] += inw[0]["start_s"] > m["t0"] + r[0] + 1e-9
-                        c["cut1"] += inw[-1]["end_s"] < m["t0"] + r[1] - 1e-9
+                        c["cut0"] += inw[0]["start_s"] > t_a + r[0] + 1e-9
+                        c["cut1"] += inw[-1]["end_s"] < t_a + r[1] - 1e-9
             n = c["n_pilot"] + c["n_dev"]
             row = {"threshold": th, "min_silence_ms": sil, **c, "n": n}
             row["lolos"] = (n > 0 and c["pecah"] <= 0.05 * n and c["lewat"] == 0 and c["cut0"] == 0 and c["cut1"] == 0
                             and c["palsu"] == 0)
             rows.append(row)
             L.append(f"| {th} | {sil} | {c['satu_pilot']}/{c['n_pilot']} | {c['satu_dev']}/{c['n_dev']} | {c['pecah']} | "
-                     f"{c['lewat']} | {c['palsu']} | {c['cut0']} | {c['cut1']} | {'ya' if row['lolos'] else '–'} |")
+                     f"{c['lewat']} | {c['palsu']} | {c['cut0']} | {c['cut0_mentah']} | {c['cut1']} | {'ya' if row['lolos'] else '–'} |")
     ok = sorted([r for r in rows if r["lolos"]], key=lambda r: (r["min_silence_ms"], abs(r["threshold"] - 0.5)))
     res["sapuan"], res["terpilih"] = rows, ok[0] if ok else None
+    L += ["", "Catatan: 'awal terpotong (mentah)' = definisi awal, yang ikut menghitung ekor ucapan item sebelumnya "
+          "(Enter ditekan sebelum ucapan sebelumnya selesai). Kolom 'awal terpotong' (dipakai aturan) mengecualikan audio "
+          "yang sudah tercakup segmen item sebelumnya. Simulasi offline memanggil flush() di akhir aliran, live tidak "
+          "(selisih maksimal 1 ujaran per sesi)."]
     L += ["", f"**Terpilih:** threshold {ok[0]['threshold']}, min_silence {ok[0]['min_silence_ms']} ms" if ok
           else "**Tidak ada kombinasi yang lolos aturan**: perlu dibahas dengan peneliti."]
     return res, L

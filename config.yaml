@@ -106,7 +106,7 @@ vad:
   threshold: 0.5              # p(ucapan) >= threshold -> ucapan (bawaan Silero)
   neg_offset: 0.15            # histeresis: diam bila p < threshold - neg_offset (sama dengan Silero)
   pre_roll_ms: 300            # audio sebelum pemicu ikut diambil (awal kata lemah)
-  min_silence_ms: 800         # diam sepanjang ini = ujaran selesai (penentu jeda akhir)
+  min_silence_ms: 1200        # F2 final (12 Nov): dipilih aturan pra-ditetapkan pada data dev P01 (results/vad_dev_MSI_20261112_040608.md); awal 800
   post_pad_ms: 200            # sisa diam di ekor ujaran
   min_speech_ms: 250          # ujaran lebih pendek dibuang (klik/batuk)
   max_utterance_s: 15         # potong paksa

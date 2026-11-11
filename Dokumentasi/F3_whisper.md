@@ -47,6 +47,22 @@ Sumber: `results/asr_MSI_20261112_010730.md`
 - initial_prompt juga bisa memicu **halusinasi pengulangan**: R03_S45 menjadi "trainer, trainer, trainer, …". Tiap konfigurasi mengalami 0–1 kasus dari 162.
 - Hasil faster-whisper GPU float16 dan CPU int8 identik pada 104/162 file. Kuantisasi int8 sedikit mengubah keluaran.
 
+## WER pada pilot (set pengembangan, P01 membaca 36 kalimat, 12 Nov 2026)
+Sumber: `results/asr_pilot_MSI_20261112_040643.md`. Klip berasal dari sesi kontinu, termasuk jeda sebelum bicara.
+
+| Konfigurasi | WER (n=36) | t_asr (s) |
+|---|---|---|
+| faster GPU + prompt | **38,75%** | 0,106 ± 0,021 |
+| faster GPU tanpa prompt | 56,25% | 0,089 ± 0,018 |
+| openai GPU + prompt | 39,58% | 0,298 ± 0,075 |
+| openai GPU tanpa prompt | 57,50% | 0,269 ± 0,082 |
+| faster CPU int8 + prompt | 39,58% | 0,930 ± 0,093 |
+
+- n=36 masih **mengikutkan P03 yang hening** (WER 100%). Tanpa P03 (n=35), faster GPU + prompt = 37,45%. Angka final dihitung ulang setelah P03 direkam ulang.
+- **initial_prompt menurunkan WER sekitar 17–18 poin**, dan berlaku untuk kedua backend.
+- Akurasi faster-whisper dan openai-whisper **setara** (selisih < 1 poin), sedangkan faster-whisper ±3× lebih cepat. Usulan: **backend final = faster-whisper**, dipilih dari data pengembangan, sehingga set uji tidak dipakai untuk memilih.
+- Galat Whisper base cukup berat pada kata umum: "Silakan temukan Ibu Vivi" → "Silatan nomukan Kus Vivi"; "Coba jalannya pelan-pelan" → "Jauhkan kembali". Sebagian kecil berupa beda pemenggalan ("keruang" vs "ke ruang"), yang tetap dihitung salah oleh WER.
+
 ## Tahap 2 (setelah koreksi transkrip)
 1. Peneliti mengoreksi transkrip: `python bench/koreksi_transkrip.py`.
 2. `python bench/tes_asr.py --hanya-wer dataset/asr_hipotesis_MSI_20261112_010730.csv` menghitung WER per konfigurasi, per responden, dan per formalitas.
