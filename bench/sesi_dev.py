@@ -17,6 +17,7 @@ Keluaran: recordings/dev/<ID>_<ts>/{stream.wav, sesi.json}, klip dev di clips/,
 Pemakaian:
     python bench/sesi_dev.py --penutur P01
     python bench/sesi_dev.py --penutur P01 --fase pilot dev      # lewati suasana
+    python bench/sesi_dev.py --penutur P01 --ulang P01 P02        # rekam ulang item tertentu (menimpa)
 """
 import argparse
 import json
@@ -44,6 +45,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--penutur", required=True)
     ap.add_argument("--fase", nargs="+", default=["suasana", "pilot", "dev"], choices=["suasana", "pilot", "dev"])
+    ap.add_argument("--ulang", nargs="+", default=[], help="ID item yang direkam ulang (mis. P01 D05); tanpa fase suasana")
     a = ap.parse_args()
     cfg = load_config()
     setup_logging(cfg, "sesi_dev")
@@ -61,13 +63,18 @@ def main():
     for p in (cfg["paths"]["recordings"] / "dev").glob(f"{pid}_*/sesi.json"):
         done_dev |= {m["item_id"] for m in json.load(open(p, encoding="utf-8"))["penanda"]
                      if m["fase"] == "dev" and m["valid"]}
+    ulang = {u.strip().upper() for u in a.ulang}
+    done_pilot -= ulang
+    done_dev -= ulang
+    if ulang:
+        a.fase = [f for f in a.fase if f != "suasana"]
     plan = []
     if "suasana" in a.fase:
         plan.append(("suasana", {"id": "AMB"}))
     if "pilot" in a.fase:
-        plan += [("pilot", it) for it in pilot if it["id"] not in done_pilot]
+        plan += [("pilot", it) for it in pilot if it["id"] not in done_pilot and (not ulang or it["id"] in ulang)]
     if "dev" in a.fase:
-        plan += [("dev", it) for it in dev if it["id"] not in done_dev]
+        plan += [("dev", it) for it in dev if it["id"] not in done_dev and (not ulang or it["id"] in ulang)]
     print(f"{pid}: {len(plan)} item (pilot sudah {len(done_pilot)}/36, dev sudah {len(done_dev)}/18)")
 
     vcfg = cfg["vad"]
@@ -126,13 +133,18 @@ def main():
                     print(f"  TUJUAN : {it['tujuan']}\n  GAYA   : {it['gaya']}\n  -> kalimat Anda SENDIRI")
                 print("  Bicara kapan saja, lalu Enter = lanjut | u = ulangi | q = berhenti")
                 t0 = n16
+                min_n = cfg["dataset"]["min_record_s"] * sr
                 while True:
                     pump(src)
                     try:
                         cmd = lines.get_nowait().strip().lower()
-                        break
                     except queue.Empty:
-                        pass
+                        continue
+                    if cmd in ("", "u") and n16 - t0 < min_n:
+                        # Enter terlalu cepat (mis. sisa baris dari paste perintah) -> diabaikan
+                        print(f"  (Enter diabaikan: baru {(n16 - t0) / sr:.2f} s. Bicara dulu, lalu Enter.)")
+                        continue
+                    break
                 m = {"fase": fase, "item_id": it["id"], "t0": t0 / sr, "t1": n16 / sr, "take": take[it["id"]],
                      "valid": cmd not in ("u", "q")}
                 marks.append(m)
