@@ -1,0 +1,38 @@
+$ conda env list
+base                     C:\ProgramData\anaconda3
+cabai                    C:\Users\indie\.conda\envs\cabai
+mbkm-nlu                 C:\Users\indie\.conda\envs\mbkm-nlu
+
+$ python bench/cek_env.py
+Item                      | Hasil
+--------------------------|-------------------------------------------------------------
+OS                        | Windows 10 (10.0.26200)
+Arsitektur                | AMD64
+Hostname                  | MSI
+Python                    | 3.11.18 @ C:\Users\indie\.conda\envs\mbkm-nlu\python.exe
+nvidia-smi                | NVIDIA GeForce RTX 2050, 610.78, 4096 MiB
+torch                     | 2.14.1+cu126 (build CUDA 12.6)
+torch.cuda.is_available() | True
+GPU (torch)               | NVIDIA GeForce RTX 2050 sm_86, cuDNN 91002
+ctranslate2 CUDA          | {"cuda_devices": 1, "compute_types_cuda": ["bfloat16", "float16", "float32", "int8", "int8_bfloat16", "int8_float16", "int8_float32"], "compute_types_cpu": ["float32", "int16", "int8", "int8_float32"]}
+ollama --version          | ollama version is 0.30.6
+ollama list               | NAME            ID              SIZE      MODIFIED      | qwen2.5:1.5b    65ec06548149    986 MB    5 months ago
+pkg numpy                 | 2.4.6
+pkg scipy                 | 1.17.1
+pkg soxr                  | 1.1.0
+pkg sounddevice           | 0.5.6
+pkg soundfile             | 0.14.0
+pkg torch                 | 2.14.1+cu126
+pkg silero-vad            | 6.2.3
+pkg onnxruntime           | 1.31.0
+pkg openai-whisper        | 20250625
+pkg faster-whisper        | 1.2.1
+pkg ctranslate2           | 4.8.2
+pkg requests              | 2.34.2
+pkg PyYAML                | 6.0.3
+pkg jsonschema            | 4.26.0
+pkg pandas                | 3.0.6
+
+
+$ pip check
+No broken requirements found.

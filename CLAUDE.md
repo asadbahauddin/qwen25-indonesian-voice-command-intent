@@ -117,14 +117,14 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 
 | Fase | Status | Bukti | Catatan |
 |---|---|---|---|
-| F0 | **Rusak** | commit `003c3b5`; `bench/cek_env.py`; `results/env_MSI_20261009_*.json` (9 Okt: torch 2.14.1+cu126, CUDA True, Ollama 0.30.6) | Dibuat dengan **venv**, bukan conda. `.venv` kini **rusak**: base interpreter `~/.conda/envs/py311-base` sudah terhapus → `No Python at ...`. Env `mbkm-nlu` tidak ada; `environment.yml` tidak ada. GPU (nvidia-smi: RTX 2050, 4096 MiB, driver 610.78) & Ollama 0.30.6 + `qwen2.5:1.5b` masih OK. |
-| F1 | Sebagian | `src/audio_io.py`, `src/utils.py`, `config.yaml` (belum di-commit) | Modul akuisisi + resampling soxr + statistik level sudah ditulis. **`bench/tes_mic.py` tidak ada**, `recordings/` kosong (tidak ada WAV), `audio.device` masih `"Microphone Array"` (mic internal laptop, TODO lavalier). Belum pernah dijalankan (tidak ada log). |
+| F0 | **Selesai** (ulang 11 Nov) | `environment.yml`, `Dokumentasi/F0_lingkungan.md`, `Dokumentasi/F0_bukti_cek_env.{txt,png}` | Env conda `mbkm-nlu` (Py 3.11.18), torch 2.14.1+cu126 CUDA True, ctranslate2 4.8.2 CUDA, Ollama 0.30.6 + `qwen2.5:1.5b`. `.venv` lama (rusak) dihapus. |
+| F1 | Sebagian | `src/audio_io.py`, `src/utils.py`, `config.yaml` (commit `468fa3a`) | Modul akuisisi + resampling soxr sudah ada. `audio.device` = `USBAudio1.0` (receiver lavalier). **Belum ada `bench/tes_mic.py`** dan belum ada WAV. |
 | F2 | Belum | – | Tidak ada `src/vad.py`, `bench/tes_vad.py`, `recordings/seg_*.wav`. |
 | F3 | Belum | – | Tidak ada `src/asr.py`. |
 | F4 | Belum | – | Tidak ada `src/nlu/`, `prompts/` kosong. Model `qwen2.5:1.5b` sudah ter-pull di Ollama. |
 | F4b | Belum | – | Tidak ada `rule.py`, `indobert.py`, `config/keywords_id.yaml`, `data/`, `models/`. Screenshot `Dokumentasi/*.png` bukan bukti hasil (hanya tangkapan file explorer). |
 | F5 | Belum | – | Tidak ada `src/pipeline.py`, `src/cli.py`. |
-| F6 | Belum | – | Tidak ada `bench/pilot_set.json`, `bench/uji_llm.py`, `results/summary_*.md`. |
+| F6 | Persiapan | `bench/pilot_set.json`, `Dokumentasi/lembar_baca_pilot.md` (commit `90c8f2d`) | 36 kalimat berlabel (6 intent × 3 formalitas × 2). Belum ada `bench/uji_llm.py` dan hasil. |
 | F7 | Belum | – | Tidak ada bukti RPi 5. |
 | F8 | Belum | – | Tidak ada alat rekam dataset, `dataset/` tidak ada. |
 | F9 | Belum | – | – |
@@ -133,6 +133,11 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 **Keputusan teknis yang sudah diambil:**
 - Audio ditangkap pada sample rate native perangkat, downmix mono, lalu di-resample streaming ke 16 kHz dengan `soxr.ResampleStream` kualitas HQ (`src/audio_io.py`, `config.yaml: audio`).
 - Konfigurasi terpusat di `config.yaml`; log ke `logs/<nama>_<host>_<tanggal>.log` (`src/utils.py`).
-- Belum diputuskan: faster-whisper vs openai-whisper, threshold VAD, versi system prompt, skema JSON final.
+- Lingkungan: conda `mbkm-nlu` + pip (versi ter-pin), PyTorch 2.14.1+cu126. CUDA toolkit sistem (11.2/11.8/12.1) dibiarkan; faster-whisper memakai `cublas64_12.dll` (v12.1) dan `cudnn64_9.dll` (v11.8), jadi **CUDA 11.8 jangan dihapus**. Cache pip laptop sengaja dinonaktifkan.
+- Mic: receiver wireless lavalier `USBAudio1.0` (USB VID_4C4A PID_4155). Jangan pakai input "NVIDIA Broadcast" karena audionya diolah.
+- Kosakata domain lab (ruangan/benda/orang/dokumen) ada di `config/domain_id.yaml`. "Trainer RL" = trainer Rangkaian Listrik; ejaan "Pak Andi".
+- Usulan skema `combined_command`: field tingkat atas null, sub-perintah di `steps[]` (menunggu persetujuan peneliti).
+- Rencana responden: 4 orang × 48 kalimat = 192 sampel.
+- Belum diputuskan: faster-whisper vs openai-whisper, threshold VAD, versi system prompt.
 
 **Angka yang sudah terukur:** belum ada (selain info lingkungan di `results/env_MSI_20261009_235828.json`, bukan metrik penelitian).

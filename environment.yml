@@ -1,0 +1,85 @@
+# Env conda proyek MBKM (laptop Windows + GPU CUDA). Dibuat ulang:
+#   conda env create -f environment.yml
+# RPi 5 (CPU): pakai requirements-torch-cpu.txt + requirements.txt di env Miniforge.
+# Diekspor: conda env export --no-builds (baris prefix dihapus).
+name: mbkm-nlu
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - bzip2=1.0.8
+  - ca-certificates=2026.10.23
+  - libexpat=2.9.0
+  - libffi=3.7.0
+  - liblzma=5.8.3
+  - libpython=3.11.18
+  - libsqlite=3.54.1
+  - libzlib=1.3.2
+  - openssl=3.6.5
+  - packaging=26.3
+  - pip=26.2.2
+  - python=3.11.18
+  - setuptools=84.2.1
+  - tk=8.6.13
+  - ucrt=10.0.26100.0
+  - vc=14.5
+  - vc14_runtime=14.51.36247
+  - vcomp14=14.51.36247
+  - wheel=0.48.0
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu126
+      - anyio==4.16.0
+      - attrs==26.1.0
+      - av==18.1.0
+      - certifi==2026.10.23
+      - cffi==2.1.1
+      - charset-normalizer==3.5.2
+      - click==8.5.1
+      - colorama==0.4.6
+      - ctranslate2==4.8.2
+      - faster-whisper==1.2.1
+      - filelock==4.2.4
+      - flatbuffers==25.12.19
+      - fsspec==2026.9.0
+      - h11==0.16.0
+      - hf-xet==1.8.0
+      - httpcore2==2.16.0
+      - httpx2==2.16.0
+      - huggingface-hub==2.4.0
+      - idna==3.20
+      - jinja2==3.1.6
+      - jsonschema==4.26.0
+      - jsonschema-specifications==2025.9.1
+      - llvmlite==0.50.0
+      - markupsafe==3.0.3
+      - more-itertools==11.2.1
+      - mpmath==1.3.0
+      - networkx==3.6.1
+      - numba==0.68.1
+      - numpy==2.4.6
+      - onnxruntime==1.31.0
+      - openai-whisper==20250625
+      - pandas==3.0.6
+      - protobuf==7.36.2
+      - pycparser==3.12
+      - python-dateutil==4.0.0
+      - pyyaml==6.0.3
+      - referencing==0.37.0
+      - regex==2026.11.9
+      - requests==2.34.2
+      - rpds-py==2026.9.1
+      - scipy==1.17.1
+      - silero-vad==6.2.3
+      - sounddevice==0.5.6
+      - soundfile==0.14.0
+      - soxr==1.1.0
+      - sympy==1.14.0
+      - tabulate==0.10.0
+      - tiktoken==0.14.0
+      - tokenizers==0.23.3
+      - torch==2.14.1+cu126
+      - tqdm==4.70.1
+      - truststore==0.10.5
+      - typing-extensions==4.16.0
+      - tzdata==2026.6
+      - urllib3==2.8.0
