@@ -1,0 +1,833 @@
+{
+  "host": "MSI",
+  "waktu": "20261111_225631",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "data": "bench/pilot_set.json",
+  "data_versi": "v1",
+  "n_kalimat": 36,
+  "masukan": "teks ground-truth",
+  "metode": {
+    "qwen": {
+      "keseluruhan": {
+        "n": 36,
+        "intent_acc": 0.8055555555555556,
+        "exact_match": 0.6388888888888888,
+        "f1_weighted": 0.793109668109668,
+        "f1_macro": 0.7931096681096682,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "per_formalitas": {
+        "formal": {
+          "n": 12,
+          "intent_acc": 0.8333333333333334,
+          "exact_match": 0.75,
+          "f1_weighted": 0.7777777777777777,
+          "f1_macro": 0.7777777777777777,
+          "json_valid": 1.0,
+          "schema_valid": 1.0
+        },
+        "semi-formal": {
+          "n": 12,
+          "intent_acc": 0.9166666666666666,
+          "exact_match": 0.6666666666666666,
+          "f1_weighted": 0.9111111111111111,
+          "f1_macro": 0.9111111111111111,
+          "json_valid": 1.0,
+          "schema_valid": 1.0
+        },
+        "informal": {
+          "n": 12,
+          "intent_acc": 0.6666666666666666,
+          "exact_match": 0.5,
+          "f1_weighted": 0.6,
+          "f1_macro": 0.6,
+          "json_valid": 1.0,
+          "schema_valid": 1.0
+        }
+      },
+      "latency": {
+        "t_nlu": {
+          "mean": 0.7861487194445039,
+          "sd": 0.3870735236929443,
+          "n": 36
+        },
+        "load_s": {
+          "mean": 0.17385994722222223,
+          "sd": 0.018026132181593414,
+          "n": 36
+        },
+        "prompt_eval_s": {
+          "mean": 0.02912038886111111,
+          "sd": 0.011110586490689646,
+          "n": 36
+        },
+        "eval_s": {
+          "mean": 0.5614661111111111,
+          "sd": 0.38311012257102695,
+          "n": 36
+        },
+        "tokens_per_s": {
+          "mean": 76.22270261302546,
+          "sd": 2.089861145809542,
+          "n": 36
+        },
+        "prompt_tokens": {
+          "mean": 923.1111111111111,
+          "sd": 4.005551702879947,
+          "n": 36
+        },
+        "eval_tokens": {
+          "mean": 42.611111111111114,
+          "sd": 28.570992060157575,
+          "n": 36
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "navigate_room",
+          "navigate_object",
+          "find_person",
+          "deliver_document",
+          "combined_command",
+          "general_command"
+        ],
+        "matrix": [
+          [
+            6,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            6,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            5,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            1,
+            0,
+            2,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            5
+          ]
+        ]
+      },
+      "salah": [
+        {
+          "id": "P10",
+          "formality": "semi-formal",
+          "text": "Coba datangi trainer pneumatik sebentar.",
+          "gold": {
+            "intent": "navigate_object",
+            "room": null,
+            "object": "trainer pneumatik",
+            "person": null,
+            "document": null,
+            "steps": null
+          },
+          "pred": {
+            "intent": "find_person",
+            "room": null,
+            "object": null,
+            "person": "trainer pneumatik",
+            "document": null,
+            "steps": null
+          },
+          "intent_ok": false,
+          "error": null
+        },
+        {
+          "id": "P20",
+          "formality": "formal",
+          "text": "Silakan serahkan surat izin ini ke ruang dosen.",
+          "gold": {
+            "intent": "deliver_document",
+            "room": "ruang dosen",
+            "object": null,
+            "person": null,
+            "document": "surat izin",
+            "steps": null
+          },
+          "pred": {
+            "intent": "deliver_document",
+            "room": "ruang dosen",
+            "object": null,
+            "person": "surat izin",
+            "document": "surat izin",
+            "steps": null
+          },
+          "intent_ok": true,
+          "error": null
+        },
+        {
+          "id": "P21",
+          "formality": "semi-formal",
+          "text": "Tolong bawa berkas tugas akhir ini ke Pak Umam ya.",
+          "gold": {
+            "intent": "deliver_document",
+            "room": null,
+            "object": null,
+            "person": "pak umam",
+            "document": "berkas tugas akhir",
+            "steps": null
+          },
+          "pred": {
+            "intent": "deliver_document",
+            "room": null,
+            "object": "berkas tugas akhir",
+            "person": "asisten lab",
+            "document": "berkas tugas akhir",
+            "steps": null
+          },
+          "intent_ok": true,
+          "error": null
+        },
+        {
+          "id": "P22",
+          "formality": "semi-formal",
+          "text": "Tolong kirim jadwal praktikum ke ruang asisten.",
+          "gold": {
+            "intent": "deliver_document",
+            "room": "ruang asisten",
+            "object": null,
+            "person": null,
+            "document": "jadwal praktikum",
+            "steps": null
+          },
+          "pred": {
+            "intent": "deliver_document",
+            "room": "lab otomasi",
+            "object": null,
+            "person": null,
+            "document": "jadwal praktikum",
+            "steps": null
+          },
+          "intent_ok": true,
+          "error": null
+        },
+        {
+          "id": "P23",
+          "formality": "informal",
+          "text": "Anterin lembar nilai ini ke Pak Kus dong.",
+          "gold": {
+            "intent": "deliver_document",
+            "room": null,
+            "object": null,
+            "person": "pak kus",
+            "document": "lembar nilai",
+            "steps": null
+          },
+          "pred": {
+            "intent": "deliver_document",
+            "room": "ruang pak kus",
+            "object": null,
+            "person": "pak kus",
+            "document": "lembar nilai",
+            "steps": null
+          },
+          "intent_ok": true,
+          "error": null
+        },
+        {
+          "id": "P24",
+          "formality": "informal",
+          "text": "Laprak ini kasih ke Pak Andi ya, buruan.",
+          "gold": {
+            "intent": "deliver_document",
+            "room": null,
+            "object": null,
+            "person": "pak andi",
+            "document": "laporan praktikum",
+            "steps": null
+          },
+          "pred": {
+            "intent": "navigate_object",
+            "room": null,
+            "object": "lapar praktikum",
+            "person": null,
+            "document": null,
+            "steps": [
+              {
+                "intent": "find_person",
+                "room": null,
+                "object": null,
+                "person": "pak andi",
+                "document": null
+              }
+            ]
+          },
+          "intent_ok": false,
+          "error": null
+        },
+        {
+          "id": "P25",
+          "formality": "formal",
+          "text": "Silakan menuju Laboratorium Otomasi, kemudian carikan Pak Umam.",
+          "gold": {
+            "intent": "combined_command",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": null,
+            "steps": [
+              {
+                "intent": "navigate_room",
+                "room": "lab otomasi",
+                "object": null,
+                "person": null,
+                "document": null
+              },
+              {
+                "intent": "find_person",
+                "room": null,
+                "object": null,
+                "person": "pak umam",
+                "document": null
+              }
+            ]
+          },
+          "pred": {
+            "intent": "navigate_room",
+            "room": "lab otomasi",
+            "object": null,
+            "person": null,
+            "document": null,
+            "steps": [
+              {
+                "intent": "find_person",
+                "room": null,
+                "object": null,
+                "person": "pak umam",
+                "document": null
+              }
+            ]
+          },
+          "intent_ok": false,
+          "error": null
+        },
+        {
+          "id": "P26",
+          "formality": "formal",
+          "text": "Mohon pergi ke ruang asisten, lalu antarkan surat izin kepada Ibu Vivi.",
+          "gold": {
+            "intent": "combined_command",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": null,
+            "steps": [
+              {
+                "intent": "navigate_room",
+                "room": "ruang asisten",
+                "object": null,
+                "person": null,
+                "document": null
+              },
+              {
+                "intent": "deliver_document",
+                "room": null,
+                "object": null,
+                "person": "bu vivi",
+                "document": "surat izin"
+              }
+            ]
+          },
+          "pred": {
+            "intent": "navigate_room",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": "surat izin",
+            "steps": [
+              {
+                "intent": "navigate_object",
+                "room": null,
+                "object": "ruang asisten",
+                "person": null,
+                "document": null
+              },
+              {
+                "intent": "deliver_document",
+                "room": null,
+                "object": null,
+                "person": "bu vivi",
+                "document": "surat izin"
+              }
+            ]
+          },
+          "intent_ok": false,
+          "error": null
+        },
+        {
+          "id": "P28",
+          "formality": "semi-formal",
+          "text": "Coba cari Pak Kus, terus antar laporan praktikum ini ke beliau.",
+          "gold": {
+            "intent": "combined_command",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": null,
+            "steps": [
+              {
+                "intent": "find_person",
+                "room": null,
+                "object": null,
+                "person": "pak kus",
+                "document": null
+              },
+              {
+                "intent": "deliver_document",
+                "room": null,
+                "object": null,
+                "person": "pak kus",
+                "document": "laporan praktikum"
+              }
+            ]
+          },
+          "pred": {
+            "intent": "combined_command",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": "laporan praktikum",
+            "steps": [
+              {
+                "intent": "find_person",
+                "room": null,
+                "object": null,
+                "person": "pak kus",
+                "document": null
+              },
+              {
+                "intent": "navigate_object",
+                "room": null,
+                "object": "laporan praktikum",
+                "person": null,
+                "document": null
+              }
+            ]
+          },
+          "intent_ok": true,
+          "error": null
+        },
+        {
+          "id": "P29",
+          "formality": "informal",
+          "text": "Ke trainer PLC bentar, abis itu balik ke ruangan Pak Andi.",
+          "gold": {
+            "intent": "combined_command",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": null,
+            "steps": [
+              {
+                "intent": "navigate_object",
+                "room": null,
+                "object": "trainer plc",
+                "person": null,
+                "document": null
+              },
+              {
+                "intent": "navigate_room",
+                "room": "ruang pak andi",
+                "object": null,
+                "person": null,
+                "document": null
+              }
+            ]
+          },
+          "pred": {
+            "intent": "navigate_room",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": null,
+            "steps": [
+              {
+                "intent": "navigate_object",
+                "room": null,
+                "object": "trainer plc",
+                "person": null,
+                "document": null
+              },
+              {
+                "intent": "navigate_room",
+                "room": "ruang pak andi",
+                "object": null,
+                "person": null,
+                "document": null
+              }
+            ]
+          },
+          "intent_ok": false,
+          "error": null
+        },
+        {
+          "id": "P30",
+          "formality": "informal",
+          "text": "Cariin mas asisten, trus anterin berkas TA ini ke dia.",
+          "gold": {
+            "intent": "combined_command",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": null,
+            "steps": [
+              {
+                "intent": "find_person",
+                "room": null,
+                "object": null,
+                "person": "asisten lab",
+                "document": null
+              },
+              {
+                "intent": "deliver_document",
+                "room": null,
+                "object": null,
+                "person": "asisten lab",
+                "document": "berkas tugas akhir"
+              }
+            ]
+          },
+          "pred": {
+            "intent": "find_person",
+            "room": null,
+            "object": null,
+            "person": "asisten lab",
+            "document": "berkas tugas akhir",
+            "steps": null
+          },
+          "intent_ok": false,
+          "error": null
+        },
+        {
+          "id": "P35",
+          "formality": "informal",
+          "text": "Stop, stop, diem dulu.",
+          "gold": {
+            "intent": "general_command",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": null,
+            "steps": null
+          },
+          "pred": {
+            "intent": "general_command",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": null,
+            "steps": [
+              {
+                "intent": "navigate_object",
+                "room": null,
+                "object": "dulu",
+                "person": null,
+                "document": null
+              }
+            ]
+          },
+          "intent_ok": true,
+          "error": null
+        },
+        {
+          "id": "P36",
+          "formality": "informal",
+          "text": "Udah, balik aja ke tempat semula.",
+          "gold": {
+            "intent": "general_command",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": null,
+            "steps": null
+          },
+          "pred": {
+            "intent": "navigate_room",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": null,
+            "steps": null
+          },
+          "intent_ok": false,
+          "error": null
+        }
+      ],
+      "meta": {
+        "warmup": {
+          "warmup_s": 3.615054500000042,
+          "load_s": 0.5457631
+        },
+        "model": "qwen2.5:1.5b",
+        "prompt_version": "v1",
+        "prompt_sha": "114d424e5d61",
+        "use_schema": true,
+        "durasi_run_s": 28.319798399999854
+      }
+    },
+    "rule": {
+      "keseluruhan": {
+        "n": 36,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "per_formalitas": {
+        "formal": {
+          "n": 12,
+          "intent_acc": 1.0,
+          "exact_match": 1.0,
+          "f1_weighted": 1.0,
+          "f1_macro": 1.0,
+          "json_valid": 1.0,
+          "schema_valid": 1.0
+        },
+        "semi-formal": {
+          "n": 12,
+          "intent_acc": 1.0,
+          "exact_match": 1.0,
+          "f1_weighted": 1.0,
+          "f1_macro": 1.0,
+          "json_valid": 1.0,
+          "schema_valid": 1.0
+        },
+        "informal": {
+          "n": 12,
+          "intent_acc": 1.0,
+          "exact_match": 1.0,
+          "f1_weighted": 1.0,
+          "f1_macro": 1.0,
+          "json_valid": 1.0,
+          "schema_valid": 1.0
+        }
+      },
+      "latency": {
+        "t_nlu": {
+          "mean": 0.00016150833334904746,
+          "sd": 7.862413808122079e-05,
+          "n": 36
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "navigate_room",
+          "navigate_object",
+          "find_person",
+          "deliver_document",
+          "combined_command",
+          "general_command"
+        ],
+        "matrix": [
+          [
+            6,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            6,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            6,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            6,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            6,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ]
+        ]
+      },
+      "salah": [],
+      "meta": {
+        "warmup": {},
+        "keywords_version": "v1",
+        "durasi_run_s": 0.008847699999023462
+      }
+    },
+    "indobert": {
+      "keseluruhan": {
+        "n": 36,
+        "intent_acc": 1.0,
+        "exact_match": 1.0,
+        "f1_weighted": 1.0,
+        "f1_macro": 1.0,
+        "json_valid": 1.0,
+        "schema_valid": 1.0
+      },
+      "per_formalitas": {
+        "formal": {
+          "n": 12,
+          "intent_acc": 1.0,
+          "exact_match": 1.0,
+          "f1_weighted": 1.0,
+          "f1_macro": 1.0,
+          "json_valid": 1.0,
+          "schema_valid": 1.0
+        },
+        "semi-formal": {
+          "n": 12,
+          "intent_acc": 1.0,
+          "exact_match": 1.0,
+          "f1_weighted": 1.0,
+          "f1_macro": 1.0,
+          "json_valid": 1.0,
+          "schema_valid": 1.0
+        },
+        "informal": {
+          "n": 12,
+          "intent_acc": 1.0,
+          "exact_match": 1.0,
+          "f1_weighted": 1.0,
+          "f1_macro": 1.0,
+          "json_valid": 1.0,
+          "schema_valid": 1.0
+        }
+      },
+      "latency": {
+        "t_nlu": {
+          "mean": 0.017394424999919365,
+          "sd": 0.023973659709733152,
+          "n": 36
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "navigate_room",
+          "navigate_object",
+          "find_person",
+          "deliver_document",
+          "combined_command",
+          "general_command"
+        ],
+        "matrix": [
+          [
+            6,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            6,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            6,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            6,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            6,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ]
+        ]
+      },
+      "salah": [],
+      "meta": {
+        "warmup": {
+          "warmup_s": 0.5107768999987456,
+          "load_s": 5.912626899998941
+        },
+        "device": "cuda",
+        "durasi_run_s": 0.6514425000004849
+      }
+    }
+  }
+}
