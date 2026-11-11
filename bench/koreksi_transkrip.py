@@ -14,6 +14,8 @@ Konvensi transkrip (lihat Dokumentasi/F3_whisper.md):
   - tulis SEMUA kata yang diucapkan, termasuk partikel (ya, dong, gih, deh) dan kata gaul/daerah apa adanya
   - jangan tulis bunyi ragu murni (eh, em, hmm); nama orang/tempat ditulis sesuai kamus (Pak Umam, lab otomasi)
   - angka ditulis dengan huruf; tanda baca boleh (diabaikan saat WER)
+  - kata depan ditulis TERPISAH (EYD): "ke ruang dosen", "ke lengan robot", "di ruang asisten"
+    (bukan "keruang", "kelengan"). Alat ini memperingatkan bila menemukan bentuk tersambung, juga pada draf 1/2.
 
 Hasil: dataset/metadata.csv kolom `transkrip`, status_label = "terkoreksi", catatan + "sumber=draf1|draf2|ketik".
 Cadangan metadata.csv dibuat sebelum penulisan pertama.
@@ -37,6 +39,35 @@ sys.path.insert(0, str(ROOT))
 from src.utils import load_config  # noqa: E402
 
 DRAF = ["faster:cuda:prompt", "openai:cuda:noprompt"]
+UMUM = {"ruang", "ruangan", "sini", "sana", "mana", "situ", "posisi", "tempat", "dekat", "depan", "belakang", "samping",
+        "kiri", "kanan", "lab", "laboratorium"}
+
+
+def kata_tempat_domain(cfg):
+    """Kata pertama tiap alias entity domain (+ kata tempat umum): dipakai mendeteksi 'ke'/'di' tersambung."""
+    import re as _re
+    import yaml
+    d = yaml.safe_load((ROOT / cfg["nlu"]["domain_vocab"]).read_text(encoding="utf-8"))
+    w = set(UMUM)
+    for sec in d.values():
+        if isinstance(sec, dict):
+            for canon, al in sec.items():
+                for a in [canon, *(al or [])]:
+                    t = _re.sub(r"[^\w\s]", " ", str(a).lower()).split()
+                    if t and len(t[0]) > 2:
+                        w.add(t[0])
+    return w
+
+
+def kata_depan_sambung(text, kata):
+    import re as _re
+    return [t for t in _re.findall(r"\w+", text.lower())
+            if _re.match(r"^(ke|di)(\w+)$", t) and _re.match(r"^(ke|di)(\w+)$", t).group(2) in kata]
+
+
+def pisah_kata_depan(text, kata):
+    import re as _re
+    return _re.sub(r"\b([KkDd][ei])(\w+)\b", lambda m: f"{m.group(1)} {m.group(2)}" if m.group(2).lower() in kata else m.group(0), text)
 
 
 def main():
@@ -52,9 +83,10 @@ def main():
     meta_p = droot / "metadata.csv"
     meta = list(csv.DictReader(open(meta_p, encoding="utf-8")))
     cols = list(meta[0].keys())
-    todo = [m for m in meta if m["mode"] == "skenario" and m["status_label"] != "terkoreksi"
+    todo = [m for m in meta if m["mode"] == "skenario" and m["status_label"] not in ("terkoreksi", "final")
             and (not a.penutur or m["penutur"] == a.penutur.upper())]
     print(f"Draf dari {hp.name}. Belum dikoreksi: {len(todo)} / {len(meta)}")
+    kata_tempat = kata_tempat_domain(cfg)
     backed = False
     for n, m in enumerate(todo, 1):
         x, sr = sf.read(droot / m["wav"], dtype="float32")
@@ -80,6 +112,15 @@ def main():
             text, src = d[int(c) - 1], f"draf{c}"
         else:
             text, src = c, "ketik"
+        sambung = kata_depan_sambung(text, kata_tempat)
+        if sambung:
+            usul = pisah_kata_depan(text, kata_tempat)
+            print(f"  PERHATIAN: kata depan tersambung {sambung}. Usulan EYD: {usul}")
+            j = input("  Enter = pakai usulan | k = simpan apa adanya | atau ketik ulang transkrip\n  > ").strip()
+            if j == "":
+                text = usul
+            elif j.lower() != "k":
+                text, src = j, "ketik"
         if not backed:
             shutil.copy(meta_p, meta_p.with_name(f"metadata.bak_{datetime.now():%Y%m%d_%H%M%S}.csv"))
             backed = True
@@ -93,7 +134,7 @@ def main():
             w.writerows(meta)
         tmp.replace(meta_p)
         print(f"  tersimpan: {text}")
-    done = sum(m["status_label"] == "terkoreksi" for m in meta)
+    done = sum(m["status_label"] in ("terkoreksi", "final") for m in meta)
     print(f"\nTerkoreksi: {done} / {len(meta)}")
 
 
