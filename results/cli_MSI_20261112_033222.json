@@ -1,0 +1,224 @@
+{
+  "host": "MSI",
+  "waktu": "20261112_033222",
+  "whisper": "base",
+  "beam": 5,
+  "asr_backend": "faster",
+  "vad": {
+    "onnx": true,
+    "threads": 1,
+    "threshold": 0.5,
+    "neg_offset": 0.15,
+    "pre_roll_ms": 300,
+    "min_silence_ms": 800,
+    "post_pad_ms": 200,
+    "min_speech_ms": 250,
+    "max_utterance_s": 15
+  },
+  "qwen": {
+    "model": "qwen2.5:1.5b",
+    "prompt_version": "v1",
+    "schema_version": "v2"
+  },
+  "csv_log": "C:\\Asad\\Kuliah\\Semester 7\\MBKM\\logs\\pipeline_MSI_20261112.csv",
+  "statistik": [
+    {
+      "perangkat": "cpu",
+      "masukan": "audio",
+      "metode": "indobert",
+      "t_vad": {
+        "n": 1,
+        "mean": 0.030310599984659348,
+        "sd": 0.0
+      },
+      "t_asr": {
+        "n": 1,
+        "mean": 1.5329674999993586,
+        "sd": 0.0
+      },
+      "t_nlu": {
+        "n": 1,
+        "mean": 0.10041849999834085,
+        "sd": 0.0
+      },
+      "t_total": {
+        "n": 1,
+        "mean": 1.6636965999823587,
+        "sd": 0.0
+      },
+      "t_respons": {
+        "n": 1,
+        "mean": 2.4333859999976992,
+        "sd": 0.0
+      }
+    },
+    {
+      "perangkat": "cpu",
+      "masukan": "audio",
+      "metode": "qwen",
+      "t_vad": {
+        "n": 1,
+        "mean": 0.030310599984659348,
+        "sd": 0.0
+      },
+      "t_asr": {
+        "n": 1,
+        "mean": 1.5329674999993586,
+        "sd": 0.0
+      },
+      "t_nlu": {
+        "n": 1,
+        "mean": 4.60544469999877,
+        "sd": 0.0
+      },
+      "t_total": {
+        "n": 1,
+        "mean": 6.168722799982788,
+        "sd": 0.0
+      },
+      "t_respons": {
+        "n": 1,
+        "mean": 6.938412199998129,
+        "sd": 0.0
+      }
+    },
+    {
+      "perangkat": "cpu",
+      "masukan": "audio",
+      "metode": "rule",
+      "t_vad": {
+        "n": 1,
+        "mean": 0.030310599984659348,
+        "sd": 0.0
+      },
+      "t_asr": {
+        "n": 1,
+        "mean": 1.5329674999993586,
+        "sd": 0.0
+      },
+      "t_nlu": {
+        "n": 1,
+        "mean": 0.000580299998546252,
+        "sd": 0.0
+      },
+      "t_total": {
+        "n": 1,
+        "mean": 1.5638583999825642,
+        "sd": 0.0
+      },
+      "t_respons": {
+        "n": 1,
+        "mean": 2.3335477999979046,
+        "sd": 0.0
+      }
+    },
+    {
+      "perangkat": "gpu",
+      "masukan": "teks",
+      "metode": "qwen",
+      "t_vad": null,
+      "t_asr": null,
+      "t_nlu": {
+        "n": 3,
+        "mean": 1.0133655000014794,
+        "sd": 0.1897307073685991
+      },
+      "t_total": {
+        "n": 3,
+        "mean": 1.0133655000014794,
+        "sd": 0.1897307073685991
+      },
+      "t_respons": null
+    },
+    {
+      "perangkat": "gpu",
+      "masukan": "audio",
+      "metode": "indobert",
+      "t_vad": {
+        "n": 1,
+        "mean": 0.10076350000599632,
+        "sd": 0.0
+      },
+      "t_asr": {
+        "n": 1,
+        "mean": 1.2477819999985513,
+        "sd": 0.0
+      },
+      "t_nlu": {
+        "n": 1,
+        "mean": 0.05559899999934714,
+        "sd": 0.0
+      },
+      "t_total": {
+        "n": 1,
+        "mean": 1.4041445000038948,
+        "sd": 0.0
+      },
+      "t_respons": {
+        "n": 1,
+        "mean": 2.1033809999978983,
+        "sd": 0.0
+      }
+    },
+    {
+      "perangkat": "gpu",
+      "masukan": "audio",
+      "metode": "qwen",
+      "t_vad": {
+        "n": 1,
+        "mean": 0.10076350000599632,
+        "sd": 0.0
+      },
+      "t_asr": {
+        "n": 1,
+        "mean": 1.2477819999985513,
+        "sd": 0.0
+      },
+      "t_nlu": {
+        "n": 1,
+        "mean": 27.093229699999938,
+        "sd": 0.0
+      },
+      "t_total": {
+        "n": 1,
+        "mean": 28.441775200004486,
+        "sd": 0.0
+      },
+      "t_respons": {
+        "n": 1,
+        "mean": 29.14101169999849,
+        "sd": 0.0
+      }
+    },
+    {
+      "perangkat": "gpu",
+      "masukan": "audio",
+      "metode": "rule",
+      "t_vad": {
+        "n": 1,
+        "mean": 0.10076350000599632,
+        "sd": 0.0
+      },
+      "t_asr": {
+        "n": 1,
+        "mean": 1.2477819999985513,
+        "sd": 0.0
+      },
+      "t_nlu": {
+        "n": 1,
+        "mean": 0.0016923000002861954,
+        "sd": 0.0
+      },
+      "t_total": {
+        "n": 1,
+        "mean": 1.3502378000048338,
+        "sd": 0.0
+      },
+      "t_respons": {
+        "n": 1,
+        "mean": 2.0494742999988373,
+        "sd": 0.0
+      }
+    }
+  ]
+}

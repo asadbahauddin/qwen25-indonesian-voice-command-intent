@@ -39,3 +39,29 @@ def setup_logging(cfg, name):
     )
     logging.getLogger(name).info("Log file: %s | config: %s", log_file, cfg["_config_path"])
     return log_file
+
+
+def ram_tersedia_gb():
+    """RAM tersedia (GB) tanpa pustaka tambahan: Windows GlobalMemoryStatusEx, Linux /proc/meminfo.
+    Dicatat per pengukuran karena laptop 8 GB bisa swap (lonjakan latency 20+ s, dicek 12 Nov 2026)."""
+    import sys
+    try:
+        if sys.platform == "win32":
+            import ctypes
+
+            class MS(ctypes.Structure):
+                _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                            ("ullTotalPhys", ctypes.c_ulonglong), ("ullAvailPhys", ctypes.c_ulonglong),
+                            ("ullTotalPageFile", ctypes.c_ulonglong), ("ullAvailPageFile", ctypes.c_ulonglong),
+                            ("ullTotalVirtual", ctypes.c_ulonglong), ("ullAvailVirtual", ctypes.c_ulonglong),
+                            ("ullAvailExtendedVirtual", ctypes.c_ulonglong)]
+            m = MS()
+            m.dwLength = ctypes.sizeof(MS)
+            ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m))
+            return m.ullAvailPhys / 2 ** 30
+        for line in open("/proc/meminfo"):
+            if line.startswith("MemAvailable:"):
+                return int(line.split()[1]) / 2 ** 20
+    except Exception:
+        return None
+    return None

@@ -47,6 +47,7 @@ class QwenNLU(NLUMethod):
         self.prompt_sha = hashlib.sha256(self.system_prompt.encode("utf-8")).hexdigest()[:12]
         self.url = self.q["host"].rstrip("/") + "/api/chat"
         self.session = requests.Session()
+        self.num_gpu = self.q.get("num_gpu")
         log.info("QwenNLU: model=%s prompt=%s (sha %s, %d karakter) schema=%s (%s)",
                  self.q["model"], self.prompt_version, self.prompt_sha, len(self.system_prompt),
                  self.q["use_schema"], self.schema_version)
@@ -61,6 +62,8 @@ class QwenNLU(NLUMethod):
             "options": {"temperature": self.q["temperature"], "seed": self.q["seed"],
                         "num_ctx": self.q["num_ctx"], "num_predict": self.q["num_predict"]},
         }
+        if self.num_gpu is not None:        # 0 = paksa CPU (skenario laptop CPU)
+            p["options"]["num_gpu"] = self.num_gpu
         p["format"] = self.gen_schema if self.q["use_schema"] else "json"
         return p
 

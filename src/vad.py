@@ -31,9 +31,12 @@ class SileroVAD:
 
     def __init__(self, cfg):
         import torch
-        from silero_vad import load_silero_vad
-        torch.set_num_threads(cfg.get("threads", 1))
+        n_awal = torch.get_num_threads()
+        from silero_vad import load_silero_vad   # catatan: silero_vad/model.py memanggil torch.set_num_threads(1) saat import (GLOBAL)
         self.onnx = bool(cfg.get("onnx", False))
+        # Mode torch: VAD 1 thread (sesuai config). Mode onnx: sesi onnxruntime silero sudah 1 thread sendiri,
+        # jadi thread torch dikembalikan agar komponen lain (IndoBERT di CPU) tidak ikut terkunci 1 thread.
+        torch.set_num_threads(cfg.get("threads", 1) if not self.onnx else n_awal)
         t0 = time.perf_counter()
         self.model = load_silero_vad(onnx=self.onnx)
         self.load_s = time.perf_counter() - t0

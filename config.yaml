@@ -78,6 +78,8 @@ nlu:
     num_ctx: 2048             # cukup untuk system prompt + 1 kalimat; hemat RAM di RPi 5
     num_predict: 256          # batas token keluaran
     keep_alive: 30m           # model tetap di memori antar-perintah
+    num_gpu: 99               # layer di GPU: 99 = semua (GPU) | 0 = paksa CPU. WAJIB eksplisit: dicek 12 Nov, setelah runner CPU dimuat,
+                              # permintaan tanpa num_gpu tetap jalan di CPU (size_vram 0). Pipeline mode cpu menimpa ke 0.
     timeout_s: 120
   rule:
     keywords: config/keywords_id.yaml   # kamus intent + penghubung klausa (entity dari domain_vocab)
@@ -123,6 +125,18 @@ asr:
   without_timestamps: true
   use_initial_prompt: true
   initial_prompt_file: prompts/whisper_initial_id.txt   # hanya daftar nama entity domain (bukan kalimat dataset)
+
+# ---------------------------------------------------------------------
+# FASE 5 - Pipeline + CLI interaktif (src/pipeline.py, src/cli.py)
+# ---------------------------------------------------------------------
+pipeline:
+  device: gpu                 # gpu | cpu  (cpu = Whisper int8 CPU + Qwen num_gpu 0 + IndoBERT CPU; /perangkat di CLI)
+  methods: [qwen]             # metode NLU aktif saat CLI mulai; /metode qwen|rule|indobert|semua
+  mode: teks                  # teks | mic
+  save_audio: true            # simpan tiap ujaran mic ke recordings/cli/ (tidak di-push)
+  csv_log: logs/pipeline      # prefiks log CSV per ujaran x metode -> logs/pipeline_<host>_<tanggal>.csv
+  whisper_allowed: [base, small]   # model yang boleh dipilih dengan /whisper
+  warmup_runs: 2              # pemanasan per komponen setelah dimuat (panggilan pertama CPU 2-3x lebih lambat; dicek 12 Nov)
 
 dataset:
   skenario: bench/skenario_dataset.json   # mode skenario (kalimat bebas responden)
