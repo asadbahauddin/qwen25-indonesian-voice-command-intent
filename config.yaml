@@ -98,6 +98,17 @@ nlu:
 # ---------------------------------------------------------------------
 # FASE 8 - Perekaman dataset (bench/rekam_dataset.py)
 # ---------------------------------------------------------------------
+vad:
+  onnx: true                  # F2: onnx 0,24 vs torch 0,33-0,47 ms/frame, SD lebih kecil, selisih prob 1e-5 (results/vad_MSI_20261112_014026.md)
+  threads: 1                  # thread torch untuk VAD (ringan; sisakan CPU untuk Whisper/Qwen)
+  threshold: 0.5              # p(ucapan) >= threshold -> ucapan (bawaan Silero)
+  neg_offset: 0.15            # histeresis: diam bila p < threshold - neg_offset (sama dengan Silero)
+  pre_roll_ms: 300            # audio sebelum pemicu ikut diambil (awal kata lemah)
+  min_silence_ms: 800         # diam sepanjang ini = ujaran selesai (penentu jeda akhir)
+  post_pad_ms: 200            # sisa diam di ekor ujaran
+  min_speech_ms: 250          # ujaran lebih pendek dibuang (klik/batuk)
+  max_utterance_s: 15         # potong paksa
+
 asr:
   backend: faster             # faster = faster-whisper (CTranslate2) | openai = openai-whisper (PyTorch); final dipilih di F3 (WER + latency)
   model: base                 # proposal: Whisper base; /whisper base|small di CLI
