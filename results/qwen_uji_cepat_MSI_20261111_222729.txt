@@ -1,0 +1,13 @@
+# F4 uji cepat Qwen2.5 — 2026-11-11 22:27:29 — laptop MSI (RTX 2050), Ollama {"version":"0.30.6"}
+
+$ python -m src.nlu.qwen "Tolong antarkan surat izin ke Pak Umam"
+warm-up: {'warmup_s': 3.306995199999619, 'load_s': 0.5733284}
+Perintah: Tolong antarkan surat izin ke Pak Umam
+JSON    : {"intent": "deliver_document", "room": null, "object": null, "person": "pak umam", "document": "surat izin", "steps": null}
+info    : {"method": "qwen", "model": "qwen2.5:1.5b", "prompt_version": "v1", "prompt_sha": "114d424e5d61", "json_valid": true, "schema_valid": true, "error": null, "t_nlu": 1.391, "total_s": 1.389, "load_s": 0.454, "prompt_eval_s": 0.047, "prompt_tokens": 922, "eval_s": 0.609, "eval_tokens": 48, "tokens_per_s": 78.759}
+
+$ python -m src.nlu.qwen "Robot, ke trainer PLC dulu, habis itu cari Bu Vivi ya"
+warm-up: {'warmup_s': 4.287561400000413, 'load_s': 0.2945962}
+Perintah: Robot, ke trainer PLC dulu, habis itu cari Bu Vivi ya
+JSON    : {"intent": "combined_command", "room": null, "object": null, "person": null, "document": null, "steps": [{"intent": "navigate_object", "room": null, "object": "trainer plc", "person": null, "document": null}, {"intent": "find_person", "room": null, "object": null, "person": "bu vivi", "document": null}]}
+info    : {"method": "qwen", "model": "qwen2.5:1.5b", "prompt_version": "v1", "prompt_sha": "114d424e5d61", "json_valid": true, "schema_valid": true, "error": null, "t_nlu": 2.07, "total_s": 2.056, "load_s": 0.394, "prompt_eval_s": 0.113, "prompt_tokens": 927, "eval_s": 1.533, "eval_tokens": 119, "tokens_per_s": 77.609}

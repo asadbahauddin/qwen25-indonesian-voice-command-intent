@@ -121,7 +121,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | F1 | **Selesai** (11 Nov) | `bench/tes_mic.py`, `results/mic_MSI_20261111_222034.{md,json}`, `Dokumentasi/F1_tes_mic.md` | WASAPI 48 kHz → mono 16 kHz PCM_16 terverifikasi. Tidak ada clipping native. Transmitter punya **limiter + noise gate** (diam ±-91 dBFS), sehingga SNR akustik tidak terukur. Level ucapan normal p90 -13 dBFS (tinggi). |
 | F2 | Belum | – | Tidak ada `src/vad.py`, `bench/tes_vad.py`, `recordings/seg_*.wav`. |
 | F3 | Belum | – | Tidak ada `src/asr.py`. |
-| F4 | Belum | – | Tidak ada `src/nlu/`, `prompts/` kosong. Model `qwen2.5:1.5b` sudah ter-pull di Ollama. |
+| F4 | **Selesai** (11 Nov) | `src/nlu/base.py`, `src/nlu/qwen.py`, `prompts/system_id.txt` v1 (sha `114d424e5d61`), `results/qwen_uji_cepat_MSI_*.txt`, `Dokumentasi/F4_qwen.md` | Ollama HTTP + structured output (JSON schema). Uji cepat 2 kalimat (sederhana + combined): JSON & skema valid, entity tepat. `load_s` 0,3–0,5 s per permintaan perlu diselidiki di F6. |
 | F4b | Belum | – | Tidak ada `rule.py`, `indobert.py`, `config/keywords_id.yaml`, `data/`, `models/`. Screenshot `Dokumentasi/*.png` bukan bukti hasil (hanya tangkapan file explorer). |
 | F5 | Belum | – | Tidak ada `src/pipeline.py`, `src/cli.py`. |
 | F6 | Persiapan | `bench/pilot_set.json`, `Dokumentasi/lembar_baca_pilot.md` (commit `90c8f2d`) | 36 kalimat berlabel (6 intent × 3 formalitas × 2). Belum ada `bench/uji_llm.py` dan hasil. |
@@ -137,7 +137,8 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - Mic: receiver wireless lavalier `USBAudio1.0` (USB VID_4C4A PID_4155). Jangan pakai input "NVIDIA Broadcast" karena audionya diolah.
 - F1: capture WASAPI 48 kHz (bukan dipaksa 16 kHz). Clipping diukur pada sinyal native, karena resampling soxr menimbulkan overshoot semu. Transmitter lavalier memakai limiter dan noise gate: SNR dari rekaman diam tidak boleh dilaporkan sebagai SNR akustik. Pre-roll VAD di F2 tidak bisa mengembalikan audio yang sudah dipotong gate.
 - Kosakata domain lab (ruangan/benda/orang/dokumen) ada di `config/domain_id.yaml`. "Trainer RL" = trainer Rangkaian Listrik; ejaan "Pak Andi".
-- Usulan skema `combined_command`: field tingkat atas null, sub-perintah di `steps[]` (menunggu persetujuan peneliti).
+- **Skema JSON final** (disetujui 11 Nov): `combined_command` → field tingkat atas null, sub-perintah di `steps[]` (tiap langkah: intent selain combined + 4 entity). Skema didefinisikan di `src/nlu/base.py: COMMAND_SCHEMA`.
+- F4: Qwen dipanggil lewat Ollama HTTP API (`requests`, tanpa paket `ollama`), `format`=JSON schema (grammar-constrained), temperature 0, seed 42, num_ctx 2048. Normalisasi entity (alias → kanonik) sama untuk semua metode. Contoh few-shot di prompt dihitung sebagai data latih Qwen, jadi tidak boleh muncul di pilot atau dataset.
 - Rencana responden: 4 orang × 48 kalimat = 192 sampel.
 - Belum diputuskan: faster-whisper vs openai-whisper, threshold VAD, versi system prompt.
 

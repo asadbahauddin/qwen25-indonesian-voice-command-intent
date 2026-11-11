@@ -58,3 +58,21 @@ bench:
   mic_warn:
     min_snr_db: 20           # SNR normal-vs-diam di bawah ini -> peringatan
     min_speech_peak_dbfs: -30   # puncak ucapan normal di bawah ini -> terlalu pelan
+
+# ---------------------------------------------------------------------
+# FASE 4 - NLU (path relatif terhadap root repo)
+# ---------------------------------------------------------------------
+nlu:
+  domain_vocab: config/domain_id.yaml   # nilai entity kanonik + alias
+  qwen:
+    host: http://localhost:11434        # Ollama HTTP API
+    model: qwen2.5:1.5b                 # Q4_K_M (cek: ollama show qwen2.5:1.5b)
+    system_prompt: prompts/system_id.txt
+    prompt_version: v1
+    use_schema: true          # true = structured output Ollama (keluaran dibatasi JSON schema)
+    temperature: 0            # deterministik untuk evaluasi
+    seed: 42
+    num_ctx: 2048             # cukup untuk system prompt + 1 kalimat; hemat RAM di RPi 5
+    num_predict: 256          # batas token keluaran
+    keep_alive: 30m           # model tetap di memori antar-perintah
+    timeout_s: 120
