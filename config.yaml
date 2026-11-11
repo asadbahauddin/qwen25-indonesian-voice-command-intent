@@ -78,3 +78,16 @@ nlu:
     timeout_s: 120
   rule:
     keywords: config/keywords_id.yaml   # kamus intent + penghubung klausa (entity dari domain_vocab)
+  indobert:
+    base_model: models/indobert-base-p1     # salinan lokal indobenchmark/indobert-base-p1 (offline)
+    model_dir: models/indobert_intent       # hasil fine-tuning (klasifikasi intent)
+    train_data: data/indobert_train.jsonl
+    device: auto              # auto | cuda | cpu
+    max_len: 64
+    epochs: 8
+    batch_size: 16
+    lr: 3.0e-5
+    weight_decay: 0.01
+    warmup_ratio: 0.1
+    val_ratio: 0.15           # dari data latih, untuk memilih epoch terbaik (BUKAN data uji)
+    seed: 42

@@ -122,7 +122,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | F2 | Belum | – | Tidak ada `src/vad.py`, `bench/tes_vad.py`, `recordings/seg_*.wav`. |
 | F3 | Belum | – | Tidak ada `src/asr.py`. |
 | F4 | **Selesai** (11 Nov) | `src/nlu/base.py`, `src/nlu/qwen.py`, `prompts/system_id.txt` v1 (sha `114d424e5d61`), `results/qwen_uji_cepat_MSI_*.txt`, `Dokumentasi/F4_qwen.md` | Ollama HTTP + structured output (JSON schema). Uji cepat 2 kalimat (sederhana + combined): JSON & skema valid, entity tepat. `load_s` 0,3–0,5 s per permintaan perlu diselidiki di F6. |
-| F4b | Belum | – | Tidak ada `rule.py`, `indobert.py`, `config/keywords_id.yaml`, `data/`, `models/`. Screenshot `Dokumentasi/*.png` bukan bukti hasil (hanya tangkapan file explorer). |
+| F4b | **Selesai** (11 Nov) | `src/nlu/{rule,indobert,entities}.py`, `config/keywords_id.yaml` v1, `data/indobert_train.jsonl` (300), `results/indobert_train_MSI_20261111_225006.json`, `results/f4b_uji_cepat_*.txt`, `Dokumentasi/F4b_baseline.md` | Val acc IndoBERT 1,0 (val dari templat yang sama, jadi **bukan hasil uji**). Model di `models/indobert_intent` (tidak di-push, bisa dibuat ulang). Uji cepat 2 kalimat: kedua baseline benar. |
 | F5 | Belum | – | Tidak ada `src/pipeline.py`, `src/cli.py`. |
 | F6 | Persiapan | `bench/pilot_set.json`, `Dokumentasi/lembar_baca_pilot.md` (commit `90c8f2d`) | 36 kalimat berlabel (6 intent × 3 formalitas × 2). Belum ada `bench/uji_llm.py` dan hasil. |
 | F7 | Belum | – | Tidak ada bukti RPi 5. |
@@ -139,7 +139,8 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - Kosakata domain lab (ruangan/benda/orang/dokumen) ada di `config/domain_id.yaml`. "Trainer RL" = trainer Rangkaian Listrik; ejaan "Pak Andi".
 - **Skema JSON final** (disetujui 11 Nov): `combined_command` → field tingkat atas null, sub-perintah di `steps[]` (tiap langkah: intent selain combined + 4 entity). Skema didefinisikan di `src/nlu/base.py: COMMAND_SCHEMA`.
 - F4: Qwen dipanggil lewat Ollama HTTP API (`requests`, tanpa paket `ollama`), `format`=JSON schema (grammar-constrained), temperature 0, seed 42, num_ctx 2048. Normalisasi entity (alias → kanonik) sama untuk semua metode. Contoh few-shot di prompt dihitung sebagai data latih Qwen, jadi tidak boleh muncul di pilot atau dataset.
-- Rencana responden: 4 orang × 48 kalimat = 192 sampel.
+- F4b: entity untuk rule-based dan IndoBERT memakai kamus bersama (`src/nlu/entities.py`, alias terpanjang, tanpa tumpang tindih). IndoBERT hanya mengklasifikasi intent; combined dipecah per klausa lalu diklasifikasi ulang. Data latih sintetis dari templat (seed 42), dicek tanpa kebocoran ke pilot dan contoh prompt. **Kamus rule-based tidak boleh disetel memakai pilot atau dataset.**
+- Rencana responden: 4 orang × 48 kalimat = 192 sampel. Kalimat dataset wajib dicek tidak sama dengan pilot, data latih, dan contoh prompt.
 - Belum diputuskan: faster-whisper vs openai-whisper, threshold VAD, versi system prompt.
 
 **Angka yang sudah terukur:**

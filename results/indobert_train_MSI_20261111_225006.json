@@ -1,0 +1,111 @@
+{
+  "host": "MSI",
+  "waktu": "20261111_225006",
+  "base_model": "models/indobert-base-p1",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 2050",
+  "torch": "2.14.1+cu126",
+  "config": {
+    "base_model": "models/indobert-base-p1",
+    "model_dir": "models/indobert_intent",
+    "train_data": "data/indobert_train.jsonl",
+    "device": "auto",
+    "max_len": 64,
+    "epochs": 8,
+    "batch_size": 16,
+    "lr": 3e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "val_ratio": 0.15,
+    "seed": 42
+  },
+  "n_total": 300,
+  "n_train": 255,
+  "n_val": 45,
+  "kalimat_terpotong_max_len": 0,
+  "label2id": {
+    "navigate_room": 0,
+    "navigate_object": 1,
+    "find_person": 2,
+    "deliver_document": 3,
+    "combined_command": 4,
+    "general_command": 5
+  },
+  "epoch_terbaik": 8,
+  "terbaik": {
+    "epoch": 8,
+    "train_loss": 0.005402591189040858,
+    "val_loss": 0.004475953864554564,
+    "val_acc": 1.0,
+    "val_f1_macro": 1.0,
+    "detik": 72.31270889999905
+  },
+  "riwayat": [
+    {
+      "epoch": 1,
+      "train_loss": 1.5323988998637479,
+      "val_loss": 0.8360080268647936,
+      "val_acc": 1.0,
+      "val_f1_macro": 1.0,
+      "detik": 29.86527820000083
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.45739841805953607,
+      "val_loss": 0.0906195749839147,
+      "val_acc": 1.0,
+      "val_f1_macro": 1.0,
+      "detik": 31.79653110000072
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.05937637629754403,
+      "val_loss": 0.017941962596442963,
+      "val_acc": 1.0,
+      "val_f1_macro": 1.0,
+      "detik": 32.20526029999928
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.014402456829945247,
+      "val_loss": 0.008688778337091207,
+      "val_acc": 1.0,
+      "val_f1_macro": 1.0,
+      "detik": 32.551923900000475
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.008018284228940804,
+      "val_loss": 0.005883026112698846,
+      "val_acc": 1.0,
+      "val_f1_macro": 1.0,
+      "detik": 22.063073400000576
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.006403470519637944,
+      "val_loss": 0.004962327755573723,
+      "val_acc": 1.0,
+      "val_f1_macro": 1.0,
+      "detik": 27.167403499999637
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.0057321810309647345,
+      "val_loss": 0.004595480973107947,
+      "val_acc": 1.0,
+      "val_f1_macro": 1.0,
+      "detik": 36.51448749999872
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.005402591189040858,
+      "val_loss": 0.004475953864554564,
+      "val_acc": 1.0,
+      "val_f1_macro": 1.0,
+      "detik": 72.31270889999905
+    }
+  ],
+  "durasi_total_s": 422.55761730000086,
+  "catatan": "val diambil dari data latih sintetis; bukan hasil uji penelitian"
+}

@@ -1,0 +1,23 @@
+# F4b uji cepat rule-based & IndoBERT — 2026-11-11 22:51:23 — laptop MSI
+
+$ python -m src.nlu.rule "Tolong antarkan surat izin ke Pak Umam"
+Perintah: Tolong antarkan surat izin ke Pak Umam
+JSON    : {"intent": "deliver_document", "room": null, "object": null, "person": "pak umam", "document": "surat izin", "steps": null}
+info    : {"method": "rule", "keywords_version": "v1", "json_valid": true, "schema_valid": true, "error": null, "t_nlu": 0.00024290000146720558}
+
+$ python -m src.nlu.rule "Robot, ke trainer PLC dulu, habis itu cari Bu Vivi ya"
+Perintah: Robot, ke trainer PLC dulu, habis itu cari Bu Vivi ya
+JSON    : {"intent": "combined_command", "room": null, "object": null, "person": null, "document": null, "steps": [{"intent": "navigate_object", "room": null, "object": "trainer plc", "person": null, "document": null}, {"intent": "find_person", "room": null, "object": null, "person": "bu vivi", "document": null}]}
+info    : {"method": "rule", "keywords_version": "v1", "json_valid": true, "schema_valid": true, "error": null, "t_nlu": 0.00035349999961908907}
+
+$ python -m src.nlu.indobert "Tolong antarkan surat izin ke Pak Umam"
+warm-up: {'warmup_s': 0.5634255999993911, 'load_s': 7.149488700000802}
+Perintah: Tolong antarkan surat izin ke Pak Umam
+JSON    : {"intent": "deliver_document", "room": null, "object": null, "person": "pak umam", "document": "surat izin", "steps": null}
+info    : {"method": "indobert", "device": "cuda", "json_valid": true, "intent_prob": 0.9952, "t_nlu": 0.0285, "schema_valid": true, "error": null}
+
+$ python -m src.nlu.indobert "Robot, ke trainer PLC dulu, habis itu cari Bu Vivi ya"
+warm-up: {'warmup_s': 0.5680197999990924, 'load_s': 6.16645459999927}
+Perintah: Robot, ke trainer PLC dulu, habis itu cari Bu Vivi ya
+JSON    : {"intent": "combined_command", "room": null, "object": null, "person": null, "document": null, "steps": [{"intent": "navigate_object", "room": null, "object": "trainer plc", "person": null, "document": null}, {"intent": "find_person", "room": null, "object": null, "person": "bu vivi", "document": null}]}
+info    : {"method": "indobert", "device": "cuda", "json_valid": true, "intent_prob": 0.9953, "t_nlu": 0.164, "schema_valid": true, "error": null}
