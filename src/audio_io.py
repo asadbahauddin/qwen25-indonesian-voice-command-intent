@@ -167,6 +167,11 @@ class AudioSource:
             except queue.Empty:
                 break
         self._resampler = self._new_resampler()
+        # blok yang terbuang saat menunggu (antrean penuh) tidak memengaruhi rekaman
+        if self.n_dropped:
+            log.debug("drain: %d blok terbuang selama menunggu (diabaikan)", self.n_dropped)
+        self.n_dropped = 0
+        self.n_status = 0
         return n
 
     def flush(self):
