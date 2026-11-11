@@ -101,7 +101,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | F0 | Cek lingkungan, conda env, CUDA, Ollama |
 | F1 | Tes mikrofon: daftar perangkat, rekam diam/normal/keras, RMS/peak/clipping/SNR |
 | F2 | Silero VAD real-time + pre-roll, `bench/tes_vad.py` |
-| F3 | Whisper base: openai-whisper vs faster-whisper, initial_prompt domain |
+| F3 | **Tahap 1 selesai** (12 Nov): latency + draf transkrip. WER menunggu koreksi manual | `src/asr.py`, `bench/tes_asr.py`, `bench/koreksi_transkrip.py`, `prompts/whisper_initial_id.txt` (sha `555a3d3569c8`), `results/asr_MSI_20261112_010730.md`, `Dokumentasi/F3_whisper.md` | faster-whisper ≈3× lebih cepat dari openai-whisper. initial_prompt memperbaiki nama entity, tapi 1/162 halusinasi pengulangan. Backend final belum dipilih (perlu WER). |
 | F4 | Qwen2.5 via Ollama, JSON schema, `prompts/system_id.txt` |
 | F4b | Baseline rule-based + IndoBERT (antarmuka sama) |
 | F5 | Integrasi pipeline + CLI interaktif + log CSV |
@@ -145,11 +145,13 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - **Pilot = set pengembangan** (boleh dipakai memperbaiki prompt/skema). **Data responden = set uji** (tidak boleh dipakai untuk pengembangan apa pun).
 - **Desain data responden (disetujui 11 Nov):** responden bicara langsung ke mic (alat rekam seperti `tes_mic`) dengan **kalimat bebas** berdasarkan **kartu skenario** (intent + entity target + gaya formalitas), bukan membaca kalimat. Transkrip dicek manual, lalu label disusun. Rekaman diuji untuk ketiga metode (teks ground-truth dan transkrip Whisper).
 - **Responden: 3 orang (peneliti + 2 orang) × 54 kartu = 162 ujaran** (diputuskan 11 Nov). Peneliti sebagai responden adalah keterbatasan (mengenal sistem), jadi hasil juga dilaporkan per responden. Kalimat dataset wajib dicek tidak sama dengan pilot, data latih, dan contoh prompt.
-- Belum diputuskan: faster-whisper vs openai-whisper, threshold VAD, versi system prompt.
+- F3: Whisper deterministik (temperature 0 tanpa fallback, beam 5, condition_on_previous_text false, vad_filter false karena VAD tahap tersendiri). initial_prompt = daftar nama entity domain saja. Transkrip per file disimpan di `dataset/` (tidak di-push). Koreksi transkrip menampilkan 2 draf dari konfigurasi berbeda untuk mengurangi anchoring.
+- Belum diputuskan: faster-whisper vs openai-whisper (tunggu WER), threshold VAD, versi system prompt.
 
 **Angka yang sudah terukur:**
 - F1 mic (`results/mic_MSI_20261111_222034.md`): diam RMS -90,94 dBFS; normal RMS -17,35 / p90 -13,21 dBFS; keras RMS -13,34 / p90 -7,87 dBFS; clipping native 0 untuk semua kondisi.
 - F6 pilot teks, laptop (`results/summary_MSI_20261111_225631.md`): Qwen intent 80,56%, EM 63,89%, F1w 0,7931, JSON valid 100%, t_nlu 0,786 ± 0,387 s (n=36); rule-based 100%/100%, 0,0002 s; IndoBERT 100%/100%, 0,0174 ± 0,0240 s. Per formalitas Qwen (intent/EM): formal 83,3/75,0, semi 91,7/66,7, informal 66,7/50,0.
 - F6 Qwen skema v2 (`results/summary_MSI_20261111_230143.md`): intent 80,56%, EM 69,44%, t_nlu 0,678 ± 0,239 s (n=36). Combined P25/P26/P29/P30 masih salah.
 - F8 kualitas rekaman (`results/kualitas_dataset_MSI_20261112_005606.md`): durasi R01 4,50 ± 1,14 s, R02 5,89 ± 1,45 s, R03 4,55 ± 1,30 s (n=54 masing-masing); RMS rata-rata -16,6 / -21,9 / -15,4 dBFS.
-- Belum ada metrik ASR (WER) dan latency end-to-end.
+- F3 latency Whisper base, laptop (`results/asr_MSI_20261112_010730.md`, n=162): faster GPU fp16 + prompt 0,093 ± 0,019 s (RTF 0,019); openai GPU fp16 + prompt 0,282 ± 0,085 s; faster CPU int8 2,791 ± 1,106 s; openai CPU fp32 6,073 ± 3,125 s.
+- Belum ada WER dan latency end-to-end.

@@ -98,6 +98,21 @@ nlu:
 # ---------------------------------------------------------------------
 # FASE 8 - Perekaman dataset (bench/rekam_dataset.py)
 # ---------------------------------------------------------------------
+asr:
+  backend: faster             # faster = faster-whisper (CTranslate2) | openai = openai-whisper (PyTorch); final dipilih di F3 (WER + latency)
+  model: base                 # proposal: Whisper base; /whisper base|small di CLI
+  models_dir: models/whisper  # unduhan model faster-whisper; openai-whisper memakai ~/.cache/whisper
+  language: id
+  device: auto                # auto = cuda bila ada, selain itu cpu
+  compute_type: {cuda: float16, cpu: int8}   # faster-whisper; openai-whisper: fp16 di cuda, fp32 di cpu
+  cpu_threads: 0              # 0 = bawaan pustaka
+  beam_size: 5
+  temperature: 0.0            # tanpa fallback suhu -> deterministik
+  condition_on_previous_text: false   # cegah halusinasi berantai
+  without_timestamps: true
+  use_initial_prompt: true
+  initial_prompt_file: prompts/whisper_initial_id.txt   # hanya daftar nama entity domain (bukan kalimat dataset)
+
 dataset:
   skenario: bench/skenario_dataset.json   # mode skenario (kalimat bebas responden)
   pilot: bench/pilot_set.json             # mode baca (membaca kalimat pilot)

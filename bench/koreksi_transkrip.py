@@ -1,0 +1,101 @@
+"""F8 - Koreksi transkrip manual (ground-truth) untuk dataset responden.
+
+Untuk tiap rekaman: audio diputar otomatis, lalu ditampilkan dua draf dari dua konfigurasi Whisper yang
+berbeda (agar penilai tidak hanya terpaku pada satu sistem). Penilai menulis transkrip yang BENAR
+sesuai yang terdengar.
+
+Perintah:
+  r            putar ulang
+  1 / 2        draf 1 / draf 2 sudah persis benar -> dipakai apa adanya
+  <teks>       ketik transkrip yang benar
+  s            lewati          q   keluar (progres tersimpan; jalankan lagi untuk melanjutkan)
+
+Konvensi transkrip (lihat Dokumentasi/F3_whisper.md):
+  - tulis SEMUA kata yang diucapkan, termasuk partikel (ya, dong, gih, deh) dan kata gaul/daerah apa adanya
+  - jangan tulis bunyi ragu murni (eh, em, hmm); nama orang/tempat ditulis sesuai kamus (Pak Umam, lab otomasi)
+  - angka ditulis dengan huruf; tanda baca boleh (diabaikan saat WER)
+
+Hasil: dataset/metadata.csv kolom `transkrip`, status_label = "terkoreksi", catatan + "sumber=draf1|draf2|ketik".
+Cadangan metadata.csv dibuat sebelum penulisan pertama.
+
+Pemakaian:
+    python bench/koreksi_transkrip.py                       # memakai CSV hipotesis terbaru
+    python bench/koreksi_transkrip.py --penutur R02
+"""
+import argparse
+import csv
+import shutil
+import sys
+from datetime import datetime
+from pathlib import Path
+
+import sounddevice as sd
+import soundfile as sf
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from src.utils import load_config  # noqa: E402
+
+DRAF = ["faster:cuda:prompt", "openai:cuda:noprompt"]
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--hipotesis", help="CSV dari bench/tes_asr.py (default: terbaru)")
+    ap.add_argument("--penutur")
+    a = ap.parse_args()
+    cfg = load_config()
+    droot = ROOT / cfg["dataset"]["out_skenario"]
+    hp = Path(a.hipotesis) if a.hipotesis else max(droot.glob("asr_hipotesis_*.csv"), key=lambda p: p.stat().st_mtime)
+    hyp = {(r["konfig"], r["penutur"], r["item_id"]): r["hipotesis"]
+           for r in csv.DictReader(open(hp, encoding="utf-8"))}
+    meta_p = droot / "metadata.csv"
+    meta = list(csv.DictReader(open(meta_p, encoding="utf-8")))
+    cols = list(meta[0].keys())
+    todo = [m for m in meta if m["mode"] == "skenario" and m["status_label"] != "terkoreksi"
+            and (not a.penutur or m["penutur"] == a.penutur.upper())]
+    print(f"Draf dari {hp.name}. Belum dikoreksi: {len(todo)} / {len(meta)}")
+    backed = False
+    for n, m in enumerate(todo, 1):
+        x, sr = sf.read(droot / m["wav"], dtype="float32")
+        d = [hyp.get((k, m["penutur"], m["item_id"]), "") for k in DRAF]
+        print("=" * 70)
+        print(f"[{n}/{len(todo)}] {m['penutur']}_{m['item_id']} ({m['formality']})  kartu: {m['tujuan']}")
+        print(f"  draf 1: {d[0]}")
+        print(f"  draf 2: {d[1]}")
+        sd.play(x, sr)
+        while True:
+            c = input("  r=putar | 1/2=draf benar | ketik transkrip | s=lewati | q=keluar\n  > ").strip()
+            if c.lower() == "r":
+                sd.stop()
+                sd.play(x, sr)
+                continue
+            break
+        sd.stop()
+        if c.lower() == "q":
+            break
+        if c.lower() == "s" or not c:
+            continue
+        if c in ("1", "2"):
+            text, src = d[int(c) - 1], f"draf{c}"
+        else:
+            text, src = c, "ketik"
+        if not backed:
+            shutil.copy(meta_p, meta_p.with_name(f"metadata.bak_{datetime.now():%Y%m%d_%H%M%S}.csv"))
+            backed = True
+        m["transkrip"] = text
+        m["status_label"] = "terkoreksi"
+        m["catatan"] = ";".join(x for x in [m["catatan"], f"sumber={src}"] if x)
+        tmp = meta_p.with_suffix(".tmp")
+        with open(tmp, "w", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=cols)
+            w.writeheader()
+            w.writerows(meta)
+        tmp.replace(meta_p)
+        print(f"  tersimpan: {text}")
+    done = sum(m["status_label"] == "terkoreksi" for m in meta)
+    print(f"\nTerkoreksi: {done} / {len(meta)}")
+
+
+if __name__ == "__main__":
+    main()

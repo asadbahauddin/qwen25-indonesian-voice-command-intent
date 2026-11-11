@@ -1,0 +1,56 @@
+{
+  "host": "MSI",
+  "waktu": "20261112_010730",
+  "n_file": 162,
+  "n_referensi": 0,
+  "konfig": {
+    "faster:cuda:prompt": {
+      "t_asr_mean": 0.09325,
+      "t_asr_sd": 0.018984221136878726,
+      "n": 162,
+      "rtf_mean": 0.019469150628057787,
+      "load_s": 2.038631699997495,
+      "compute": "float16"
+    },
+    "faster:cuda:noprompt": {
+      "t_asr_mean": 0.08528765432098766,
+      "t_asr_sd": 0.016184686287970252,
+      "n": 162,
+      "rtf_mean": 0.017840375796746067,
+      "load_s": 0.7102992000000086,
+      "compute": "float16"
+    },
+    "openai:cuda:prompt": {
+      "t_asr_mean": 0.28222345679012345,
+      "t_asr_sd": 0.08491856716199318,
+      "n": 162,
+      "rtf_mean": 0.05738037855333545,
+      "load_s": 1.823185499997635,
+      "compute": "float16"
+    },
+    "openai:cuda:noprompt": {
+      "t_asr_mean": 0.2710314814814815,
+      "t_asr_sd": 0.0895708411627995,
+      "n": 162,
+      "rtf_mean": 0.05489165587821011,
+      "load_s": 0.925821900000301,
+      "compute": "float16"
+    },
+    "faster:cpu:prompt": {
+      "t_asr_mean": 2.790509259259259,
+      "t_asr_sd": 1.105546377541485,
+      "n": 162,
+      "rtf_mean": 0.5782739477466423,
+      "load_s": 1.0406770999979926,
+      "compute": "int8"
+    },
+    "openai:cpu:prompt": {
+      "t_asr_mean": 6.073409259259259,
+      "t_asr_sd": 3.1252220352783753,
+      "n": 162,
+      "rtf_mean": 1.2864601411595558,
+      "load_s": 3.0838825999999244,
+      "compute": "float32"
+    }
+  }
+}
