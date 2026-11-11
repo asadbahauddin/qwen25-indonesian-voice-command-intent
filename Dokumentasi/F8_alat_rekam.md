@@ -6,13 +6,14 @@
 ## Desain (disetujui peneliti 11 Nov 2026)
 - Responden **berbicara langsung ke mikrofon** dengan **kalimat sendiri** berdasarkan kartu skenario. Kalimat tidak dibacakan. Ini sesuai judul penelitian ("perintah kalimat bebas") dan membuat data uji **independen** dari set pilot, data latih, dan kamus rule-based (lihat ancaman validitas di F6).
 - Rekaman diuji untuk ketiga metode, dengan dua masukan: transkrip manual (ground-truth) dan transkrip Whisper.
-- Rencana: 4 responden × 48 kartu = 192 ujaran.
+- Rencana (diperbarui 11 Nov): **3 responden** (peneliti + 2 orang) × **54 kartu** = **162 ujaran**, sesuai rentang 150–250 di proposal.
+- Peneliti juga menjadi responden. Ini **keterbatasan**: peneliti sudah mengenal sistem dan kalimat pilot, sehingga gaya kalimatnya bisa terpengaruh. Hasil akan dilaporkan juga per responden.
 
-## Kartu skenario (`bench/skenario_dataset.json` v1)
+## Kartu skenario (`bench/skenario_dataset.json` v2; daftar cetak: `Dokumentasi/F8_daftar_kartu_skenario.md`)
 | Item | Nilai |
 |---|---|
-| Jumlah | 48 kartu = 6 intent × 8 |
-| Formalitas | formal 16, semi-formal 16, informal 16 |
+| Jumlah | 54 kartu = 6 intent × 9 (v1 = 48 kartu, ditambah agar total ≥ 150 ujaran) |
+| Formalitas | formal 18, semi-formal 18, informal 18 |
 | Cakupan entity | semua ruangan (7/7), benda (7/7), orang (5/5), dan dokumen (5/5) muncul |
 | Isi kartu | **Tujuan** (contoh: "Minta robot pergi ke LAB OTOMASI.") + **gaya** (formal/semi-formal/informal). Tidak ada contoh kalimat. |
 | Perintah gabungan | Ditulis netral "(1) …; (2) …" agar tidak memancing kata penghubung tertentu. Ada 1 kartu dengan kata ganti ("orang yang sama, boleh pakai 'beliau'/'dia'"). |
@@ -42,4 +43,4 @@ $PY = "C:\Users\indie\.conda\envs\mbkm-nlu\python.exe"
 ```
 
 ## Kalimat logbook
-> Menyusun 48 kartu skenario perintah (6 intent × 8, formalitas seimbang) dan alat perekaman push-to-talk dengan pemeriksaan kualitas otomatis, metadata, lembar persetujuan responden, serta templat data card untuk pendaftaran HKI dataset.
+> Menyusun 54 kartu skenario perintah (6 intent × 9, formalitas seimbang) dan alat perekaman push-to-talk dengan pemeriksaan kualitas otomatis, metadata, lembar persetujuan responden, serta templat data card untuk pendaftaran HKI dataset.

@@ -14,13 +14,13 @@
 ## 2. Isi
 | Item | Isi |
 |---|---|
-| Jumlah responden | ⟨n⟩ (rencana 4) |
-| Jumlah ujaran | ⟨n⟩ (rencana 4 × 48 = 192) |
+| Jumlah responden | ⟨n⟩ (rencana 3: peneliti + 2 responden) |
+| Jumlah ujaran | ⟨n⟩ (rencana 3 × 54 = 162) |
 | Durasi total | ⟨menit⟩ |
 | Format audio | WAV, 16 kHz, mono, PCM 16-bit (direkam 48 kHz lalu di-resample dengan soxr HQ) |
 | Perangkat | Mikrofon wireless lavalier, receiver USB (VID_4C4A PID_4155), Windows WASAPI. Transmitter memiliki limiter dan noise gate bawaan. |
 | Lingkungan | Laboratorium Sistem Otomasi, Teknik Mekatronika UTM (ruangan dalam, kondisi kebisingan normal) |
-| Cara elisitasi | **Kalimat bebas**: responden diberi kartu skenario (tujuan + gaya bahasa) dan mengucapkan perintah dengan kata-kata sendiri. Kartu: `bench/skenario_dataset.json` v1 (48 kartu, 6 intent × 8, formalitas 16/16/16). |
+| Cara elisitasi | **Kalimat bebas**: responden diberi kartu skenario (tujuan + gaya bahasa) dan mengucapkan perintah dengan kata-kata sendiri. Kartu: `bench/skenario_dataset.json` v2 (54 kartu, 6 intent × 9, formalitas 18/18/18). |
 | Label per ujaran | Transkrip manual, intent (6 kelas), entity (room/object/person/document), steps (perintah gabungan), formalitas, kode responden |
 | Metadata responden | Usia, jenis kelamin, bahasa ibu (tanpa nama) |
 
@@ -41,6 +41,7 @@ Setiap responden menandatangani lembar persetujuan (`Dokumentasi/F8_lembar_perse
 
 ## 7. Keterbatasan
 - Jumlah responden kecil (⟨n⟩); variasi dialek dan usia terbatas.
+- Salah satu responden adalah peneliti sendiri, yang mengenal sistem (potensi bias gaya kalimat).
 - Satu jenis mikrofon dan satu ruangan.
 - Noise gate dan limiter transmitter memengaruhi bagian sunyi dan puncak sinyal.
 - Kosakata entity terbatas pada lingkungan Lab Sistem Otomasi UTM.

@@ -1,10 +1,10 @@
 {
   "_meta": {
     "nama": "Kartu skenario dataset responden (kalimat bebas)",
-    "versi": "v1",
+    "versi": "v2",
     "tanggal": "2026-11-11",
-    "jumlah": 48,
-    "desain": "6 intent x 8 kartu, formalitas 16/16/16",
+    "jumlah": 54,
+    "desain": "6 intent x 9 kartu, formalitas 18/18/18",
     "catatan": "Responden menyusun kalimat sendiri. 'target' = label yang diharapkan; label akhir ditetapkan setelah transkrip diperiksa."
   },
   "items": [
@@ -122,6 +122,20 @@
     },
     {
       "id": "S09",
+      "formality": "informal",
+      "tujuan": "Minta robot pergi ke RUANG ASISTEN.",
+      "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
+      "target": {
+        "intent": "navigate_room",
+        "room": "ruang asisten",
+        "object": null,
+        "person": null,
+        "document": null,
+        "steps": null
+      }
+    },
+    {
+      "id": "S10",
       "formality": "semi-formal",
       "tujuan": "Minta robot pergi ke MESIN CNC.",
       "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
@@ -135,7 +149,7 @@
       }
     },
     {
-      "id": "S10",
+      "id": "S11",
       "formality": "informal",
       "tujuan": "Minta robot pergi ke LENGAN ROBOT.",
       "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
@@ -149,7 +163,7 @@
       }
     },
     {
-      "id": "S11",
+      "id": "S12",
       "formality": "formal",
       "tujuan": "Minta robot pergi ke DERETAN KOMPUTER.",
       "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
@@ -163,7 +177,7 @@
       }
     },
     {
-      "id": "S12",
+      "id": "S13",
       "formality": "semi-formal",
       "tujuan": "Minta robot pergi ke TRAINER PLC.",
       "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
@@ -177,7 +191,7 @@
       }
     },
     {
-      "id": "S13",
+      "id": "S14",
       "formality": "informal",
       "tujuan": "Minta robot pergi ke TRAINER PNEUMATIK.",
       "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
@@ -191,7 +205,7 @@
       }
     },
     {
-      "id": "S14",
+      "id": "S15",
       "formality": "formal",
       "tujuan": "Minta robot pergi ke TRAINER RANGKAIAN LISTRIK.",
       "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
@@ -205,7 +219,7 @@
       }
     },
     {
-      "id": "S15",
+      "id": "S16",
       "formality": "semi-formal",
       "tujuan": "Minta robot pergi ke TRAINER SISTEM DIGITAL.",
       "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
@@ -219,7 +233,7 @@
       }
     },
     {
-      "id": "S16",
+      "id": "S17",
       "formality": "informal",
       "tujuan": "Minta robot pergi ke MESIN CNC.",
       "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
@@ -233,7 +247,21 @@
       }
     },
     {
-      "id": "S17",
+      "id": "S18",
+      "formality": "formal",
+      "tujuan": "Minta robot pergi ke LENGAN ROBOT.",
+      "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
+      "target": {
+        "intent": "navigate_object",
+        "room": null,
+        "object": "lengan robot",
+        "person": null,
+        "document": null,
+        "steps": null
+      }
+    },
+    {
+      "id": "S19",
       "formality": "informal",
       "tujuan": "Minta robot mencari PAK UMAM.",
       "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
@@ -247,7 +275,7 @@
       }
     },
     {
-      "id": "S18",
+      "id": "S20",
       "formality": "formal",
       "tujuan": "Minta robot mencari PAK KUS.",
       "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
@@ -261,7 +289,7 @@
       }
     },
     {
-      "id": "S19",
+      "id": "S21",
       "formality": "semi-formal",
       "tujuan": "Minta robot mencari BU VIVI.",
       "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
@@ -275,7 +303,7 @@
       }
     },
     {
-      "id": "S20",
+      "id": "S22",
       "formality": "informal",
       "tujuan": "Minta robot mencari PAK ANDI.",
       "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
@@ -289,7 +317,7 @@
       }
     },
     {
-      "id": "S21",
+      "id": "S23",
       "formality": "formal",
       "tujuan": "Minta robot mencari ASISTEN LAB.",
       "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
@@ -303,7 +331,7 @@
       }
     },
     {
-      "id": "S22",
+      "id": "S24",
       "formality": "semi-formal",
       "tujuan": "Minta robot mencari PAK UMAM.",
       "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
@@ -317,7 +345,7 @@
       }
     },
     {
-      "id": "S23",
+      "id": "S25",
       "formality": "informal",
       "tujuan": "Minta robot mencari PAK KUS.",
       "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
@@ -331,7 +359,7 @@
       }
     },
     {
-      "id": "S24",
+      "id": "S26",
       "formality": "formal",
       "tujuan": "Minta robot mencari BU VIVI.",
       "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
@@ -345,27 +373,41 @@
       }
     },
     {
-      "id": "S25",
+      "id": "S27",
+      "formality": "semi-formal",
+      "tujuan": "Minta robot mencari PAK ANDI.",
+      "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
+      "target": {
+        "intent": "find_person",
+        "room": null,
+        "object": null,
+        "person": "pak andi",
+        "document": null,
+        "steps": null
+      }
+    },
+    {
+      "id": "S28",
       "formality": "formal",
-      "tujuan": "Minta robot mengantar LAPORAN PRAKTIKUM kepada PAK ANDI.",
+      "tujuan": "Minta robot mengantar LAPORAN PRAKTIKUM kepada ASISTEN LAB.",
       "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
       "target": {
         "intent": "deliver_document",
         "room": null,
         "object": null,
-        "person": "pak andi",
+        "person": "asisten lab",
         "document": "laporan praktikum",
         "steps": null
       }
     },
     {
-      "id": "S26",
+      "id": "S29",
       "formality": "semi-formal",
-      "tujuan": "Minta robot mengantar BERKAS TUGAS AKHIR ke RUANG ASISTEN.",
+      "tujuan": "Minta robot mengantar BERKAS TUGAS AKHIR ke RUANG DOSEN.",
       "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
       "target": {
         "intent": "deliver_document",
-        "room": "ruang asisten",
+        "room": "ruang dosen",
         "object": null,
         "person": null,
         "document": "berkas tugas akhir",
@@ -373,27 +415,27 @@
       }
     },
     {
-      "id": "S27",
+      "id": "S30",
       "formality": "informal",
-      "tujuan": "Minta robot mengantar SURAT IZIN kepada ASISTEN LAB.",
+      "tujuan": "Minta robot mengantar SURAT IZIN kepada PAK UMAM.",
       "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
       "target": {
         "intent": "deliver_document",
         "room": null,
         "object": null,
-        "person": "asisten lab",
+        "person": "pak umam",
         "document": "surat izin",
         "steps": null
       }
     },
     {
-      "id": "S28",
+      "id": "S31",
       "formality": "formal",
-      "tujuan": "Minta robot mengantar JADWAL PRAKTIKUM ke RUANG DOSEN.",
+      "tujuan": "Minta robot mengantar JADWAL PRAKTIKUM ke RUANG PAK UMAM.",
       "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
       "target": {
         "intent": "deliver_document",
-        "room": "ruang dosen",
+        "room": "ruang pak umam",
         "object": null,
         "person": null,
         "document": "jadwal praktikum",
@@ -401,27 +443,27 @@
       }
     },
     {
-      "id": "S29",
+      "id": "S32",
       "formality": "semi-formal",
-      "tujuan": "Minta robot mengantar LEMBAR NILAI kepada PAK UMAM.",
+      "tujuan": "Minta robot mengantar LEMBAR NILAI kepada PAK KUS.",
       "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
       "target": {
         "intent": "deliver_document",
         "room": null,
         "object": null,
-        "person": "pak umam",
+        "person": "pak kus",
         "document": "lembar nilai",
         "steps": null
       }
     },
     {
-      "id": "S30",
+      "id": "S33",
       "formality": "informal",
-      "tujuan": "Minta robot mengantar LAPORAN PRAKTIKUM ke RUANG PAK UMAM.",
+      "tujuan": "Minta robot mengantar LAPORAN PRAKTIKUM ke RUANG PAK KUS.",
       "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
       "target": {
         "intent": "deliver_document",
-        "room": "ruang pak umam",
+        "room": "ruang pak kus",
         "object": null,
         "person": null,
         "document": "laporan praktikum",
@@ -429,27 +471,27 @@
       }
     },
     {
-      "id": "S31",
+      "id": "S34",
       "formality": "formal",
-      "tujuan": "Minta robot mengantar BERKAS TUGAS AKHIR kepada PAK KUS.",
+      "tujuan": "Minta robot mengantar BERKAS TUGAS AKHIR kepada BU VIVI.",
       "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
       "target": {
         "intent": "deliver_document",
         "room": null,
         "object": null,
-        "person": "pak kus",
+        "person": "bu vivi",
         "document": "berkas tugas akhir",
         "steps": null
       }
     },
     {
-      "id": "S32",
+      "id": "S35",
       "formality": "semi-formal",
-      "tujuan": "Minta robot mengantar SURAT IZIN ke RUANG PAK KUS.",
+      "tujuan": "Minta robot mengantar SURAT IZIN ke RUANG BU VIVI.",
       "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
       "target": {
         "intent": "deliver_document",
-        "room": "ruang pak kus",
+        "room": "ruang bu vivi",
         "object": null,
         "person": null,
         "document": "surat izin",
@@ -457,9 +499,23 @@
       }
     },
     {
-      "id": "S33",
+      "id": "S36",
+      "formality": "informal",
+      "tujuan": "Minta robot mengantar JADWAL PRAKTIKUM kepada PAK ANDI.",
+      "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
+      "target": {
+        "intent": "deliver_document",
+        "room": null,
+        "object": null,
+        "person": "pak andi",
+        "document": "jadwal praktikum",
+        "steps": null
+      }
+    },
+    {
+      "id": "S37",
       "formality": "semi-formal",
-      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot pergi ke RUANG BU VIVI; (2) robot mencari BU VIVI.",
+      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot pergi ke RUANG PAK ANDI; (2) robot mencari ASISTEN LAB.",
       "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
       "target": {
         "intent": "combined_command",
@@ -468,114 +524,27 @@
         "person": null,
         "document": null,
         "steps": [
-          {
-            "intent": "navigate_room",
-            "room": "ruang bu vivi",
-            "object": null,
-            "person": null,
-            "document": null
-          },
-          {
-            "intent": "find_person",
-            "room": null,
-            "object": null,
-            "person": "bu vivi",
-            "document": null
-          }
-        ]
-      }
-    },
-    {
-      "id": "S34",
-      "formality": "informal",
-      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot pergi ke LENGAN ROBOT; (2) robot pergi ke RUANG PAK ANDI.",
-      "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
-      "target": {
-        "intent": "combined_command",
-        "room": null,
-        "object": null,
-        "person": null,
-        "document": null,
-        "steps": [
-          {
-            "intent": "navigate_object",
-            "room": null,
-            "object": "lengan robot",
-            "person": null,
-            "document": null
-          },
           {
             "intent": "navigate_room",
             "room": "ruang pak andi",
             "object": null,
             "person": null,
             "document": null
-          }
-        ]
-      }
-    },
-    {
-      "id": "S35",
-      "formality": "formal",
-      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot mencari PAK ANDI; (2) robot mengantar JADWAL PRAKTIKUM kepada orang yang sama (boleh pakai kata 'beliau'/'dia').",
-      "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
-      "target": {
-        "intent": "combined_command",
-        "room": null,
-        "object": null,
-        "person": null,
-        "document": null,
-        "steps": [
+          },
           {
             "intent": "find_person",
             "room": null,
             "object": null,
-            "person": "pak andi",
-            "document": null
-          },
-          {
-            "intent": "deliver_document",
-            "room": null,
-            "object": null,
-            "person": "pak andi",
-            "document": "jadwal praktikum"
-          }
-        ]
-      }
-    },
-    {
-      "id": "S36",
-      "formality": "semi-formal",
-      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot pergi ke LAB OTOMASI; (2) robot mengantar LEMBAR NILAI kepada ASISTEN LAB.",
-      "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
-      "target": {
-        "intent": "combined_command",
-        "room": null,
-        "object": null,
-        "person": null,
-        "document": null,
-        "steps": [
-          {
-            "intent": "navigate_room",
-            "room": "lab otomasi",
-            "object": null,
-            "person": null,
-            "document": null
-          },
-          {
-            "intent": "deliver_document",
-            "room": null,
-            "object": null,
             "person": "asisten lab",
-            "document": "lembar nilai"
+            "document": null
           }
         ]
       }
     },
     {
-      "id": "S37",
+      "id": "S38",
       "formality": "informal",
-      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot pergi ke DERETAN KOMPUTER; (2) robot mencari PAK UMAM.",
+      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot pergi ke DERETAN KOMPUTER; (2) robot pergi ke LAB OTOMASI.",
       "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
       "target": {
         "intent": "combined_command",
@@ -592,20 +561,49 @@
             "document": null
           },
           {
-            "intent": "find_person",
-            "room": null,
+            "intent": "navigate_room",
+            "room": "lab otomasi",
             "object": null,
-            "person": "pak umam",
+            "person": null,
             "document": null
           }
         ]
       }
     },
     {
-      "id": "S38",
+      "id": "S39",
       "formality": "formal",
-      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot pergi ke RUANG ASISTEN; (2) robot berhenti.",
+      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot mencari PAK UMAM; (2) robot mengantar LEMBAR NILAI kepada orang yang sama (boleh pakai kata 'beliau'/'dia').",
       "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
+      "target": {
+        "intent": "combined_command",
+        "room": null,
+        "object": null,
+        "person": null,
+        "document": null,
+        "steps": [
+          {
+            "intent": "find_person",
+            "room": null,
+            "object": null,
+            "person": "pak umam",
+            "document": null
+          },
+          {
+            "intent": "deliver_document",
+            "room": null,
+            "object": null,
+            "person": "pak umam",
+            "document": "lembar nilai"
+          }
+        ]
+      }
+    },
+    {
+      "id": "S40",
+      "formality": "semi-formal",
+      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot pergi ke RUANG ASISTEN; (2) robot mengantar LAPORAN PRAKTIKUM ke RUANG DOSEN.",
+      "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
       "target": {
         "intent": "combined_command",
         "room": null,
@@ -621,6 +619,64 @@
             "document": null
           },
           {
+            "intent": "deliver_document",
+            "room": "ruang dosen",
+            "object": null,
+            "person": null,
+            "document": "laporan praktikum"
+          }
+        ]
+      }
+    },
+    {
+      "id": "S41",
+      "formality": "informal",
+      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot pergi ke TRAINER PLC; (2) robot mencari PAK KUS.",
+      "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
+      "target": {
+        "intent": "combined_command",
+        "room": null,
+        "object": null,
+        "person": null,
+        "document": null,
+        "steps": [
+          {
+            "intent": "navigate_object",
+            "room": null,
+            "object": "trainer plc",
+            "person": null,
+            "document": null
+          },
+          {
+            "intent": "find_person",
+            "room": null,
+            "object": null,
+            "person": "pak kus",
+            "document": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "S42",
+      "formality": "formal",
+      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot pergi ke RUANG PAK UMAM; (2) robot berhenti.",
+      "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
+      "target": {
+        "intent": "combined_command",
+        "room": null,
+        "object": null,
+        "person": null,
+        "document": null,
+        "steps": [
+          {
+            "intent": "navigate_room",
+            "room": "ruang pak umam",
+            "object": null,
+            "person": null,
+            "document": null
+          },
+          {
             "intent": "general_command",
             "room": null,
             "object": null,
@@ -631,9 +687,9 @@
       }
     },
     {
-      "id": "S39",
+      "id": "S43",
       "formality": "semi-formal",
-      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot mencari PAK KUS; (2) robot pergi ke TRAINER PLC.",
+      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot mencari BU VIVI; (2) robot pergi ke TRAINER PNEUMATIK.",
       "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
       "target": {
         "intent": "combined_command",
@@ -646,13 +702,13 @@
             "intent": "find_person",
             "room": null,
             "object": null,
-            "person": "pak kus",
+            "person": "bu vivi",
             "document": null
           },
           {
             "intent": "navigate_object",
             "room": null,
-            "object": "trainer plc",
+            "object": "trainer pneumatik",
             "person": null,
             "document": null
           }
@@ -660,9 +716,9 @@
       }
     },
     {
-      "id": "S40",
+      "id": "S44",
       "formality": "informal",
-      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot mengantar LAPORAN PRAKTIKUM ke RUANG DOSEN; (2) robot pergi ke RUANG PAK UMAM.",
+      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot mengantar BERKAS TUGAS AKHIR kepada PAK ANDI; (2) robot pergi ke RUANG PAK KUS.",
       "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
       "target": {
         "intent": "combined_command",
@@ -673,14 +729,14 @@
         "steps": [
           {
             "intent": "deliver_document",
-            "room": "ruang dosen",
+            "room": null,
             "object": null,
-            "person": null,
-            "document": "laporan praktikum"
+            "person": "pak andi",
+            "document": "berkas tugas akhir"
           },
           {
             "intent": "navigate_room",
-            "room": "ruang pak umam",
+            "room": "ruang pak kus",
             "object": null,
             "person": null,
             "document": null
@@ -689,80 +745,39 @@
       }
     },
     {
-      "id": "S41",
-      "formality": "informal",
-      "tujuan": "Robot harus MENUNGGU sebentar di tempatnya.",
-      "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
-      "target": {
-        "intent": "general_command",
-        "room": null,
-        "object": null,
-        "person": null,
-        "document": null,
-        "steps": null
-      }
-    },
-    {
-      "id": "S42",
-      "formality": "formal",
-      "tujuan": "Robot harus KEMBALI ke posisi awalnya.",
-      "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
-      "target": {
-        "intent": "general_command",
-        "room": null,
-        "object": null,
-        "person": null,
-        "document": null,
-        "steps": null
-      }
-    },
-    {
-      "id": "S43",
-      "formality": "semi-formal",
-      "tujuan": "Robot harus MAJU sedikit.",
-      "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
-      "target": {
-        "intent": "general_command",
-        "room": null,
-        "object": null,
-        "person": null,
-        "document": null,
-        "steps": null
-      }
-    },
-    {
-      "id": "S44",
-      "formality": "informal",
-      "tujuan": "Robot harus MUNDUR sedikit.",
-      "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
-      "target": {
-        "intent": "general_command",
-        "room": null,
-        "object": null,
-        "person": null,
-        "document": null,
-        "steps": null
-      }
-    },
-    {
       "id": "S45",
       "formality": "formal",
-      "tujuan": "Robot harus berjalan LEBIH PELAN.",
+      "tujuan": "DUA tindakan berurutan dalam SATU perintah: (1) robot pergi ke TRAINER RANGKAIAN LISTRIK; (2) robot menunggu sebentar.",
       "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
       "target": {
-        "intent": "general_command",
+        "intent": "combined_command",
         "room": null,
         "object": null,
         "person": null,
         "document": null,
-        "steps": null
+        "steps": [
+          {
+            "intent": "navigate_object",
+            "room": null,
+            "object": "trainer rangkaian listrik",
+            "person": null,
+            "document": null
+          },
+          {
+            "intent": "general_command",
+            "room": null,
+            "object": null,
+            "person": null,
+            "document": null
+          }
+        ]
       }
     },
     {
       "id": "S46",
-      "formality": "semi-formal",
-      "tujuan": "Robot harus PUTAR BALIK.",
-      "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
+      "formality": "informal",
+      "tujuan": "Robot harus KEMBALI ke posisi awalnya.",
+      "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
       "target": {
         "intent": "general_command",
         "room": null,
@@ -774,9 +789,9 @@
     },
     {
       "id": "S47",
-      "formality": "informal",
-      "tujuan": "Robot harus DIAM di tempat dan tidak bergerak.",
-      "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
+      "formality": "formal",
+      "tujuan": "Robot harus MAJU sedikit.",
+      "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
       "target": {
         "intent": "general_command",
         "room": null,
@@ -788,9 +803,93 @@
     },
     {
       "id": "S48",
+      "formality": "semi-formal",
+      "tujuan": "Robot harus MUNDUR sedikit.",
+      "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
+      "target": {
+        "intent": "general_command",
+        "room": null,
+        "object": null,
+        "person": null,
+        "document": null,
+        "steps": null
+      }
+    },
+    {
+      "id": "S49",
+      "formality": "informal",
+      "tujuan": "Robot harus berjalan LEBIH PELAN.",
+      "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
+      "target": {
+        "intent": "general_command",
+        "room": null,
+        "object": null,
+        "person": null,
+        "document": null,
+        "steps": null
+      }
+    },
+    {
+      "id": "S50",
+      "formality": "formal",
+      "tujuan": "Robot harus PUTAR BALIK.",
+      "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
+      "target": {
+        "intent": "general_command",
+        "room": null,
+        "object": null,
+        "person": null,
+        "document": null,
+        "steps": null
+      }
+    },
+    {
+      "id": "S51",
+      "formality": "semi-formal",
+      "tujuan": "Robot harus DIAM di tempat dan tidak bergerak.",
+      "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
+      "target": {
+        "intent": "general_command",
+        "room": null,
+        "object": null,
+        "person": null,
+        "document": null,
+        "steps": null
+      }
+    },
+    {
+      "id": "S52",
+      "formality": "informal",
+      "tujuan": "Robot harus berjalan LEBIH CEPAT.",
+      "gaya": "INFORMAL: santai seperti kepada teman dekat, boleh bahasa gaul/daerah.",
+      "target": {
+        "intent": "general_command",
+        "room": null,
+        "object": null,
+        "person": null,
+        "document": null,
+        "steps": null
+      }
+    },
+    {
+      "id": "S53",
       "formality": "formal",
       "tujuan": "Robot harus BERHENTI bergerak.",
       "gaya": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
+      "target": {
+        "intent": "general_command",
+        "room": null,
+        "object": null,
+        "person": null,
+        "document": null,
+        "steps": null
+      }
+    },
+    {
+      "id": "S54",
+      "formality": "semi-formal",
+      "tujuan": "Robot harus MENUNGGU sebentar di tempatnya.",
+      "gaya": "SEMI-FORMAL: sopan tetapi santai, seperti kepada kakak tingkat.",
       "target": {
         "intent": "general_command",
         "room": null,

@@ -9,7 +9,7 @@
 
 ### Penjelasan kepada responden
 1. **Tujuan.** Penelitian ini menguji kemampuan program komputer dalam memahami perintah suara berbahasa Indonesia yang ditujukan kepada robot.
-2. **Yang Anda lakukan.** Anda akan melihat ±48 kartu skenario (misalnya "minta robot mengantar dokumen kepada seseorang"), lalu mengucapkan perintah tersebut **dengan kalimat Anda sendiri** ke mikrofon *clip-on*. Waktu yang dibutuhkan ±20–30 menit.
+2. **Yang Anda lakukan.** Anda akan melihat ±54 kartu skenario (misalnya "minta robot mengantar dokumen kepada seseorang"), lalu mengucapkan perintah tersebut **dengan kalimat Anda sendiri** ke mikrofon *clip-on*. Waktu yang dibutuhkan ±20–30 menit.
 3. **Data yang direkam.** Suara Anda dalam bentuk file audio, ditambah usia, jenis kelamin, dan bahasa ibu. **Nama Anda tidak disimpan bersama rekaman.** Rekaman hanya diberi kode anonim (mis. R01).
 4. **Penggunaan data.** Rekaman dan transkripnya dipakai untuk penelitian ini dan untuk dataset yang didaftarkan sebagai Hak Kekayaan Intelektual (hak cipta dataset) atas nama tim peneliti. Data dapat dipakai untuk publikasi ilmiah, laporan, dan penelitian lanjutan, **tanpa** mencantumkan identitas Anda.
 5. **Penyimpanan.** Audio disimpan di perangkat peneliti dan penyimpanan cloud pribadi, **tidak** diunggah ke repositori publik tanpa persetujuan tambahan.

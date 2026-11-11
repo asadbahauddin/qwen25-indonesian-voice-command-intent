@@ -2,7 +2,7 @@
 
 Setiap kartu berisi TUJUAN perintah (intent + entity target + gaya bahasa), BUKAN kalimat,
 sehingga responden menyusun kalimatnya sendiri (perintah kalimat bebas).
-- 6 intent x 8 kartu = 48 kartu; formalitas seimbang 16/16/16.
+- 6 intent x 9 kartu = 54 kartu; formalitas seimbang 18/18/18 (3 responden x 54 = 162 ujaran).
 - Entity diputar agar semua ruangan/benda/orang/dokumen di config/domain_id.yaml muncul.
 - `target` = label yang DIHARAPKAN; label akhir ditetapkan setelah transkrip diperiksa
   (responden bisa saja menyimpang dari kartu).
@@ -21,7 +21,7 @@ sys.path.insert(0, str(ROOT))
 from src.nlu.base import ENTITY_FIELDS, INTENTS, Domain, validate_command  # noqa: E402
 from src.utils import load_config  # noqa: E402
 
-PER_INTENT = 8
+PER_INTENT = 9
 FORMS = ["formal", "semi-formal", "informal"]
 GAYA = {
     "formal": "FORMAL: sopan dan baku, seperti berbicara kepada dosen.",
@@ -37,9 +37,10 @@ UMUM = [  # (deskripsi tujuan, tanpa memberi kalimat jadi)
     "Robot harus berjalan LEBIH PELAN.",
     "Robot harus PUTAR BALIK.",
     "Robot harus DIAM di tempat dan tidak bergerak.",
+    "Robot harus berjalan LEBIH CEPAT.",
 ]
 UMUM_SINGKAT = ["berhenti", "menunggu sebentar", "kembali ke posisi awal", "maju sedikit", "mundur sedikit",
-                "berjalan lebih pelan", "putar balik", "diam di tempat"]
+                "berjalan lebih pelan", "putar balik", "diam di tempat", "berjalan lebih cepat"]
 
 
 def up(s):
@@ -87,7 +88,7 @@ def main():
     combos = [("navigate_room", "find_person"), ("navigate_object", "navigate_room"), ("find_person", "PRONOUN"),
               ("navigate_room", "deliver_document"), ("navigate_object", "find_person"),
               ("navigate_room", "general_command"), ("find_person", "navigate_object"),
-              ("deliver_document", "navigate_room")]
+              ("deliver_document", "navigate_room"), ("navigate_object", "general_command")]
     cards, n = [], 0
     for ii, intent in enumerate(INTENTS):
         for k in range(PER_INTENT):
@@ -118,8 +119,8 @@ def main():
                           "target": target})
 
     out = ROOT / "bench" / "skenario_dataset.json"
-    meta = {"nama": "Kartu skenario dataset responden (kalimat bebas)", "versi": "v1", "tanggal": "2026-11-11",
-            "jumlah": len(cards), "desain": "6 intent x 8 kartu, formalitas 16/16/16",
+    meta = {"nama": "Kartu skenario dataset responden (kalimat bebas)", "versi": "v2", "tanggal": "2026-11-11",
+            "jumlah": len(cards), "desain": "6 intent x 9 kartu, formalitas 18/18/18",
             "catatan": "Responden menyusun kalimat sendiri. 'target' = label yang diharapkan; label akhir "
                        "ditetapkan setelah transkrip diperiksa."}
     out.write_text(json.dumps({"_meta": meta, "items": cards}, indent=2, ensure_ascii=False), encoding="utf-8")

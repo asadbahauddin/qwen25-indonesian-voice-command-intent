@@ -126,7 +126,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | F5 | Belum | – | Tidak ada `src/pipeline.py`, `src/cli.py`. |
 | F6 | **Selesai** (11 Nov) | `bench/uji_llm.py`, `results/summary_MSI_20261111_225631.md` (+csv/json), `Dokumentasi/F6_uji_pilot.md` | Qwen intent 80,56% / EM 63,89%; rule & IndoBERT 100%. **Ancaman validitas:** pilot, templat, dan kamus disusun bersamaan dengan kosakata sama, jadi hasil F6 bukan uji hipotesis. Kesalahan Qwen dominan pada konsistensi struktur combined. |
 | F7 | Belum | – | Tidak ada bukti RPi 5. |
-| F8 | Sebagian (alat siap) | `bench/rekam_dataset.py`, `bench/skenario_dataset.json` v1 (48 kartu), `Dokumentasi/F8_*.md` (alat, persetujuan, data card) | Uji fungsi OK (input simulasi). **Belum ada rekaman:** pilot dibaca (P01) dan responden R01–R04. |
+| F8 | Sebagian (alat siap) | `bench/rekam_dataset.py`, `bench/skenario_dataset.json` v2 (54 kartu), `Dokumentasi/F8_*.md` (alat, persetujuan, data card) | Uji fungsi OK (input simulasi). **Belum ada rekaman:** pilot dibaca (P01) dan responden R01–R03 (R01 = peneliti). |
 | F9 | Belum | – | – |
 | F10 | Belum | – | – |
 
@@ -144,7 +144,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - **Prompt final Qwen = v1** (`prompts/system_id.txt`, sha `114d424e5d61`) + skema v2. Prompt v2 (field `tindakan` dulu) sudah diuji: intent 86,11% tetapi EM 66,67% dan latency 1,024 s, jadi tidak dipakai. **Iterasi prompt dihentikan** agar tidak overfitting ke pilot.
 - **Pilot = set pengembangan** (boleh dipakai memperbaiki prompt/skema). **Data responden = set uji** (tidak boleh dipakai untuk pengembangan apa pun).
 - **Desain data responden (disetujui 11 Nov):** responden bicara langsung ke mic (alat rekam seperti `tes_mic`) dengan **kalimat bebas** berdasarkan **kartu skenario** (intent + entity target + gaya formalitas), bukan membaca kalimat. Transkrip dicek manual, lalu label disusun. Rekaman diuji untuk ketiga metode (teks ground-truth dan transkrip Whisper).
-- Rencana responden: 4 orang × 48 kalimat = 192 sampel. Kalimat dataset wajib dicek tidak sama dengan pilot, data latih, dan contoh prompt.
+- **Responden: 3 orang (peneliti + 2 orang) × 54 kartu = 162 ujaran** (diputuskan 11 Nov). Peneliti sebagai responden adalah keterbatasan (mengenal sistem), jadi hasil juga dilaporkan per responden. Kalimat dataset wajib dicek tidak sama dengan pilot, data latih, dan contoh prompt.
 - Belum diputuskan: faster-whisper vs openai-whisper, threshold VAD, versi system prompt.
 
 **Angka yang sudah terukur:**
