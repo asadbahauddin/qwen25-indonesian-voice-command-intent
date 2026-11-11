@@ -23,3 +23,6 @@ results/env_*.json
 dataset/
 models/
 *.wav
+
+# cadangan lokal dataset (audio responden, jangan di-push)
+backup/

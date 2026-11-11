@@ -37,13 +37,13 @@ Lihat `src/nlu/base.py` (`COMMAND_SCHEMA_V2`). Intent: `navigate_room`, `navigat
 Tidak ada kalimat yang sama dengan set pilot (`bench/pilot_set.json`), data latih IndoBERT (`data/indobert_train.jsonl`), maupun contoh di prompt Qwen (dicek otomatis setelah transkripsi). Dataset ini **hanya** dipakai sebagai data uji. Tidak dipakai untuk melatih atau menyetel metode apa pun.
 
 ## 6. Etika dan privasi
-Setiap responden menandatangani lembar persetujuan (`Dokumentasi/F8_lembar_persetujuan.md`). Nama hanya tercantum di lembar kertas tersebut. Audio tidak diunggah ke repositori publik.
+Setiap responden menandatangani lembar persetujuan (`Dokumentasi/F8_lembar_persetujuan.md`). Nama hanya tercantum di lembar kertas tersebut. Audio tidak diunggah ke repositori publik. Cadangan: arsip zip + `SHA256SUMS.txt` (checksum per file) di laptop peneliti (`backup/`) dan Google Drive pribadi.
 
 ## 7. Keterbatasan
 - Jumlah responden kecil (⟨n⟩); variasi dialek dan usia terbatas.
 - Salah satu responden adalah peneliti sendiri, yang mengenal sistem (potensi bias gaya kalimat).
 - Satu jenis mikrofon dan satu ruangan.
-- Noise gate dan limiter transmitter memengaruhi bagian sunyi dan puncak sinyal.
+- Noise gate dan limiter transmitter memengaruhi bagian sunyi dan puncak sinyal. Clipping puncak sesaat terjadi pada 56/162 file (R01 13, R02 1, R03 42), maksimum 0,051% sampel per file, dan potongan datar terpanjang 6 sampel (0,38 ms) pada 16 kHz, sehingga tidak terdengar sebagai distorsi (`results/kualitas_dataset_MSI_20261112_005606.md`).
 - Kosakata entity terbatas pada lingkungan Lab Sistem Otomasi UTM.
 
 ## 8. Statistik
