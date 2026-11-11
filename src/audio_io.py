@@ -190,7 +190,8 @@ class AudioSource:
             got += len(r)
         res.append(self.flush())
         log.info("Rekam %.2f s selesai dalam %.2f s (wall clock)", seconds, time.perf_counter() - t0)
-        return np.concatenate(raw)[:need], np.concatenate(res)
+        need_out = int(round(seconds * self.out_sr))
+        return np.concatenate(raw)[:need], np.concatenate(res)[:need_out]
 
 
 # ------------------------------------------------------------------ simpan & analisis
