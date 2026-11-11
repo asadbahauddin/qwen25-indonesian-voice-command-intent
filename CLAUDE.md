@@ -53,7 +53,7 @@
 
 ## 3. Perangkat
 - **Laptop:** GPU NVIDIA RTX 2050 (VRAM 4 GB) — pengembangan.
-- **Target:** Raspberry Pi 5 8GB + Active Cooler, fully offline. (Sempat tertunda: microSD rusak → OS gagal boot.)
+- **Target:** ~~Raspberry Pi 5 8GB~~ → **diganti laptop** (keputusan peneliti 12 Nov 2026: waktu mepet, microSD RPi rusak). Semua pengujian fully offline di laptop. RPi 5 = saran penelitian lanjutan/skripsi.
 - **Mikrofon:** wireless lavalier, receiver USB (biasanya 44,1/48 kHz → wajib resample ke 16 kHz).
 
 ## 4. Lingkungan & alat
@@ -125,7 +125,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | F4b | **Selesai** (11 Nov) | `src/nlu/{rule,indobert,entities}.py`, `config/keywords_id.yaml` v1, `data/indobert_train.jsonl` (300), `results/indobert_train_MSI_20261111_225006.json`, `results/f4b_uji_cepat_*.txt`, `Dokumentasi/F4b_baseline.md` | Val acc IndoBERT 1,0 (val dari templat yang sama, jadi **bukan hasil uji**). Model di `models/indobert_intent` (tidak di-push, bisa dibuat ulang). Uji cepat 2 kalimat: kedua baseline benar. |
 | F5 | Belum | – | Tidak ada `src/pipeline.py`, `src/cli.py`. |
 | F6 | **Selesai** (11 Nov) | `bench/uji_llm.py`, `results/summary_MSI_20261111_225631.md` (+csv/json), `Dokumentasi/F6_uji_pilot.md` | Qwen intent 80,56% / EM 63,89%; rule & IndoBERT 100%. **Ancaman validitas:** pilot, templat, dan kamus disusun bersamaan dengan kosakata sama, jadi hasil F6 bukan uji hipotesis. Kesalahan Qwen dominan pada konsistensi struktur combined. |
-| F7 | Belum | – | Tidak ada bukti RPi 5. |
+| F7 | **Dibatalkan** (12 Nov, keputusan peneliti) | – | RPi 5 diganti laptop. Penyimpangan dari proposal (RM1, RM2, H1, H3 menyebut RPi 5) wajib dijelaskan di Kendala & Solusi laporan akhir. |
 | F8 | **Rekaman selesai** (12 Nov); transkrip & label belum | `bench/rekam_dataset.py`, `bench/cek_dataset.py`, `results/kualitas_dataset_MSI_20261112_005606.md`, `dataset/` (lokal, tidak di-push) | 3 responden × 54 = **162 WAV** lengkap, format 16 kHz mono PCM_16 semua benar, total 13,4 menit. Clipping ringan (limiter transmitter): R01 13/54, R02 1/54, R03 42/54 file, maks 0,051% sampel. Sisa: transkrip manual + label final + cek kebocoran. |
 | F9 | Belum | – | – |
 | F10 | Belum | – | – |
@@ -147,6 +147,8 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - **Responden: 3 orang (peneliti + 2 orang) × 54 kartu = 162 ujaran** (diputuskan 11 Nov). Peneliti sebagai responden adalah keterbatasan (mengenal sistem), jadi hasil juga dilaporkan per responden. Kalimat dataset wajib dicek tidak sama dengan pilot, data latih, dan contoh prompt.
 - F3: Whisper deterministik (temperature 0 tanpa fallback, beam 5, condition_on_previous_text false, vad_filter false karena VAD tahap tersendiri). initial_prompt = daftar nama entity domain saja. Transkrip per file disimpan di `dataset/` (tidak di-push). Koreksi transkrip menampilkan 2 draf dari konfigurasi berbeda untuk mengurangi anchoring.
 - F2: VAD = Silero ONNX + state machine sendiri (pre-roll 300 ms, histeresis 0,15, post-pad 200 ms, min_speech 250 ms). Parameter aktif 0,5/800 ms ditetapkan sebelum melihat data; **parameter VAD tidak boleh dipilih dari data responden** (set uji).
+- **Platform (12 Nov, keputusan peneliti):** RPi 5 tidak dipakai; RM1/RM2/H1/H3 dijawab untuk platform laptop offline. Angka laptop **tidak boleh** diklaim sebagai kinerja RPi 5.
+- **Luaran tambahan (12 Nov):** poster ilmiah + dataset penelitian (dengan data card/datasheet).
 - Belum diputuskan: faster-whisper vs openai-whisper (tunggu WER), min_silence VAD (tunggu data pengembangan), versi system prompt.
 
 **Angka yang sudah terukur:**
