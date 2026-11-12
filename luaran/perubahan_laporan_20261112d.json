@@ -1,0 +1,6 @@
+[
+  {"cari": "Kartu microSD Raspberry Pi 5 rusak (OS gagal booting) dan waktu pelaksanaan tidak cukup", "mode": "persis", "aksi": "ganti",
+   "teks": "Raspberry Pi 5 tidak dapat booting. Kendala ini paling lama ditangani: sudah dicoba berulang kali, termasuk mengganti kartu microSD, tetapi perangkat tetap tidak dapat booting, sehingga waktu pelaksanaan tidak cukup"},
+  {"cari": "Tidak terlaksana (microSD rusak, waktu tidak cukup)", "mode": "persis", "aksi": "ganti",
+   "teks": "Tidak terlaksana: RPi 5 tetap tidak dapat booting walaupun sudah dicoba berulang kali dan microSD diganti"}
+]
