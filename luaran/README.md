@@ -18,3 +18,5 @@ python -c "import zipfile,shutil;s='Laporan_Akhir_MBKM_Asad_Bahauddin_Ahmad_DRAF
 Setelah dibuka di Word: klik kanan Daftar Isi → Update Field.
 | `buat_artikel_joti.py` | Draf artikel JoTI: mengisi `Template JoTI Baru 2025.docx` (header, kotak info, logo, gaya dipertahankan). Bahasa Indonesia, abstrak Inggris, IEEE, grafik `_id`. `python luaran/buat_artikel_joti.py "Template JoTI Baru 2025.docx" Artikel_JoTI_DRAF.docx` |
 | `tangkapan_cli.py` → `tangkapan/*.png` | Tangkapan layar CLI asli (src/cli.py dijalankan dengan masukan pilot, tampilan rich direkam lalu dirender Edge headless); keterangan di `tangkapan/keterangan.txt` |
+
+**Aturan (12 Nov 2026):** satu file per dokumen. Laporan akhir yang sudah disunting peneliti TIDAK dibuat ulang; bagian baru disisipkan dengan `sisip_ke_laporan.py` (operasi: ruang_lingkup, model_matematis, lampiran2, lampiran3, bukti_logbook; cadangan ke `backup/`).

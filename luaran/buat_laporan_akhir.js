@@ -7,6 +7,7 @@ const {
   VerticalAlign, TabStopType, ImageRun,
 } = require("docx");
 const path = require("path");
+const { Math: OMath, MathRun, MathFraction, MathSum, MathSubScript, MathSuperScript, MathRadical, Tab } = require("docx");
 const GBR = path.join(__dirname, "gambar");
 
 const FONT = "Times New Roman";
@@ -70,6 +71,21 @@ function T(header, rows, widthsCm, o = {}) {
       ...rows.map((r) => new TableRow({ children: r.map((c, i) => cell(c, i, false)) }))] });
 }
 const GAP = () => new Paragraph({ children: [], spacing: { after: 120 } });
+// ---------- persamaan (OMML asli Word), nomor rata kanan ----------
+const R = (t) => new MathRun(t);
+const FR = (n, d) => new MathFraction({ numerator: n, denominator: d });
+const SB = (b, sub) => new MathSubScript({ children: b, subScript: sub });
+const SP = (b, sup) => new MathSuperScript({ children: b, superScript: sup });
+const SUM = (lo, hi, body) => new MathSum({ children: body, subScript: lo, superScript: hi });
+const SQRT = (body) => new MathRadical({ children: body });
+const v = (name, sub) => SB([R(name)], [R(sub)]);
+const EQ = (no, parts) => new Paragraph({
+  tabStops: [{ type: TabStopType.CENTER, position: Math.round(TW / 2) }, { type: TabStopType.RIGHT, position: TW }],
+  spacing: { before: 80, after: 80 },
+  children: [new TextRun({ children: [new Tab()] }), new OMath({ children: parts }),
+    new TextRun({ children: [new Tab(), "(" + no + ")"], font: FONT, size: 24 })],
+});
+const KET = (t) => P(t, { noIndent: true, after: 100 });
 // Gambar: judul di BAWAH gambar (Lampiran 1 pedoman). Ukuran dalam piksel (96 dpi): lebar isi ±567 px.
 const FIGP = (absPath, w, caption) => {
   const buf = fs.readFileSync(absPath);
@@ -197,6 +213,41 @@ children.push(H2("2.1. Waktu dan Tempat Pelaksanaan"),
   P("Tiga responden (bahasa ibu Madura satu orang, Jawa dua orang; usia 20–21 tahun) masing-masing mengucapkan 54 perintah berdasarkan **kartu skenario** (intent dan entitas target serta gaya formalitas), dengan **kalimat mereka sendiri**, bukan membaca kalimat. Total 162 ujaran (27 per intent, 54 per formalitas), WAV 16 kHz mono 16-bit, 13,4 menit. Persetujuan ketiga responden tercatat pada metadata responden (Lampiran 4). Transkrip _ground-truth_ dikoreksi manual dengan bantuan dua draf Whisper dari konfigurasi berbeda untuk mengurangi _anchoring_; label disusun dari apa yang benar-benar diucapkan (entitas yang tidak diucapkan bernilai null). Pemeriksaan kebocoran data menunjukkan tidak ada kalimat yang sama dengan set pilot, data latih IndoBERT, maupun contoh _prompt_; dua kalimat pendek memiliki kemiripan ≥ 0,8 (Jaccard) dan diuji dengan analisis sensitivitas."),
   H3("2.3.9. Prosedur Evaluasi"),
   P("Ketiga metode diuji pada tiga masukan: (1) **teks** _ground-truth_ untuk mengukur galat NLU saja, (2) **rekaman utuh** → Whisper, dan (3) **VAD → Whisper** (pipeline lengkap), masing-masing pada **laptop GPU** dan **laptop CPU**. Metrik: WER, _Intent Accuracy_, _Exact Match_ (intent dan seluruh entitas serta langkah tepat), F1 _weighted_ dan _macro_, _confusion matrix_, persentase JSON valid, serta _latency_ per tahap. Tiga ujaran pertama per platform dijalankan sebagai pemanasan dan tidak dihitung. Perbedaan antarmetode diuji dengan uji McNemar eksak pada item yang sama."),
+  H3("2.3.10. Model Matematis"),
+  P("Bagian ini merumuskan secara matematis setiap komponen yang dipakai dalam sistem dan evaluasi. Setiap persamaan diimplementasikan langsung pada kode di repositori (lokasinya disebutkan pada keterangan)."),
+  P("**a. Keputusan Voice Activity Detection.** Silero VAD menghasilkan probabilitas ucapan p_t untuk setiap _frame_ t berukuran 512 sampel (32 ms pada 16 kHz). Status _frame_ ditentukan dengan histeresis:", { noIndent: true }),
+  EQ("2.1", [v("s", "t"), R(" = 1  jika  "), v("p", "t"), R(" ≥ θ ;     "), v("s", "t"), R(" = 0  jika  "), v("p", "t"), R(" < θ − δ")]),
+  KET("dengan θ = 0,5 (ambang ucapan) dan δ = 0,15 (histeresis), sehingga ambang diam 0,35; _frame_ di antara keduanya tidak dihitung sebagai ucapan maupun diam. Ujaran dinyatakan selesai bila terdapat K _frame_ diam berturut-turut:"),
+  EQ("2.2", [R("K = "), FR([v("T", "sil")], [v("T", "frame")]), R(" = "), FR([R("1200 ms")], [R("32 ms")]), R(" ≈ 38 frame")]),
+  KET("dengan T_sil jeda diam yang dipilih dari data pengembangan (Subbab 2.3.3). Implementasi: src/vad.py (kelas VADSegmenter)."),
+  P("**b. Ekstraksi intent oleh Qwen2.5.** Qwen2.5 membangkitkan keluaran JSON y token demi token dari masukan x (_system prompt_ dan kalimat perintah). Dengan _temperature_ 0 dan _structured output_, setiap token dipilih secara _greedy_ hanya dari himpunan token yang sah menurut tata bahasa JSON Schema:", { noIndent: true }),
+  EQ("2.3", [v("y", "t"), R(" = "), SB([R("arg max")], [R("v ∈ "), v("V", "t"), R("(G)")]), R(" "), v("p", "θ"), R("(v | x, "), v("y", "<t"), R(")")]),
+  KET("dengan p_θ distribusi token model, G tata bahasa yang diturunkan dari skema perintah (skema v2), dan V_t(G) himpunan token yang masih membentuk JSON sah pada langkah t, sehingga keluaran selalu berupa JSON valid. Implementasi: src/nlu/qwen.py dan src/nlu/base.py (COMMAND_SCHEMA)."),
+  P("**c. Klasifikasi intent oleh IndoBERT.** Representasi token [CLS] h dari IndoBERT diproyeksikan ke enam kelas intent:", { noIndent: true }),
+  EQ("2.4", [R("p(c | x) = softmax(W h + b) ,     ĉ = "), SB([R("arg max")], [R("c")]), R(" p(c | x)")]),
+  KET("dengan W dan b bobot lapisan klasifikasi yang dilatih dengan _cross-entropy_ pada 300 kalimat latih. Implementasi: src/nlu/indobert.py dan bench/latih_indobert.py."),
+  P("**d. Word Error Rate.** Akurasi transkripsi diukur dengan:", { noIndent: true }),
+  EQ("2.5", [R("WER = "), FR([R("S + D + I")], [R("N")])]),
+  KET("dengan S, D, dan I jumlah kata tersubstitusi, terhapus, dan tersisip pada penyejajaran minimum (jarak Levenshtein tingkat kata), dan N jumlah kata referensi. Implementasi: jiwer, bench/tes_asr.py."),
+  P("**e. Intent Accuracy dan Exact Match.** Untuk n kalimat uji dengan label intent c_i dan label JSON lengkap j_i:", { noIndent: true }),
+  EQ("2.6", [R("Acc = "), FR([R("1")], [R("n")]), SUM([R("i=1")], [R("n")], [R("𝟙["), v("ĉ", "i"), R(" = "), v("c", "i"), R("]")])]),
+  EQ("2.7", [R("EM = "), FR([R("1")], [R("n")]), SUM([R("i=1")], [R("n")], [R("𝟙["), v("ĵ", "i"), R(" = "), v("j", "i"), R("]")])]),
+  KET("dengan 𝟙[·] fungsi indikator (bernilai 1 bila benar). Pada Exact Match, kesamaan j berarti intent, keempat entitas, dan seluruh langkah (steps) identik. Implementasi: bench/uji_llm.py (exact_match, metrics)."),
+  P("**f. Precision, Recall, dan F1.** Untuk setiap kelas intent c:", { noIndent: true }),
+  EQ("2.8", [v("P", "c"), R(" = "), FR([v("TP", "c")], [v("TP", "c"), R(" + "), v("FP", "c")]), R(" ,   "), v("R", "c"), R(" = "), FR([v("TP", "c")], [v("TP", "c"), R(" + "), v("FN", "c")]), R(" ,   "), v("F1", "c"), R(" = "), FR([R("2 "), v("P", "c"), R(" "), v("R", "c")], [v("P", "c"), R(" + "), v("R", "c")])]),
+  EQ("2.9", [v("F1", "macro"), R(" = "), FR([R("1")], [R("C")]), SUM([R("c=1")], [R("C")], [v("F1", "c")]), R(" ,     "), v("F1", "weighted"), R(" = "), SUM([R("c=1")], [R("C")], [FR([v("n", "c")], [R("n")]), R(" "), v("F1", "c")])]),
+  KET("dengan C = 6 kelas dan n_c jumlah kalimat kelas c. Karena set uji seimbang (n_c = 27), F1 weighted sama dengan F1 macro. Implementasi: scikit-learn, bench/analisis_f9.py."),
+  P("**g. Uji McNemar eksak.** Dua metode A dan B dibandingkan pada kalimat yang sama. Misalkan b jumlah kalimat yang benar oleh A tetapi salah oleh B, dan c sebaliknya. Di bawah hipotesis nol (kedua metode setara), b mengikuti distribusi binomial Bin(b + c; 0,5), sehingga nilai p dua sisi adalah:", { noIndent: true }),
+  EQ("2.10", [R("p = min(1, 2 "), SUM([R("k=0")], [R("min(b,c)")], [R("C(b+c, k) "), SP([R("0,5")], [R("b+c")])]), R(")")]),
+  KET("dengan C(b+c, k) koefisien binomial; perbedaan dinyatakan bermakna bila p < 0,05. Implementasi: scipy.stats.binomtest, bench/analisis_f9.py."),
+  P("**h. Latency.** Waktu komputasi dan waktu respons yang dirasakan pengguna dihitung sebagai:", { noIndent: true }),
+  EQ("2.11", [v("t", "total"), R(" = "), v("t", "VAD"), R(" + "), v("t", "ASR"), R(" + "), v("t", "NLU"), R(" ,     "), v("t", "respons"), R(" = "), v("T", "sil"), R(" + "), v("t", "ASR"), R(" + "), v("t", "NLU")]),
+  KET("dan dilaporkan sebagai rata-rata ± simpangan baku sampel:"),
+  EQ("2.12", [R("x̄ = "), FR([R("1")], [R("n")]), SUM([R("i=1")], [R("n")], [v("x", "i")]), R(" ,     s = "), SQRT([FR([SUM([R("i=1")], [R("n")], [SP([R("("), v("x", "i"), R(" − x̄)")], [R("2")])])], [R("n − 1")])])]),
+  KET("Implementasi: src/pipeline.py dan bench/evaluasi.py."),
+  P("**i. Kemiripan kalimat (cek kebocoran data).** Kemiripan kalimat uji dengan data latih, set pengembangan, dan contoh _prompt_ diukur dengan indeks Jaccard pada himpunan kata:", { noIndent: true }),
+  EQ("2.13", [R("J(A, B) = "), FR([R("|A ∩ B|")], [R("|A ∪ B|")])]),
+  KET("dengan ambang mirip J ≥ 0,8 yang ditetapkan sebelum pemeriksaan dijalankan. Implementasi: bench/cek_kebocoran.py."),
 );
 
 children.push(H2("2.4. Hasil"),
