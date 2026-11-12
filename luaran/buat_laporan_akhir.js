@@ -71,6 +71,18 @@ function T(header, rows, widthsCm, o = {}) {
 }
 const GAP = () => new Paragraph({ children: [], spacing: { after: 120 } });
 // Gambar: judul di BAWAH gambar (Lampiran 1 pedoman). Ukuran dalam piksel (96 dpi): lebar isi ±567 px.
+const FIGP = (absPath, w, caption) => {
+  const buf = fs.readFileSync(absPath);
+  const h = Math.round(w * buf.readUInt32BE(20) / buf.readUInt32BE(16));
+  return [
+    new Paragraph({ alignment: AlignmentType.CENTER, keepNext: true, spacing: { before: 120, after: 60 },
+      children: [new ImageRun({ type: "png", data: buf, transformation: { width: w, height: h },
+        altText: { title: caption, description: caption, name: path.basename(absPath) } })] }),
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 160 }, children: runs(caption, { size: 22 }) }),
+  ];
+};
+const ROOTDIR = path.join(__dirname, "..");
+const TKP = (f) => path.join(__dirname, "tangkapan", f);
 const FIG = (file, w, h, caption) => [
   new Paragraph({ alignment: AlignmentType.CENTER, keepNext: true, spacing: { before: 120, after: 60 },
     children: [new ImageRun({ type: "png", data: fs.readFileSync(path.join(GBR, file)), transformation: { width: w, height: h },
@@ -362,11 +374,15 @@ children.push(new Paragraph({ children: [new PageBreak()] }),
   ], [1, 2.8, 7.2, 3.2, 1.3]),
   GAP(),
   H2("Lampiran 2. Dokumentasi Kegiatan"),
-  P("[ISI: foto perangkat (mikrofon lavalier, receiver, laptop), sesi perekaman responden, CLI saat mode mikrofon, bimbingan. Tangkapan layar yang sudah tersedia: Dokumentasi/F0_bukti_cek_env.png, F1_bukti_tes_mic.png, dan lima tangkapan layar kegiatan Agustus–September.]", { noIndent: true }),
+  ...FIGP(path.join(ROOTDIR, "Dokumentasi", "F0_bukti_cek_env.png"), 500, "Gambar L.1. Pemeriksaan lingkungan pengembangan (conda, PyTorch CUDA, Ollama)"),
+  ...FIGP(path.join(ROOTDIR, "Dokumentasi", "F1_bukti_tes_mic.png"), 560, "Gambar L.2. Uji mikrofon lavalier: level dan clipping kondisi diam, normal, dan keras"),
+  P("[ISI: foto perangkat (mikrofon lavalier, receiver, laptop), sesi perekaman responden, dan bimbingan. Tangkapan layar kegiatan Agustus–September di folder Dokumentasi/ berukuran kecil sehingga tidak terbaca; ganti dengan tangkapan layar ukuran penuh bila tersedia.]", { noIndent: true }),
   H2("Lampiran 3. Contoh Keluaran Sistem"),
-  P("Contoh dari set pilot (pengembangan). Perintah \"Silakan temukan Ibu Vivi.\" menghasilkan keluaran Qwen2.5:", { noIndent: true }),
-  P('{"intent": "find_person", "room": null, "object": null, "person": "bu vivi", "document": null, "steps": null}', { noIndent: true, size: 20 }),
-  P("Waktu NLU 0,598 s (laptop GPU; load 0,158 s, prompt eval 0,026 s, eval 0,394 s, 73,5 token/s). [ISI: tangkapan layar CLI]", { noIndent: true }),
+  P("Tangkapan layar berikut diambil dari CLI yang dijalankan langsung (src/cli.py) dengan masukan set pilot (pengembangan), bukan data responden. Tampilan terminal direkam dan dirender menjadi gambar (luaran/tangkapan_cli.py).", { noIndent: true }),
+  ...FIGP(TKP("01_mulai_bantuan.png"), 540, "Gambar L.3. Tampilan awal CLI dan daftar perintah (/bantuan)"),
+  ...FIGP(TKP("02_mode_teks.png"), 540, "Gambar L.4. Mode teks: satu kalimat diproses tiga metode, beserta JSON dan tabel latency"),
+  ...FIGP(TKP("03_file_audio_gpu.png"), 470, "Gambar L.5. Masukan audio perintah majemuk (laptop GPU): rule-based dan IndoBERT memecah menjadi dua langkah, Qwen2.5 hanya mengenali satu intent"),
+  ...FIGP(TKP("04_cpu_stat.png"), 430, "Gambar L.6. Pindah ke laptop CPU tanpa restart (/perangkat cpu) dan statistik sesi (/stat)"),
   H2("Lampiran 4. Lembar Persetujuan Responden"),
   P("Templat lembar persetujuan: Dokumentasi/F8_lembar_persetujuan.md. [ISI: pindaian lembar bertanda tangan R01–R03; jangan diunggah ke repositori publik karena memuat nama.]", { noIndent: true }),
   H2("Lampiran 5. Daftar Berkas Hasil Pengujian"),

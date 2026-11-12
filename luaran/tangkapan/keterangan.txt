@@ -1,0 +1,4 @@
+01_mulai_bantuan.png: Tampilan awal CLI: status metode/mode/Whisper/perangkat dan daftar perintah (/metode, /mode, /whisper, /beam, /perangkat, /file, /stat, /reset, /simpan).
+02_mode_teks.png: Mode teks: kalimat pilot "Silakan temukan Ibu Vivi." diproses ketiga metode; JSON per metode dan tabel latency (t_nlu, load/prompt_eval/eval, token/s).
+03_file_audio_gpu.png: Masukan audio (rekaman pilot P26, perintah majemuk) melalui VAD → Whisper → tiga metode NLU di laptop GPU: transkrip, JSON, latency per tahap.
+04_cpu_stat.png: Pindah ke laptop CPU tanpa restart (/perangkat cpu), audio yang sama diproses ulang, lalu /stat menampilkan rata-rata ± SD latency sesi.
