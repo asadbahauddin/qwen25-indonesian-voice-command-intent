@@ -1,0 +1,13 @@
+Sumber: eval_dataset_MSI_20261112_095743.json, analisis_dataset_MSI_20261112_104423.json
+akurasi_id.png
+formalitas_id.png
+latency_id.png
+f1_intent_id.png
+cm_qwen_id.png
+cm_indobert_id.png
+akurasi_en.png
+formalitas_en.png
+latency_en.png
+f1_intent_en.png
+cm_qwen_en.png
+cm_indobert_en.png

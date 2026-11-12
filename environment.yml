@@ -39,10 +39,13 @@ dependencies:
       - click==8.5.1
       - cloudpickle==3.1.2
       - colorama==0.4.6
+      - contourpy==1.3.3
       - ctranslate2==4.8.2
+      - cycler==0.12.1
       - faster-whisper==1.2.1
       - filelock==4.2.4
       - flatbuffers==25.12.19
+      - fonttools==4.68.0
       - fsspec==2026.9.0
       - h11==0.16.0
       - hf-xet==1.8.0
@@ -53,11 +56,13 @@ dependencies:
       - jinja2==3.1.6
       - jiwer==4.0.0
       - joblib==1.6.0
-      - jsonschema==4.26.0
       - jsonschema-specifications==2025.9.1
+      - jsonschema==4.26.0
+      - kiwisolver==1.5.1
       - llvmlite==0.50.0
       - markdown-it-py==4.3.0
       - markupsafe==3.0.3
+      - matplotlib==3.10.3
       - mdurl==0.1.2
       - more-itertools==11.2.1
       - mpmath==1.3.0
@@ -68,11 +73,13 @@ dependencies:
       - onnxruntime==1.31.0
       - openai-whisper==20250625
       - pandas==3.0.6
+      - pillow==13.0.0
       - protobuf==7.36.2
       - pycparser==3.12
-      - pydantic==2.14.3
       - pydantic-core==2.50.4
+      - pydantic==2.14.3
       - pygments==2.21.0
+      - pyparsing==3.3.3
       - python-dateutil==4.0.0
       - pyyaml==6.0.3
       - rapidfuzz==3.14.6

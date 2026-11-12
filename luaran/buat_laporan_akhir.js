@@ -4,8 +4,10 @@ const fs = require("fs");
 const {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, AlignmentType, HeadingLevel,
   WidthType, BorderStyle, ShadingType, PageBreak, TableOfContents, Footer, PageNumber, LevelFormat,
-  VerticalAlign, TabStopType,
+  VerticalAlign, TabStopType, ImageRun,
 } = require("docx");
+const path = require("path");
+const GBR = path.join(__dirname, "gambar");
 
 const FONT = "Times New Roman";
 const CM = 567; // dxa per cm
@@ -68,6 +70,13 @@ function T(header, rows, widthsCm, o = {}) {
       ...rows.map((r) => new TableRow({ children: r.map((c, i) => cell(c, i, false)) }))] });
 }
 const GAP = () => new Paragraph({ children: [], spacing: { after: 120 } });
+// Gambar: judul di BAWAH gambar (Lampiran 1 pedoman). Ukuran dalam piksel (96 dpi): lebar isi ±567 px.
+const FIG = (file, w, h, caption) => [
+  new Paragraph({ alignment: AlignmentType.CENTER, keepNext: true, spacing: { before: 120, after: 60 },
+    children: [new ImageRun({ type: "png", data: fs.readFileSync(path.join(GBR, file)), transformation: { width: w, height: h },
+      altText: { title: caption, description: caption, name: file } })] }),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 160 }, children: runs(caption, { size: 22 }) }),
+];
 
 // ---------- isi ----------
 const JUDUL = "EVALUASI LARGE LANGUAGE MODEL QWEN2.5 UNTUK EKSTRAKSI INTENT PERINTAH KALIMAT BEBAS BAHASA INDONESIA PADA ROBOT";
@@ -187,6 +196,7 @@ children.push(H2("2.4. Hasil"),
   ], [3.4, 2, 2, 2, 2, 3], { centerCols: [1, 2, 3, 4, 5] }),
   NOTE("Sumber: results/eval_dataset_MSI_20261112_095743.md. Platform Raspberry Pi 5 tidak diuji (BAB III). Waktu NLU pembanding di GPU: rule-based 0,001 ± 0,001 s, IndoBERT 0,037 ± 0,039 s."),
   P("Di laptop GPU seluruh ujaran selesai di bawah 4,4 detik. Di laptop CPU rata-rata waktu respons 5,37 detik, tetapi 4 dari 162 ujaran melebihi 15 detik (maksimum 26,0 detik). Keempatnya terjadi saat RAM tersedia hanya 0,24–0,44 GB, sehingga lonjakan tersebut diduga disebabkan _swap_ memori, bukan beban komputasi model itu sendiri."),
+  ...FIG("latency_id.png", 567, 227, "Gambar 2.1. Komposisi waktu komputasi pipeline per tahap (rata-rata, n = 162)"),
   H3("2.4.2. Akurasi Transkripsi (WER)"),
   CAP("Tabel 2.3. WER Whisper base pada 162 Ujaran Responden"),
   T(["Platform", "Masukan", "WER", "Formal", "Semi-formal", "Informal"], [
@@ -209,6 +219,7 @@ children.push(H2("2.4. Hasil"),
   ], [2.6, 2.6, 1.8, 1.9, 1.8, 1.7, 1.6], { centerCols: [2, 3, 4, 5, 6] }),
   NOTE("F1 weighted sama dengan F1 macro karena kelas seimbang (27 kalimat per intent). JSON valid 100% untuk semua metode pada masukan ini. Hasil rekaman utuh (tanpa VAD) dan laptop CPU ada di results/eval_dataset_MSI_20261112_095743.md; pada CPU, Qwen teks 78,40% / 70,99%."),
   P("Pada teks _ground-truth_, IndoBERT memperoleh akurasi intent tertinggi (96,30%), diikuti _rule-based_ (85,80%) dan Qwen2.5 (75,31%). Ketika masukan berupa transkrip Whisper, Exact Match turun 19,8 poin (Qwen2.5), 24,1 poin (_rule-based_), dan 29,0 poin (IndoBERT), terutama karena kesalahan transkripsi nama entitas, dan _rule-based_ memperoleh Exact Match tertinggi (61,11%)."),
+  ...FIG("akurasi_id.png", 567, 241, "Gambar 2.2. Intent Accuracy dan Exact Match tiga metode pada tiga jenis masukan (laptop GPU, n = 162)"),
   H3("2.4.4. Pengaruh Formalitas dan Responden"),
   CAP("Tabel 2.5. Intent Accuracy / Exact Match per Formalitas, Laptop GPU (%; n = 54 per sel)"),
   T(["Metode", "Masukan", "Formal", "Semi-formal", "Informal"], [
@@ -219,6 +230,7 @@ children.push(H2("2.4. Hasil"),
     ["Rule-based", "VAD → Whisper", "59,3 / 57,4", "74,1 / 66,7", "63,0 / 59,3"],
     ["IndoBERT", "VAD → Whisper", "85,2 / 53,7", "87,0 / 61,1", "79,6 / 53,7"],
   ], [3, 3, 2.4, 2.4, 2.4], { centerCols: [2, 3, 4] }),
+  ...FIG("formalitas_id.png", 567, 241, "Gambar 2.3. Intent Accuracy per tingkat formalitas (laptop GPU, n = 54 per kelompok)"),
   GAP(),
   CAP("Tabel 2.6. Intent Accuracy / Exact Match per Responden, Pipeline Lengkap, Laptop GPU (%; n = 54)"),
   T(["Metode", "R01 (Madura)", "R02 (Jawa)", "R03 (Jawa)"], [
@@ -236,6 +248,8 @@ children.push(H2("2.4. Hasil"),
     ["combined_command", "0,07", "0,54", "0,88"], ["general_command", "0,65", "0,93", "1,00"],
   ], [4, 3, 3, 3], { centerCols: [1, 2, 3] }),
   NOTE("Sumber: results/analisis_dataset_MSI_20261112_104423.md (juga memuat precision/recall dan masukan VAD → Whisper)."),
+  ...FIG("f1_intent_id.png", 567, 227, "Gambar 2.4. F1 per intent pada masukan teks (laptop GPU)"),
+  ...FIG("cm_qwen_id.png", 315, 270, "Gambar 2.5. Confusion matrix Qwen2.5 1.5B pada masukan teks: perintah majemuk dan perintah umum sebagian besar diprediksi sebagai perintah tunggal"),
   P("Galat transkripsi berdampak pada ketiga metode: dari kalimat yang Exact Match-nya benar pada teks, 37 (Qwen2.5), 41 (_rule-based_), dan 49 (IndoBERT) menjadi salah ketika masukannya transkrip Whisper, terutama karena nama orang atau ruangan salah dengar."),
   H3("2.4.6. Uji Signifikansi dan Sensitivitas"),
   P("Uji McNemar eksak pada item yang sama menunjukkan bahwa keunggulan IndoBERT atas Qwen2.5 dalam akurasi intent bermakna pada semua masukan dan platform (p < 0,001). Pada transkrip (VAD → Whisper, GPU), akurasi intent Qwen2.5 dan _rule-based_ tidak berbeda bermakna (p = 0,71), sedangkan Exact Match _rule-based_ lebih tinggi secara bermakna dari Qwen2.5 (p = 0,001). Keluaran Qwen2.5 di GPU dan CPU tidak identik walaupun _temperature_ 0 dan _seed_ sama (JSON berbeda pada 13 dari 162 kalimat teks), sehingga hasil dilaporkan per platform. Analisis sensitivitas tanpa dua kalimat yang mirip data latih/_prompt_ mengubah akurasi paling banyak 0,7 poin dan tidak mengubah kesimpulan."),
