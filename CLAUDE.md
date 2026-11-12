@@ -149,6 +149,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - F2: VAD = Silero ONNX + state machine sendiri (pre-roll 300 ms, histeresis 0,15, post-pad 200 ms, min_speech 250 ms). Parameter aktif 0,5/800 ms ditetapkan sebelum melihat data; **parameter VAD tidak boleh dipilih dari data responden** (set uji).
 - **Platform (12 Nov, keputusan peneliti):** RPi 5 tidak dipakai; RM1/RM2/H1/H3 dijawab untuk platform laptop offline. Angka laptop **tidak boleh** diklaim sebagai kinerja RPi 5.
 - **Luaran tambahan (12 Nov):** poster ilmiah + dataset penelitian (dengan data card/datasheet).
+- **Ruang lingkup "pada Robot" (12 Nov, penegasan peneliti):** rumusan masalah tidak mencakup penggerakan robot; luaran = JSON perintah robot sebagai antarmuka ke pengendali (integrasi robot = skripsi). Bukan kekurangan penelitian.
 - **Skenario laptop CPU (disetujui 12 Nov):** latency dilaporkan untuk Laptop GPU dan Laptop CPU (Whisper int8 CPU, Qwen `num_gpu 0`, IndoBERT CPU) sebagai pendekatan perangkat tanpa GPU, tetap disebut "laptop CPU" (bukan RPi).
 - **HKI (disetujui 12 Nov):** hak cipta **program komputer** (pipeline + CLI); dataset = luaran tambahan (hindari dihitung dua kali). Ikuti arahan Bu Vivi bila berbeda.
 - F5: `nlu.qwen.num_gpu` eksplisit (99 GPU / 0 CPU) karena Ollama tetap di CPU bila opsi dihilangkan. `SileroVAD` mengembalikan `torch.get_num_threads()` setelah import silero (pustaka memanggil `set_num_threads(1)` global). Pemanasan realistis 2× per komponen; F9 buang ujaran awal sebagai pemanasan.

@@ -64,7 +64,7 @@ ISI = [
           "jeda diam 1,2 detik sebagai penanda akhir perintah. Whisper base dijalankan melalui faster-whisper [12] dengan "
           "bahasa Indonesia, _beam_ 5, _temperature_ 0, dan _initial prompt_ berisi nama entitas domain. Transkrip kemudian "
           "diproses oleh metode NLU yang menghasilkan JSON dengan field intent, room, object, person, document, dan steps. "
-          "Field steps berisi daftar sub-perintah dan hanya dipakai untuk perintah majemuk. Seluruh komponen berjalan "
+          "Field steps berisi daftar sub-perintah dan hanya dipakai untuk perintah majemuk. JSON ini merupakan antarmuka ke pengendali robot; penggerakan robot fisik berada di luar ruang lingkup penelitian ini. Seluruh komponen berjalan "
           "_offline_ pada laptop (Intel Core i5-12450H, RAM 7,7 GB, NVIDIA RTX 2050 4 GB) dalam dua skenario: dengan GPU "
           "dan hanya CPU."),
     ("P", "Enam kategori _intent_ yang digunakan adalah navigate_room, navigate_object, find_person, deliver_document, "
