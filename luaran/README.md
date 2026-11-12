@@ -16,3 +16,4 @@ Sesudah dibuat, hapus entri folder di arsip (Word bisa menolaknya lewat layanan 
 python -c "import zipfile,shutil;s='Laporan_Akhir_MBKM_Asad_Bahauddin_Ahmad_DRAF.docx';t=s+'.tmp';zi=zipfile.ZipFile(s);zo=zipfile.ZipFile(t,'w',zipfile.ZIP_DEFLATED);[zo.writestr(i,zi.read(i.filename)) for i in zi.infolist() if not i.filename.endswith('/')];zo.close();zi.close();shutil.move(t,s)"
 ```
 Setelah dibuka di Word: klik kanan Daftar Isi → Update Field.
+| `buat_artikel_joti.py` | Draf artikel JoTI: mengisi `Template JoTI Baru 2025.docx` (header, kotak info, logo, gaya dipertahankan). Bahasa Indonesia, abstrak Inggris, IEEE, grafik `_id`. `python luaran/buat_artikel_joti.py "Template JoTI Baru 2025.docx" Artikel_JoTI_DRAF.docx` |
