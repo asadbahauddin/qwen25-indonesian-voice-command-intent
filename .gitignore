@@ -26,3 +26,6 @@ models/
 
 # cadangan lokal dataset (audio responden, jangan di-push)
 backup/
+
+# foto dokumentasi pribadi (repo publik)
+luaran/foto/
