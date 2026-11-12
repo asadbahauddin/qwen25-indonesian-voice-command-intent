@@ -232,6 +232,42 @@ def main():
             xl = xl.replace(tb, tb_baru, 1)
             log.append(f"logbook: {len(baru_rows)} baris disusun ({sum(1 for e in spek if e.get('baru'))} baris baru)")
             continue
+        elif op == "paraf_logbook":
+            # Paraf pembimbing (gambar SISIP_LB_ttd) di kolom terakhir logbook, hanya baris yang sudah terlaksana
+            # (baris bertanda "Rencana" dilewati). Izin Bu Vivi disampaikan peneliti, 12 Nov 2026.
+            tbs = [m for m in re.finditer(r"<w:tbl>.*?</w:tbl>", xl, re.S)
+                   if "Paraf Pembimbing" in teks(m.group(0)) and "24–28 Agt 2026" in teks(m.group(0))]
+            if len(tbs) != 1:
+                raise RuntimeError(f"tabel logbook ditemukan {len(tbs)}")
+            tb = tbs[0].group(0)
+            ps_s = re.findall(r"<w:p[ >].*?</w:p>", body_s, re.S)
+            i_ttd = next(i for i, p in enumerate(ps_s) if teks(p) == "SISIP_LB_ttd")
+            rows = [m.group(0) for m in re.finditer(r"<w:tr[ >].*?</w:tr>", tb, re.S)]
+            tb_baru, n = tb, 0
+            for row in rows[1:]:
+                cells = re.findall(r"<w:tc>.*?</w:tc>", row, re.S)
+                if "Rencana" in teks(cells[2]) or "<w:drawing" in cells[-1]:
+                    continue
+                tcpr = re.search(r"<w:tcPr>.*?</w:tcPr>", cells[-1], re.S).group(0)
+                sel = f"<w:tc>{tcpr}{bawa_gambar(ps_s[i_ttd + 1])}</w:tc>"
+                tb_baru = tb_baru.replace(row, row.replace(cells[-1], sel), 1)
+                n += 1
+            xl = xl.replace(tb, tb_baru, 1)
+            log.append(f"paraf_logbook: {n} baris diparaf")
+            continue
+        elif op == "foto_bimbingan":
+            # ganti paragraf "[ISI: foto bimbingan..." di Lampiran 2 dengan Gambar L.10; gambar L.10–L.14 dinomori ulang +1
+            if "Kegiatan bimbingan dengan dosen pembimbing" in xl:
+                log.append("foto_bimbingan: sudah ada, dilewati"); continue
+            for nmr in range(14, 9, -1):
+                xl, k = re.subn(rf"(<w:t[^>]*>)Gambar L\.{nmr}\.", rf"\g<1>Gambar L.{nmr + 1}.", xl)
+                if k != 1:
+                    raise RuntimeError(f"keterangan Gambar L.{nmr}. ditemukan {k} kali (harus 1)")
+            sis = ambil(lambda t: t == "SISIP_BIMBINGAN_MULAI", lambda t: t == "SISIP_BIMBINGAN_SELESAI", termasuk_awal=False)
+            m = next(m for m in re.finditer(r"<w:p[ >].*?</w:p>", xl, re.S) if teks(m.group(0)).startswith("[ISI: foto bimbingan"))
+            xl = xl[:m.start()] + sis + xl[m.end():]
+            log.append("foto_bimbingan: disisipkan, Gambar L.10–L.14 menjadi L.11–L.15")
+            continue
         elif op == "tabel42_satu_opsi":
             # Tabel 4.2: buang kolom "Opsi B: Dataset", lebar kolom digabung ke kolom Program Komputer
             m_t = next((m for m in re.finditer(r"<w:tbl>.*?</w:tbl>", xl, re.S) if "Opsi B: Dataset" in teks(m.group(0))), None)
