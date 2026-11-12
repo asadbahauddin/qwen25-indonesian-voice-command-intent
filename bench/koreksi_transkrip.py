@@ -26,6 +26,7 @@ Pemakaian:
 """
 import argparse
 import csv
+import re
 import shutil
 import sys
 from datetime import datetime
@@ -61,12 +62,16 @@ def kata_tempat_domain(cfg):
 
 def kata_depan_sambung(text, kata):
     import re as _re
-    return [t for t in _re.findall(r"\w+", text.lower())
-            if _re.match(r"^(ke|di)(\w+)$", t) and _re.match(r"^(ke|di)(\w+)$", t).group(2) in kata]
+    low = text.lower()
+    out = [t for t in _re.findall(r"\w+", low)
+           if _re.match(r"^(ke|di)(\w+)$", t) and _re.match(r"^(ke|di)(\w+)$", t).group(2) in kata]
+    out += [f"{x}-{y}" for x, y in _re.findall(r"\b(ke|di)-(\w+)", low) if y in kata]   # ke-trainer
+    return out
 
 
 def pisah_kata_depan(text, kata):
     import re as _re
+    text = _re.sub(r"\b([KkDd][ei])-(\w+)", lambda m: f"{m.group(1)} {m.group(2)}" if m.group(2).lower() in kata else m.group(0), text)
     return _re.sub(r"\b([KkDd][ei])(\w+)\b", lambda m: f"{m.group(1)} {m.group(2)}" if m.group(2).lower() in kata else m.group(0), text)
 
 
@@ -74,6 +79,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--hipotesis", help="CSV dari bench/tes_asr.py (default: terbaru)")
     ap.add_argument("--penutur")
+    ap.add_argument("--ulang", nargs="+", default=[], help="PENUTUR:ITEM yang dikoreksi ulang, mis. R02:S53 (label ikut dikosongkan)")
     a = ap.parse_args()
     cfg = load_config()
     droot = ROOT / cfg["dataset"]["out_skenario"]
@@ -83,8 +89,12 @@ def main():
     meta_p = droot / "metadata.csv"
     meta = list(csv.DictReader(open(meta_p, encoding="utf-8")))
     cols = list(meta[0].keys())
-    todo = [m for m in meta if m["mode"] == "skenario" and m["status_label"] not in ("terkoreksi", "final")
-            and (not a.penutur or m["penutur"] == a.penutur.upper())]
+    ulang = {tuple(u.upper().split(":")) for u in a.ulang}
+    if ulang:
+        todo = [m for m in meta if (m["penutur"], m["item_id"]) in ulang]
+    else:
+        todo = [m for m in meta if m["mode"] == "skenario" and m["status_label"] not in ("terkoreksi", "final")
+                and (not a.penutur or m["penutur"] == a.penutur.upper())]
     print(f"Draf dari {hp.name}. Belum dikoreksi: {len(todo)} / {len(meta)}")
     kata_tempat = kata_tempat_domain(cfg)
     backed = False
@@ -95,13 +105,20 @@ def main():
         print(f"[{n}/{len(todo)}] {m['penutur']}_{m['item_id']} ({m['formality']})  kartu: {m['tujuan']}")
         print(f"  draf 1: {d[0]}")
         print(f"  draf 2: {d[1]}")
+        if m["transkrip"].strip() and ulang:
+            print(f"  lama  : {m['transkrip']}")
         sd.play(x, sr)
         while True:
-            c = input("  r=putar | 1/2=draf benar | ketik transkrip | s=lewati | q=keluar\n  > ").strip()
+            c = input("  r=putar | 1 atau 2 = draf itu benar | ketik transkrip | s=lewati | q=keluar\n  > ").strip()
             if c.lower() == "r":
                 sd.stop()
                 sd.play(x, sr)
                 continue
+            if c not in ("1", "2") and c.lower() not in ("s", "q", "") and (
+                    re.search(r"\d|/", c) or len(c.split()) < 2):
+                # temuan 12 Nov: "1/2" tersimpan sebagai transkrip (R02_S53, R03_S02)
+                if input(f"  Transkrip '{c}' tampak bukan kalimat (angka / '/' / satu kata). Simpan? (y/n) ").strip() != "y":
+                    continue
             break
         sd.stop()
         if c.lower() == "q":
@@ -125,6 +142,8 @@ def main():
             shutil.copy(meta_p, meta_p.with_name(f"metadata.bak_{datetime.now():%Y%m%d_%H%M%S}.csv"))
             backed = True
         m["transkrip"] = text
+        if m["status_label"] == "final" or m.get("label_final_json", "").strip():
+            m["label_final_json"] = ""          # transkrip berubah -> label harus dicek ulang
         m["status_label"] = "terkoreksi"
         m["catatan"] = ";".join(x for x in [m["catatan"], f"sumber={src}"] if x)
         tmp = meta_p.with_suffix(".tmp")
