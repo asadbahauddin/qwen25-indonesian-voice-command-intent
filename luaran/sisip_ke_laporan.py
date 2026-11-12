@@ -40,6 +40,9 @@ def cari(blocks, body, pred, mulai=0):
 def main():
     lap, src, ops = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3:]
     bak = ROOT / "backup" / f"{lap.stem}.sebelum_sisip_{datetime.now():%Y%m%d_%H%M%S}.docx"
+    n_bak = 1
+    while bak.exists():                     # dua proses dalam detik yang sama tidak boleh saling menimpa cadangan
+        bak = bak.with_name(f"{bak.stem.split('__')[0]}__{n_bak}.docx"); n_bak += 1
     bak.parent.mkdir(exist_ok=True)
     shutil.copy(lap, bak)
     zl, zs = zipfile.ZipFile(lap), zipfile.ZipFile(src)
@@ -59,6 +62,9 @@ def main():
             tgt = tgt.group(1)
             n_rel[0] += 1
             new_id = f"rIdSisip{datetime.now():%H%M%S}{n_rel[0]}"
+            while f'Id="{new_id}"' in rels_l + "".join(nonlocal_rels):   # temuan 12 Nov: dua proses dalam 1 detik -> Id ganda
+                n_rel[0] += 1
+                new_id = f"rIdSisip{datetime.now():%H%M%S}{n_rel[0]}"
             nama = f"media/sisip_{n_rel[0]}_{Path(tgt).name}"
             media_baru["word/" + nama] = zs.read("word/" + tgt)
             nonlocal_rels.append(f'<Relationship Id="{new_id}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="{nama}"/>')
@@ -120,6 +126,13 @@ def main():
             i = cari(bl, body_l, lambda t: t == "Lampiran 2. Dokumentasi Kegiatan")
             k = cari(bl, body_l, lambda t: t.startswith("[ISI: foto"), i + 1)
             pos = b0 + bl[k].start()
+        elif op == "bukti_hki":
+            # sumber berisi SISIP_HKI_MULAI ... SISIP_HKI_SELESAI (Gambar 4.1); disisipkan sebelum judul "4.2. Artikel Ilmiah"
+            if "Gambar 4.1. Bukti pengajuan" in xl:
+                log.append("bukti_hki: sudah ada, dilewati"); continue
+            sis = ambil(lambda t: t == "SISIP_HKI_MULAI", lambda t: t == "SISIP_HKI_SELESAI", termasuk_awal=False)
+            k = cari(bl, body_l, lambda t: t == "4.2. Artikel Ilmiah")
+            pos = b0 + bl[k].start()
         elif op == "lampiran4":
             # sumber = lembar persetujuan bertanda tangan (docx peneliti). Penomoran daftar diubah jadi teks
             # ("1. ") karena definisi numbering milik dokumen sumber tidak ikut tersalin.
@@ -161,6 +174,11 @@ def main():
                 log.append("lampiran8: sudah ada, dilewati"); continue
             sis = ambil(lambda t: t == "SISIP_L8_MULAI", lambda t: t == "SISIP_L8_SELESAI", termasuk_awal=False)
             pos = b0 + bl[-1].end()          # akhir isi dokumen (setelah Lampiran 7)
+        elif op == "lampiran9":
+            if "Lampiran 9. Poster Ilmiah" in xl:
+                log.append("lampiran9: sudah ada, dilewati"); continue
+            sis = ambil(lambda t: t == "SISIP_L9_MULAI", lambda t: t == "SISIP_L9_SELESAI", termasuk_awal=False)
+            pos = b0 + bl[-1].end()          # akhir isi dokumen (setelah Lampiran 8)
         elif op == "tabel42_satu_opsi":
             # Tabel 4.2: buang kolom "Opsi B: Dataset", lebar kolom digabung ke kolom Program Komputer
             m_t = next((m for m in re.finditer(r"<w:tbl>.*?</w:tbl>", xl, re.S) if "Opsi B: Dataset" in teks(m.group(0))), None)
