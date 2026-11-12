@@ -66,7 +66,9 @@ ISI = [
           "diproses oleh metode NLU yang menghasilkan JSON dengan field intent, room, object, person, document, dan steps. "
           "Field steps berisi daftar sub-perintah dan hanya dipakai untuk perintah majemuk. JSON ini merupakan antarmuka ke pengendali robot; penggerakan robot fisik berada di luar ruang lingkup penelitian ini. Seluruh komponen berjalan "
           "_offline_ pada laptop (Intel Core i5-12450H, RAM 7,7 GB, NVIDIA RTX 2050 4 GB) dalam dua skenario: dengan GPU "
-          "dan hanya CPU."),
+          "dan hanya CPU. Perangkat lunak yang digunakan adalah Python 3.11, faster-whisper 1.2.1 (CTranslate2 4.8.2), "
+          "silero-vad 6.2.3 (ONNX Runtime 1.31.0), Ollama 0.30.6, PyTorch 2.14.1, transformers 5.22.2, jiwer 4.0.0, "
+          "scikit-learn 1.9.1, dan SciPy 1.17.1."),
     ("P", "Enam kategori _intent_ yang digunakan adalah navigate_room, navigate_object, find_person, deliver_document, "
           "combined_command (dua tindakan berurutan dalam satu kalimat), dan general_command (misalnya berhenti atau kembali "
           "ke posisi awal)."),
@@ -92,9 +94,16 @@ ISI = [
           "Whisper, dan _pipeline_ lengkap (VAD lalu Whisper). Akurasi transkripsi diukur dengan _word error rate_ (WER):"),
     ("EQ", "WER = (S + D + I) / N", "1"),
     ("P", "dengan S, D, dan I berturut-turut jumlah kata tersubstitusi, terhapus, dan tersisip, serta N jumlah kata "
-          "referensi. NLU diukur dengan _intent accuracy_, _exact match_ (EM: _intent_ serta seluruh entitas dan langkah "
-          "harus tepat), F1, dan _confusion matrix_. _Latency_ dicatat per tahap; waktu respons adalah jeda tunggu VAD "
-          "ditambah waktu Whisper dan NLU. Perbedaan antarmetode pada item yang sama diuji dengan uji McNemar eksak [16]."),
+          "referensi. NLU diukur dengan _intent accuracy_, F1, dan _confusion matrix_. Untuk n kalimat uji dengan label "
+          "JSON lengkap j_i dan prediksi ĵ_i, _exact match_ (EM) mensyaratkan _intent_ serta seluruh entitas dan langkah tepat:"),
+    ("EQ", "EM = (1/n) · Σ 𝟙[ĵᵢ = jᵢ]", "2"),
+    ("P", "dengan 𝟙[·] bernilai 1 bila benar. F1 setiap kelas _intent_ c dihitung dari _precision_ Pc dan _recall_ Rc:"),
+    ("EQ", "F1c = 2 · Pc · Rc / (Pc + Rc)", "3"),
+    ("P", "_Latency_ dicatat per tahap; waktu respons adalah jeda tunggu VAD ditambah waktu Whisper dan NLU. Perbedaan "
+          "antarmetode pada kalimat yang sama diuji dengan uji McNemar eksak [16]: bila b adalah jumlah kalimat yang "
+          "benar oleh metode A tetapi salah oleh B dan c sebaliknya, nilai p dua sisi adalah"),
+    ("EQ", "p = min(1, 2 · Σₖ₌₀^min(b,c) C(b+c, k) · 0,5^(b+c))", "4"),
+    ("P", "dan perbedaan dinyatakan bermakna bila p < 0,05."),
 
     ("H", "HASIL DAN PEMBAHASAN"),
     ("S", "Latency dan Akurasi Transkripsi"),
@@ -273,6 +282,11 @@ def set_text(block, old_substr_re, new_runs_xml):
 # ---------------------------------------------------------------- rakit
 def main():
     tpl, out = Path(sys.argv[1]), Path(sys.argv[2])
+    import json as _json
+    lok = ROOT / "luaran" / "penulis_lokal.json"   # email/WA penulis: lokal, TIDAK di-push
+    K = _json.load(open(lok, encoding="utf-8")) if lok.exists() else {}
+    e1, e2 = K.get("email1", "[ISI: email penulis 1]"), K.get("email2", "[ISI: email penulis 2]")
+    kor, wa = K.get("korespondensi", "[ISI: email penulis korespondensi]"), K.get("wa", "[ISI]")
     tmp = Path(tempfile.mkdtemp())
     with zipfile.ZipFile(tpl) as z:
         z.extractall(tmp)
@@ -298,13 +312,13 @@ def main():
     head[2] = set_text(head[2], "Program Studi", f'<w:r>{rpr(20, extra=SUP)}<w:t>1,2</w:t></w:r>' +
                        runs("Program Studi Teknik Mekatronika, Universitas Trunojoyo Madura, Bangkalan, Jawa Timur, Indonesia", sz=20))
     head[3] = ""  # afiliasi ke-3 (contoh luar negeri) dihapus
-    head[4] = set_text(head[4], "e-mail", runs("e-mail: [ISI: email penulis 1]", sz=20) + sup("1*") + runs(", [ISI: email penulis 2]", sz=20) + sup("2"))
-    head[5] = set_text(head[5], "Kontak WA", runs("Kontak WA: [ISI] (hanya untuk komunikasi, dihapus saat publish)", sz=20))
+    head[4] = set_text(head[4], "e-mail", runs("e-mail: " + e1, sz=20) + sup("1*") + runs(", " + e2, sz=20) + sup("2"))
+    head[5] = set_text(head[5], "Kontak WA", runs("Kontak WA: " + wa + " (hanya untuk komunikasi, dihapus saat publish)", sz=20))
     # kotak informasi artikel (tabel)
     info = head[7]
     info = set_text(info, "A maximum 200 word", runs(ABSTRAK, sz=20, i=True))
     info = set_text(info, "Ditulis Bahasa Inggris", runs(KATA_KUNCI, sz=20, i=True))
-    info = set_text(info, "^…+", runs("[ISI: email penulis korespondensi]", sz=20))
+    info = set_text(info, "^…+", runs(kor, sz=20))
     head[7] = info
 
     # isi

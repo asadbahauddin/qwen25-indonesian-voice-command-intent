@@ -34,3 +34,6 @@ luaran/foto/
 Dokumentasi/*.jpeg
 Dokumentasi/*.jpg
 Dokumentasi/*.pdf
+
+# data kontak penulis (email/WA) - tidak di-push
+luaran/penulis_lokal.json

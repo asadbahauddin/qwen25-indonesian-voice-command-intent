@@ -120,6 +120,45 @@ def main():
             i = cari(bl, body_l, lambda t: t == "Lampiran 2. Dokumentasi Kegiatan")
             k = cari(bl, body_l, lambda t: t.startswith("[ISI: foto"), i + 1)
             pos = b0 + bl[k].start()
+        elif op == "lampiran4":
+            # sumber = lembar persetujuan bertanda tangan (docx peneliti). Penomoran daftar diubah jadi teks
+            # ("1. ") karena definisi numbering milik dokumen sumber tidak ikut tersalin.
+            if "LEMBAR PERSETUJUAN RESPONDEN" in xl:
+                log.append("lampiran4: sudah ada, dilewati"); continue
+            from xml.sax.saxutils import escape
+            k_no, parts = 0, []
+            for b in bs:
+                x_b = b.group(0)
+                if "LEMBAR PERSETUJUAN RESPONDEN" in teks(x_b):
+                    k_no = 0
+                if "<w:numPr>" in x_b:
+                    k_no += 1
+                    x_b = re.sub(r"<w:numPr>.*?</w:numPr>", "", x_b, flags=re.S)
+                    rp = re.search(r"<w:r[ >](?:(?!</w:r>).)*?(<w:rPr>.*?</w:rPr>)", x_b, re.S)
+                    rpr = re.sub(r"<w:b/>|<w:bCs/>", "", rp.group(1)) if rp else ""
+                    m_r = re.search(r"<w:r[ >]", x_b)
+                    x_b = x_b[:m_r.start()] + f'<w:r>{rpr}<w:t xml:space="preserve">{k_no}. </w:t></w:r>' + x_b[m_r.start():]
+                parts.append(bawa_gambar(x_b))
+            sis = "".join(parts)
+            i = cari(bl, body_l, lambda t: t == "Lampiran 4. Lembar Persetujuan Responden")
+            j = cari(bl, body_l, lambda t: t.startswith("Lampiran 5."), i + 1)
+            pb = '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'
+            xl = xl[:b0 + bl[i + 1].start()] + sis + pb + xl[b0 + bl[j].start():]
+            log.append(f"lampiran4: {len(bs)} blok lembar persetujuan menggantikan {j - i - 1} paragraf placeholder")
+            continue
+        elif op == "lampiran6":
+            if "Lampiran 6. Daftar Perangkat Lunak dan Versi" in xl:
+                log.append("lampiran6: sudah ada, dilewati"); continue
+            sis = ambil(lambda t: t == "SISIP_L6_MULAI", lambda t: t == "SISIP_L6_SELESAI", termasuk_awal=False)
+            pos = b0 + bl[-1].end()          # akhir isi dokumen (setelah Lampiran 5)
+        elif op == "hapus_vs":
+            m_p = next((m for m in re.finditer(r"<w:p[ >].*?</w:p>", xl, re.S) if teks(m.group(0)) == "VSPENGESAHAN"), None)
+            if not m_p:
+                log.append("hapus_vs: tidak ditemukan"); continue
+            p_new = re.sub(r"<w:r[ >](?:(?!</w:r>).)*?<w:t[^>]*>VS</w:t></w:r>", "", m_p.group(0), count=1, flags=re.S)
+            xl = xl[:m_p.start()] + p_new + xl[m_p.end():]
+            log.append(f"hapus_vs: '{teks(p_new)}'")
+            continue
         elif op.startswith("ganti:"):
             import json
             from xml.sax.saxutils import escape
