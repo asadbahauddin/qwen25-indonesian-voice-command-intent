@@ -5,11 +5,11 @@
 | Item | Isi |
 |---|---|
 | Nama | Dataset Perintah Suara Robot Layanan Laboratorium — Bahasa Indonesia (formal, semi-formal, informal) |
-| Versi | v1 ⟨tanggal rilis⟩ |
+| Versi | v1.0 (tanggal rilis = tanggal unggah publik) |
 | Pembuat | As'ad Bahauddin Ahmad; Ir. Vivi Tri Widyaningrum, S.Kom., M.T. — Teknik Mekatronika, Universitas Trunojoyo Madura |
 | Pendanaan / program | Asistensi Hibah Penelitian (MBKM Riset), LPPM UTM 2026 |
 | Tujuan | Evaluasi ekstraksi intent dan entity perintah suara kalimat bebas untuk robot layanan (ASR + NLU) |
-| Lisensi | ⟨mis. CC BY-NC 4.0, sesuai keputusan tim/LPPM⟩ |
+| Lisensi | CC BY-NC 4.0 (Atribusi–NonKomersial). Rilis publik audio (mis. Kaggle) hanya setelah persetujuan tambahan responden (butir 5 lembar persetujuan) dan izin pencipta kedua. |
 
 ## 2. Isi
 | Item | Isi |
