@@ -111,11 +111,51 @@ def main():
                 n += k
             log.append(f"bukti_logbook: {n} sel diganti [ISI]")
             continue
+        elif op == "foto_kegiatan":
+            # sumber berisi penanda SISIP_FOTO_MULAI ... SISIP_FOTO_SELESAI; disisipkan sebelum paragraf "[ISI: foto"
+            # pertama di Lampiran 2
+            if "Gambar L.6. Perekaman" in xl:
+                log.append("foto_kegiatan: sudah ada, dilewati"); continue
+            sis = ambil(lambda t: t == "SISIP_FOTO_MULAI", lambda t: t == "SISIP_FOTO_SELESAI", termasuk_awal=False)
+            i = cari(bl, body_l, lambda t: t == "Lampiran 2. Dokumentasi Kegiatan")
+            k = cari(bl, body_l, lambda t: t.startswith("[ISI: foto"), i + 1)
+            pos = b0 + bl[k].start()
+        elif op.startswith("ganti:"):
+            import json
+            from xml.sax.saxutils import escape
+            for e in json.load(open(op[6:], encoding="utf-8")):
+                placeholder = e["cari"].startswith("[")
+                hit = None
+                for m in re.finditer(r"<w:p[ >].*?</w:p>", xl, re.S):
+                    t = teks(m.group(0))
+                    ok = {"persis": t == e["cari"], "awal": t.startswith(e["cari"]), "berisi": e["cari"] in t}[e["mode"]]
+                    if ok:
+                        hit = m
+                        break
+                if not hit:
+                    log.append(f"ganti: TIDAK DITEMUKAN '{e['cari'][:50]}'"); continue
+                p = hit.group(0)
+                rprs = re.findall(r"<w:r[ >](?:(?!</w:r>).)*?(<w:rPr>.*?</w:rPr>)(?:(?!</w:r>).)*?<w:t", p, re.S)
+                rpr = (rprs[-1] if e["aksi"] == "tambah" else rprs[0]) if rprs else ""
+                if placeholder:
+                    rpr = re.sub(r"<w:highlight [^>]*/>|<w:b/>|<w:bCs/>", "", rpr)
+                run = f'<w:r>{rpr}<w:t xml:space="preserve">{escape(e["teks"])}</w:t></w:r>'
+                if e["aksi"] == "tambah":
+                    baru = p[: p.rindex("</w:p>")] + run + "</w:p>"
+                else:
+                    ppr = re.search(r"<w:pPr>.*?</w:pPr>", p, re.S)
+                    baru = p[: p.index(">") + 1] + (ppr.group(0) if ppr else "") + run + "</w:p>"
+                xl = xl[:hit.start()] + baru + xl[hit.end():]
+                log.append(f"ganti ({e['aksi']}): '{e['cari'][:50]}'")
+            continue
         else:
             raise ValueError(op)
         xl = xl[:pos] + sis + xl[pos:]
         log.append(f"{op}: disisipkan")
 
+    import itertools
+    nomor = itertools.count(1)   # docPr id wajib unik (temuan 12 Nov: sumber docx-js memakai id sama)
+    xl = re.sub(r'(<wp:docPr id=")\d+', lambda m: m.group(1) + str(next(nomor)), xl)
     if "xmlns:m=" not in xl[:3000]:
         xl = xl.replace("<w:document ", '<w:document xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" ', 1)
     if nonlocal_rels:

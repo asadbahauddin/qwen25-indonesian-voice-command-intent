@@ -29,3 +29,8 @@ backup/
 
 # foto dokumentasi pribadi (repo publik)
 luaran/foto/
+
+# foto & pindaian kegiatan (wajah/nama responden) - repo publik, jangan di-push
+Dokumentasi/*.jpeg
+Dokumentasi/*.jpg
+Dokumentasi/*.pdf

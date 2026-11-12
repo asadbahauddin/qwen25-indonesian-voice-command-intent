@@ -1,0 +1,23 @@
+[
+  {"cari": "[ISI: sesuaikan dengan penelitian dosen]", "mode": "berisi", "aksi": "ganti",
+   "teks": "Membantu penggerakan dan pemberian perintah robot penyiram otomatis berpenggerak Ackermann dengan kendali PID dan fuzzy adaptif (penelitian dosen pembimbing)"},
+  {"cari": "Jenis ciptaan menunggu keputusan pembimbing", "mode": "berisi", "aksi": "ganti",
+   "teks": "Hak cipta Program Komputer; pencipta As'ad Bahauddin Ahmad dan Vivi Tri Widyaningrum; berkas disiapkan (Subbab 4.1)"},
+  {"cari": "target submit 15 November", "mode": "berisi", "aksi": "ganti",
+   "teks": "Bahasa Indonesia dengan abstrak dan kata kunci Bahasa Inggris (template JoTI 2025, maks. 10 halaman, IEEE); target submit 15 November"},
+  {"cari": "keputusan jenis ciptaan dan susunan pencipta diserahkan kepada dosen pembimbing", "mode": "berisi", "aksi": "ganti",
+   "teks": "Pengajuan dilakukan melalui sistem e-HKI Universitas Trunojoyo Madura (https://hki.trunojoyo.ac.id/) dengan jenis permohonan Lembaga Pendidikan. Dua jenis ciptaan yang dapat diajukan dari kegiatan ini ditunjukkan pada Tabel 4.2."},
+  {"cari": "[KEPUTUSAN PEMBIMBING", "mode": "berisi", "aksi": "ganti",
+   "teks": "Keputusan: ciptaan yang didaftarkan adalah Program Komputer (Opsi A) dengan urutan pencipta As'ad Bahauddin Ahmad (Ketua Pencipta sekaligus pemohon) dan Vivi Tri Widyaningrum. Biaya pendaftaran ditanggung dari dana pribadi dosen pembimbing. Dataset tetap dilaporkan sebagai luaran tambahan."},
+  {"cari": "Artikel berjudul [ISI", "mode": "berisi", "aksi": "ganti",
+   "teks": "Artikel berjudul \"Evaluasi Large Language Model Qwen2.5 untuk Ekstraksi Intent Perintah Suara Robot Berbahasa Indonesia secara Offline\" (penulis: As'ad Bahauddin Ahmad dan Vivi Tri Widyaningrum) disusun untuk Journal of Technology and Informatics (JoTI) Universitas Dinamika (SINTA 3) mengikuti template JoTI 2025: Bahasa Indonesia dengan abstrak dan kata kunci Bahasa Inggris, maksimal 10 halaman, dan sitasi IEEE dengan 16 rujukan (3 di antaranya artikel JoTI). Isi artikel mengikuti Bab II laporan ini: rancangan pipeline, dataset kalimat bebas, perbandingan tiga metode, dan analisis kesalahan."},
+  {"cari": "Dari sisi sistem, galat Whisper base", "mode": "awal", "aksi": "tambah",
+   "teks": " Keterbatasan lain, data pengembangan untuk memilih parameter VAD dan implementasi Whisper direkam oleh peneliti yang juga merupakan responden R03; meskipun demikian, hasil R03 tidak lebih tinggi daripada responden lain (Tabel 2.6)."},
+  {"cari": "[ISI: foto mikrofon lavalier", "mode": "awal", "aksi": "ganti",
+   "teks": "[ISI: foto bimbingan; bukti kegiatan Agustus–September yang sesuai dengan logbook minggu 1–5.]"},
+  {"cari": "Gambar L.6. Tampilan awal CLI", "mode": "awal", "aksi": "ganti", "teks": "Gambar L.10. Tampilan awal CLI dan daftar perintah (/bantuan)"},
+  {"cari": "Gambar L.7. Mode teks", "mode": "awal", "aksi": "ganti", "teks": "Gambar L.11. Mode teks: satu kalimat diproses tiga metode, beserta JSON dan tabel latency"},
+  {"cari": "Gambar L.8. Masukan audio", "mode": "awal", "aksi": "ganti", "teks": "Gambar L.12. Masukan audio perintah majemuk (laptop GPU): rule-based dan IndoBERT memecah menjadi dua langkah, Qwen2.5 hanya mengenali satu intent"},
+  {"cari": "Gambar L.9. Pindah ke laptop CPU", "mode": "awal", "aksi": "ganti", "teks": "Gambar L.13. Pindah ke laptop CPU tanpa restart (/perangkat cpu) dan statistik sesi (/stat)"},
+  {"cari": "Paraf", "mode": "persis", "aksi": "ganti", "teks": "Paraf Pembimbing"}
+]

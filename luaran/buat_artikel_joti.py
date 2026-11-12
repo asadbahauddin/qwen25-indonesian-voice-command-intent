@@ -45,23 +45,23 @@ ISI = [
     ("P", "Sejak hadirnya _large language model_ (LLM), sejumlah penelitian interaksi manusia–robot memakai LLM praterlatih "
           "sebagai komponen NLU. Nwankwo dan Rueckert menunjukkan bahwa robot otonom dapat memahami instruksi kalimat bebas "
           "melalui LLM tanpa data latih _intent_ khusus [3], dan Ahn dkk. memadukan LLM dengan kemampuan robot untuk "
-          "menerjemahkan instruksi bahasa alami menjadi tindakan [4]. Namun, penelitian tersebut memakai Bahasa Inggris dan "
+          "menerjemahkan instruksi bahasa alami menjadi tindakan [4]. Pemetaan perintah ke gerakan robot juga telah dikaji dengan masukan gestur tangan untuk navigasi _unmanned ground vehicle_ [5]. Namun, penelitian tersebut memakai Bahasa Inggris dan "
           "model berukuran besar yang berjalan di server. Untuk Bahasa Indonesia, model berbasis _transformer_ seperti "
-          "IndoBERT [5], [6] telah banyak dipakai untuk klasifikasi teks, sedangkan evaluasi pengenalan suara Whisper [7] "
-          "untuk Bahasa Indonesia menunjukkan kinerja yang masih dipengaruhi variasi cara bicara [8], [9]."),
+          "IndoBERT [6], [7] telah banyak dipakai untuk klasifikasi teks, termasuk analisis sentimen [8], selain metode _machine learning_ klasik berbasis TF-IDF [9], sedangkan evaluasi pengenalan suara Whisper [10] "
+          "untuk Bahasa Indonesia menunjukkan kinerja yang masih dipengaruhi variasi cara bicara [11], [12]."),
     ("P", "Celah yang diisi penelitian ini adalah belum adanya perbandingan sistematis antara LLM kecil yang berjalan "
           "sepenuhnya _offline_ dan metode konvensional untuk ekstraksi _intent_ perintah robot berbahasa Indonesia yang "
-          "diucapkan secara bebas. Penelitian ini mengevaluasi Qwen2.5 1.5B [10] dalam _pipeline_ suara-ke-JSON dan "
+          "diucapkan secara bebas. Penelitian ini mengevaluasi Qwen2.5 1.5B [13] dalam _pipeline_ suara-ke-JSON dan "
           "membandingkannya dengan _rule-based keyword matching_ dan IndoBERT _fine-tuned_. Pertanyaan penelitiannya adalah: "
           "(1) seberapa akurat Qwen2.5 mengekstrak _intent_ dan entitas dari perintah kalimat bebas, (2) berapa _latency_ "
           "_pipeline_ dari suara hingga JSON, dan (3) bagaimana perbandingannya dengan kedua metode pembanding pada tiga "
-          "tingkat formalitas. [ISI: tambahkan 2–3 rujukan artikel JoTI yang relevan, sesuai ketentuan 20% rujukan JoTI.]"),
+          "tingkat formalitas."),
 
     ("H", "METODE"),
     ("S", "Rancangan Sistem"),
     ("P", "_Pipeline_ terdiri atas empat tahap. Audio mikrofon _wireless lavalier_ direkam pada 48 kHz, digabung menjadi mono, "
-          "dan di-_resample_ ke 16 kHz. Silero VAD [11] mendeteksi ujaran per _frame_ 32 ms dengan _pre-roll_ 300 ms dan "
-          "jeda diam 1,2 detik sebagai penanda akhir perintah. Whisper base dijalankan melalui faster-whisper [12] dengan "
+          "dan di-_resample_ ke 16 kHz. Silero VAD [14] mendeteksi ujaran per _frame_ 32 ms dengan _pre-roll_ 300 ms dan "
+          "jeda diam 1,2 detik sebagai penanda akhir perintah. Whisper base dijalankan melalui faster-whisper [15] dengan "
           "bahasa Indonesia, _beam_ 5, _temperature_ 0, dan _initial prompt_ berisi nama entitas domain. Transkrip kemudian "
           "diproses oleh metode NLU yang menghasilkan JSON dengan field intent, room, object, person, document, dan steps. "
           "Field steps berisi daftar sub-perintah dan hanya dipakai untuk perintah majemuk. JSON ini merupakan antarmuka ke pengendali robot; penggerakan robot fisik berada di luar ruang lingkup penelitian ini. Seluruh komponen berjalan "
@@ -75,7 +75,7 @@ ISI = [
           "enam contoh _few-shot_ dan _structured output_ berbasis JSON Schema yang dikunci per _intent_, _temperature_ 0, dan "
           "_seed_ 42. Iterasi _prompt_ hanya dilakukan pada set pengembangan dan dihentikan setelah dua versi untuk mencegah "
           "_overfitting_. **Rule-based keyword matching** memetakan kata kunci per _intent_ dan memecah perintah majemuk "
-          "berdasarkan kata penghubung. **IndoBERT** (indobenchmark/indobert-base-p1) [5] di-_fine-tune_ untuk klasifikasi "
+          "berdasarkan kata penghubung. **IndoBERT** (indobenchmark/indobert-base-p1) [6] di-_fine-tune_ untuk klasifikasi "
           "_intent_ dengan 300 kalimat latih sintetis (50 per _intent_); perintah majemuk dipecah per klausa sebelum "
           "diklasifikasi. Ketiga metode memakai kamus entitas dan normalisasi yang sama sehingga perbandingan adil."),
     ("S", "Dataset"),
@@ -85,7 +85,7 @@ ISI = [
           "formalitas) berformat WAV 16 kHz mono. Transkrip _ground-truth_ dikoreksi manual, dan label disusun dari apa yang "
           "benar-benar diucapkan. Pemeriksaan kebocoran data memastikan tidak ada kalimat uji yang sama dengan set "
           "pengembangan, data latih IndoBERT, maupun contoh _prompt_. Parameter VAD dan pilihan implementasi Whisper "
-          "ditetapkan dari set pengembangan terpisah (36 kalimat dibaca dan 18 perintah bebas dari satu penutur) [ISI: sebutkan bila penutur ini juga salah satu responden], bukan "
+          "ditetapkan dari set pengembangan terpisah (36 kalimat dibaca dan 18 perintah bebas yang direkam oleh penulis pertama), bukan "
           "dari set uji."),
     ("S", "Prosedur Pengujian dan Metrik"),
     ("P", "Ketiga metode diuji pada tiga masukan: teks _ground-truth_ (galat NLU saja), rekaman utuh yang ditranskripsi "
@@ -94,7 +94,7 @@ ISI = [
     ("P", "dengan S, D, dan I berturut-turut jumlah kata tersubstitusi, terhapus, dan tersisip, serta N jumlah kata "
           "referensi. NLU diukur dengan _intent accuracy_, _exact match_ (EM: _intent_ serta seluruh entitas dan langkah "
           "harus tepat), F1, dan _confusion matrix_. _Latency_ dicatat per tahap; waktu respons adalah jeda tunggu VAD "
-          "ditambah waktu Whisper dan NLU. Perbedaan antarmetode pada item yang sama diuji dengan uji McNemar eksak [13]."),
+          "ditambah waktu Whisper dan NLU. Perbedaan antarmetode pada item yang sama diuji dengan uji McNemar eksak [16]."),
 
     ("H", "HASIL DAN PEMBAHASAN"),
     ("S", "Latency dan Akurasi Transkripsi"),
@@ -138,7 +138,8 @@ ISI = [
           "memecah perintah majemuk belum andal. Di sisi lain, akurasi _baseline_ yang mencapai 100% pada set pengembangan "
           "turun pada kalimat bebas responden, yang menegaskan pentingnya menguji dengan kalimat yang tidak disusun dari "
           "kosakata kamus atau data latih. Keterbatasan penelitian ini adalah jumlah responden yang kecil (tiga orang, satu "
-          "di antaranya berbahasa ibu Madura) dan pengujian yang dilakukan pada laptop, bukan perangkat _embedded_."),
+          "di antaranya berbahasa ibu Madura), penutur data pengembangan yang juga merupakan salah satu responden set uji (R03), "
+          "walaupun hasil R03 tidak lebih tinggi daripada responden lain, serta pengujian yang dilakukan pada laptop, bukan perangkat _embedded_."),
 
     ("H", "KESIMPULAN DAN SARAN"),
     ("P", "Pada 162 perintah kalimat bebas berbahasa Indonesia, Qwen2.5 1.5B yang berjalan _offline_ mencapai _intent "
@@ -153,7 +154,7 @@ ISI = [
     ("H", "UCAPAN TERIMA KASIH"),
     ("P", "Penelitian ini didukung Program Asistensi Hibah Penelitian (MBKM Riset) LPPM Universitas Trunojoyo Madura. "
           "Penulis berterima kasih kepada Laboratorium Sistem Otomasi, Program Studi Teknik Mekatronika, dan para responden "
-          "yang bersedia direkam. [ISI: sesuaikan]"),
+          "yang bersedia direkam."),
 ]
 
 PUSTAKA = [
@@ -161,8 +162,11 @@ PUSTAKA = [
     "S. Larson et al., \"An evaluation dataset for intent classification and out-of-scope prediction,\" in _Proc. EMNLP-IJCNLP_, Hong Kong, 2019, pp. 1311–1316.",
     "L. Nwankwo and E. Rueckert, \"The conversation is the command: Interacting with real-world autonomous robots through natural language,\" in _Companion of the 2024 ACM/IEEE Int. Conf. Human-Robot Interaction_, 2024, pp. 284–288, doi: 10.1145/3610978.3640723.",
     "M. Ahn et al., \"Do as I can, not as I say: Grounding language in robotic affordances,\" _arXiv preprint_ arXiv:2204.01691, 2022.",
+    "A. M. Agus, M. Fuad, H. Budiarto, F. Umam, V. T. Widyaningrum, and A. I. Sudianto, \"Brush-shaped motion gesture of UGV using hand gesture recognition,\" _Journal of Technology and Informatics (JoTI)_, vol. 8, no. 1, pp. 25–36, 2026, doi: 10.37802/joti.v8i1.1315.",
     "B. Wilie et al., \"IndoNLU: Benchmark and resources for evaluating Indonesian natural language understanding,\" in _Proc. 1st Conf. Asia-Pacific Chapter of the ACL_, 2020, pp. 843–857.",
     "F. Koto, A. Rahimi, J. H. Lau, and T. Baldwin, \"IndoLEM and IndoBERT: A benchmark dataset and pre-trained language model for Indonesian NLP,\" in _Proc. 28th Int. Conf. Computational Linguistics (COLING)_, 2020, pp. 757–770.",
+    "P. Subarkah, A. N. Ikhsan, E. Anggraeni, and A. P. Sabaniyah, \"Sentiment perspective of government's free nutritious meal policy on social media X using Indo-BERT and Bi-LTSM,\" _Journal of Technology and Informatics (JoTI)_, vol. 7, no. 2, pp. 201–210, 2025, doi: 10.37802/joti.v7i2.1065.",
+    "M. D. H. Fahri and D. Gunawan, \"Analisis sentimen pengguna X terhadap perempuan di lingkungan kerja menggunakan algoritma machine learning,\" _Journal of Technology and Informatics (JoTI)_, vol. 7, no. 2, pp. 134–146, 2025, doi: 10.37802/joti.v7i2.1087.",
     "A. Radford, J. W. Kim, T. Xu, G. Brockman, C. McLeavey, and I. Sutskever, \"Robust speech recognition via large-scale weak supervision,\" in _Proc. 40th Int. Conf. Machine Learning (PMLR 202)_, 2023, pp. 28492–28518.",
     "A. Adila, D. Lestari, A. Purwarianti, D. Tanaya, K. Azizah, and S. Sakti, \"Enhancing Indonesian automatic speech recognition: Evaluating multilingual models with diverse speech variabilities,\" _arXiv preprint_ arXiv:2410.08828, 2024.",
     "I. A. N. Fathony, A. Mareta, B. E. Adiana, O. Wardhani, and D. A. Halim, \"Optimisasi Whisper speech-to-text Bahasa Indonesia dengan hybrid cloud dan multi-engine,\" _ELKOM: Jurnal Elektronika dan Komputer_, vol. 18, no. 1, pp. 60–72, 2025, doi: 10.51903/5n2d3s08.",
@@ -170,8 +174,6 @@ PUSTAKA = [
     "Silero Team, \"Silero VAD: Pre-trained enterprise-grade voice activity detector,\" GitHub, 2024. [Online]. Available: https://github.com/snakers4/silero-vad",
     "SYSTRAN, \"faster-whisper: Faster Whisper transcription with CTranslate2,\" GitHub, 2024. [Online]. Available: https://github.com/SYSTRAN/faster-whisper",
     "Q. McNemar, \"Note on the sampling error of the difference between correlated proportions or percentages,\" _Psychometrika_, vol. 12, no. 2, pp. 153–157, 1947.",
-    "[ISI: rujukan artikel JoTI 1]",
-    "[ISI: rujukan artikel JoTI 2]",
 ]
 
 
@@ -291,8 +293,8 @@ def main():
     # penulis & afiliasi
     SUP = '<w:vertAlign w:val="superscript"/>'
     sup = lambda s: f'<w:r>{rpr(22, True, extra=SUP)}<w:t>{s}</w:t></w:r>'
-    head[1] = set_text(head[1], "Nama Penulis", runs("[ISI: Nama Penulis 1 tanpa gelar]", b=True) + sup("1*") +
-                       runs(", [ISI: Nama Penulis 2 tanpa gelar]", b=True) + sup("2"))
+    head[1] = set_text(head[1], "Nama Penulis", runs("As'ad Bahauddin Ahmad", b=True) + sup("1*") +
+                       runs(", Vivi Tri Widyaningrum", b=True) + sup("2"))
     head[2] = set_text(head[2], "Program Studi", f'<w:r>{rpr(20, extra=SUP)}<w:t>1,2</w:t></w:r>' +
                        runs("Program Studi Teknik Mekatronika, Universitas Trunojoyo Madura, Bangkalan, Jawa Timur, Indonesia", sz=20))
     head[3] = ""  # afiliasi ke-3 (contoh luar negeri) dihapus
