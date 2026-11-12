@@ -151,6 +151,11 @@ def main():
                 log.append("lampiran6: sudah ada, dilewati"); continue
             sis = ambil(lambda t: t == "SISIP_L6_MULAI", lambda t: t == "SISIP_L6_SELESAI", termasuk_awal=False)
             pos = b0 + bl[-1].end()          # akhir isi dokumen (setelah Lampiran 5)
+        elif op == "lampiran7":
+            if "Lampiran 7. Data Card dan Struktur Dataset" in xl:
+                log.append("lampiran7: sudah ada, dilewati"); continue
+            sis = ambil(lambda t: t == "SISIP_L7_MULAI", lambda t: t == "SISIP_L7_SELESAI", termasuk_awal=False)
+            pos = b0 + bl[-1].end()          # akhir isi dokumen (setelah Lampiran 6)
         elif op == "hapus_vs":
             m_p = next((m for m in re.finditer(r"<w:p[ >].*?</w:p>", xl, re.S) if teks(m.group(0)) == "VSPENGESAHAN"), None)
             if not m_p:
