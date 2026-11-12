@@ -109,7 +109,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | F7 | Deployment & benchmark Raspberry Pi 5 (suhu, throttling) |
 | F8 | Alat perekaman dataset responden (daftar kalimat, metadata, consent) |
 | F9 | **Selesai** (12 Nov) | `bench/evaluasi.py`, `bench/analisis_f9.py`, `results/eval_dataset_MSI_20261112_095743.md`, `results/analisis_dataset_MSI_20261112_104423.md`, `Dokumentasi/F9_evaluasi.md` | Set uji 162: H1 tidak tercapai, H2 tidak terdukung (IndoBERT terbaik), H3 tercapai di GPU (CPU 4/162 > 15 s, swap). Kelemahan Qwen: combined_command (recall 0,04 teks). Sensitivitas tanpa 2 item mirip: ≤ 0,7 poin. |
-| F10 | Bahan luaran: grafik untuk artikel/poster, paket dataset + data card untuk HKI |
+| F10 | **Berjalan** (12 Nov) | `luaran/buat_laporan_akhir.js` → `Laporan_Akhir_MBKM_Asad_Bahauddin_Ahmad_DRAF.docx` (lokal), `Dokumentasi/Luaran_JoTI_ketentuan.md` | Draf laporan akhir lengkap (BAB I–V, angka nyata F9) dengan [ISI] untuk logbook minggu 8–12, foto, scan persetujuan, keputusan HKI. Belum: grafik (matplotlib belum terpasang), artikel JoTI, poster, paket dataset, berkas HKI. |
 
 ## Status Proyek
 > Diperbarui oleh Claude Code di akhir setiap fase. Format: fase | status | bukti (file/commit) | catatan.
