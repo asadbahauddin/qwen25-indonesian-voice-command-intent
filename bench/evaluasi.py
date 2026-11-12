@@ -129,6 +129,7 @@ def main():
     ap.add_argument("--metode", nargs="+", choices=METHODS, default=METHODS)
     ap.add_argument("--pemanasan", type=int, default=3, help="item awal dijalankan dulu dan TIDAK dihitung, per perangkat")
     ap.add_argument("--batas", type=int, help="hanya N item pertama (uji alat)")
+    ap.add_argument("--sensitivitas", help="JSON dari bench/cek_kebocoran.py: akurasi juga dihitung TANPA item 'mirip'")
     a = ap.parse_args()
     try:
         from transformers.utils import logging as hf_logging
@@ -215,6 +216,16 @@ def main():
         out["confusion"][key] = {"label": lab, "matriks": cm.tolist()}
         out["latency"][key] = {c: msd([r[c] for r in rr]) for c in ("t_vad", "t_asr", "t_nlu", "t_total", "t_respons")}
         out["latency"][key]["qwen_tokens_per_s"] = msd([r["qwen_tokens_per_s"] for r in rr])
+    mirip = set()
+    if a.sensitivitas:
+        kb = json.load(open(a.sensitivitas, encoding="utf-8"))
+        mirip = {x["item"] for v in kb["sumber"].values() for x in v["mirip"]}
+        out["sensitivitas"] = {"sumber": str(a.sensitivitas), "dikeluarkan": sorted(mirip), "akurasi": {}}
+        for (dev, mk, mname), rr in G.items():
+            sub = [r for r in rr if f"{r['penutur']}_{r['item_id']}" not in mirip]
+            out["sensitivitas"]["akurasi"][f"{dev}/{mk}/{mname}"] = {
+                "semua": metrics(sub), **{f"formality={x}": metrics([r for r in sub if r["formality"] == x])
+                                          for x in FORMS if any(r["formality"] == x for r in sub)}}
 
     # ---------------- laporan ----------------
     n = len(items)
@@ -278,6 +289,17 @@ def main():
                 L.append(f"| {NAMA[mname]} | " + " | ".join(
                     f"{acc[f'penutur={p}']['intent_acc'] * 100:.1f} / {acc[f'penutur={p}']['exact_match'] * 100:.1f}"
                     if f"penutur={p}" in acc else "–" for p in pen) + " |")
+    if mirip:
+        L += ["", f"## Uji sensitivitas: tanpa {len(mirip)} item 'mirip' data latih/prompt ({', '.join(sorted(mirip))})", "",
+              "Intent Accuracy / Exact Match (%): semua item → tanpa item mirip.", "",
+              "| Platform | Metode | Masukan | Semua | Tanpa item mirip |", "|---|---|---|---|---|"]
+        for dev in a.perangkat:
+            for mk in a.masukan:
+                for mname in a.metode:
+                    k2 = f"{dev}/{mk}/{mname}"
+                    s1, s2 = out["akurasi"][k2]["semua"], out["sensitivitas"]["akurasi"][k2]["semua"]
+                    L.append(f"| {PLATFORM[dev]} | {NAMA[mname]} | {mk} | {s1['intent_acc'] * 100:.2f} / {s1['exact_match'] * 100:.2f} "
+                             f"(n={s1['n']}) | {s2['intent_acc'] * 100:.2f} / {s2['exact_match'] * 100:.2f} (n={s2['n']}) |")
     # hipotesis (dihitung, bukan klaim): H1 formal+semi Qwen > 80%, H2 informal Qwen vs baseline, H3 total < 15 s
     L += ["", "## Ringkasan hipotesis (angka dihitung otomatis; interpretasi oleh peneliti)", ""]
     for dev in a.perangkat:

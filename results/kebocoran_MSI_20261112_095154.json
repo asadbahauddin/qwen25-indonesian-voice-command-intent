@@ -1,0 +1,36 @@
+{
+  "n_dataset": 162,
+  "ambang": 0.8,
+  "sumber": {
+    "pilot": {
+      "n": 36,
+      "sama_persis": [],
+      "mirip": [],
+      "jaccard_maks": 0.625
+    },
+    "latih_indobert": {
+      "n": 300,
+      "sama_persis": [],
+      "mirip": [
+        {
+          "item": "R03_S46",
+          "sumber": "T254",
+          "jaccard": 0.833
+        }
+      ],
+      "jaccard_maks": 0.833
+    },
+    "prompt_qwen": {
+      "n": 6,
+      "sama_persis": [],
+      "mirip": [
+        {
+          "item": "R03_S16",
+          "sumber": "contoh2",
+          "jaccard": 0.833
+        }
+      ],
+      "jaccard_maks": 0.833
+    }
+  }
+}
