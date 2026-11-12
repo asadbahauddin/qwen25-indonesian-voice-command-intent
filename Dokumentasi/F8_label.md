@@ -45,7 +45,7 @@ Hasil R01 (`results/kebocoran_MSI_20261112_044132.md`, n = 54):
 Cek ini dijalankan ulang setelah seluruh transkrip selesai.
 
 ## Hasil akhir (12 Nov 2026)
-- **Transkrip 162/162.** Sumber: ketik 120, draf 1 39, draf 2 3.
+- **Transkrip 162/162.** Sumber akhir per item: ketik 118, draf 1 41 (termasuk 2 yang dikonfirmasi peneliti), draf 2 3.
 - **Perbaikan setelah pemeriksaan otomatis** (semua dicadangkan di `dataset/metadata.bak_*.csv` dan dicatat di `catatan`):
   - 11 kata depan tersambung di R01 dan 1 di R03 (`ke-trainer`) dipisahkan sesuai EYD.
   - R01_S07: "andu" dikoreksi menjadi "andi".
