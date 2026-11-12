@@ -40,3 +40,8 @@ luaran/penulis_lokal.json
 
 # berkas unggahan e-HKI (dibuat ulang dari luaran/buat_berkas_hki.*)
 HKI/
+
+# keluaran poster (dibuat ulang dari luaran/buat_poster.py)
+luaran/poster/*.pdf
+luaran/poster/*.png
+luaran/poster/*.jpeg
