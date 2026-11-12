@@ -1,0 +1,670 @@
+{
+  "sumber": "dataset/eval_item_dataset_MSI_20261112_095743.csv",
+  "per_intent": {
+    "gpu/teks": {
+      "qwen": {
+        "navigate_room": {
+          "p": 0.5192307692307693,
+          "r": 1.0,
+          "f1": 0.6835443037974683,
+          "n": 27
+        },
+        "navigate_object": {
+          "p": 0.75,
+          "r": 1.0,
+          "f1": 0.8571428571428571,
+          "n": 27
+        },
+        "find_person": {
+          "p": 0.8709677419354839,
+          "r": 1.0,
+          "f1": 0.9310344827586207,
+          "n": 27
+        },
+        "deliver_document": {
+          "p": 0.9310344827586207,
+          "r": 1.0,
+          "f1": 0.9642857142857143,
+          "n": 27
+        },
+        "combined_command": {
+          "p": 1.0,
+          "r": 0.037037037037037035,
+          "f1": 0.07142857142857142,
+          "n": 27
+        },
+        "general_command": {
+          "p": 1.0,
+          "r": 0.48148148148148145,
+          "f1": 0.65,
+          "n": 27
+        }
+      },
+      "rule": {
+        "navigate_room": {
+          "p": 0.896551724137931,
+          "r": 0.9629629629629629,
+          "f1": 0.9285714285714286,
+          "n": 27
+        },
+        "navigate_object": {
+          "p": 0.8666666666666667,
+          "r": 0.9629629629629629,
+          "f1": 0.9122807017543859,
+          "n": 27
+        },
+        "find_person": {
+          "p": 0.78125,
+          "r": 0.9259259259259259,
+          "f1": 0.847457627118644,
+          "n": 27
+        },
+        "deliver_document": {
+          "p": 0.8333333333333334,
+          "r": 0.9259259259259259,
+          "f1": 0.8771929824561403,
+          "n": 27
+        },
+        "combined_command": {
+          "p": 1.0,
+          "r": 0.37037037037037035,
+          "f1": 0.5405405405405406,
+          "n": 27
+        },
+        "general_command": {
+          "p": 0.8709677419354839,
+          "r": 1.0,
+          "f1": 0.9310344827586207,
+          "n": 27
+        }
+      },
+      "indobert": {
+        "navigate_room": {
+          "p": 0.9310344827586207,
+          "r": 1.0,
+          "f1": 0.9642857142857143,
+          "n": 27
+        },
+        "navigate_object": {
+          "p": 0.9310344827586207,
+          "r": 1.0,
+          "f1": 0.9642857142857143,
+          "n": 27
+        },
+        "find_person": {
+          "p": 1.0,
+          "r": 1.0,
+          "f1": 1.0,
+          "n": 27
+        },
+        "deliver_document": {
+          "p": 0.9310344827586207,
+          "r": 1.0,
+          "f1": 0.9642857142857143,
+          "n": 27
+        },
+        "combined_command": {
+          "p": 1.0,
+          "r": 0.7777777777777778,
+          "f1": 0.875,
+          "n": 27
+        },
+        "general_command": {
+          "p": 1.0,
+          "r": 1.0,
+          "f1": 1.0,
+          "n": 27
+        }
+      }
+    },
+    "gpu/vad": {
+      "qwen": {
+        "navigate_room": {
+          "p": 0.5098039215686274,
+          "r": 0.9629629629629629,
+          "f1": 0.6666666666666666,
+          "n": 27
+        },
+        "navigate_object": {
+          "p": 0.46551724137931033,
+          "r": 1.0,
+          "f1": 0.6352941176470588,
+          "n": 27
+        },
+        "find_person": {
+          "p": 0.8888888888888888,
+          "r": 0.5925925925925926,
+          "f1": 0.7111111111111111,
+          "n": 27
+        },
+        "deliver_document": {
+          "p": 0.9583333333333334,
+          "r": 0.8518518518518519,
+          "f1": 0.9019607843137255,
+          "n": 27
+        },
+        "combined_command": {
+          "p": 0.6666666666666666,
+          "r": 0.07407407407407407,
+          "f1": 0.13333333333333333,
+          "n": 27
+        },
+        "general_command": {
+          "p": 1.0,
+          "r": 0.2962962962962963,
+          "f1": 0.45714285714285713,
+          "n": 27
+        }
+      },
+      "rule": {
+        "navigate_room": {
+          "p": 0.7058823529411765,
+          "r": 0.4444444444444444,
+          "f1": 0.5454545454545454,
+          "n": 27
+        },
+        "navigate_object": {
+          "p": 0.8636363636363636,
+          "r": 0.7037037037037037,
+          "f1": 0.7755102040816326,
+          "n": 27
+        },
+        "find_person": {
+          "p": 0.5384615384615384,
+          "r": 0.7777777777777778,
+          "f1": 0.6363636363636364,
+          "n": 27
+        },
+        "deliver_document": {
+          "p": 0.8333333333333334,
+          "r": 0.7407407407407407,
+          "f1": 0.7843137254901961,
+          "n": 27
+        },
+        "combined_command": {
+          "p": 1.0,
+          "r": 0.25925925925925924,
+          "f1": 0.4117647058823529,
+          "n": 27
+        },
+        "general_command": {
+          "p": 0.5094339622641509,
+          "r": 1.0,
+          "f1": 0.675,
+          "n": 27
+        }
+      },
+      "indobert": {
+        "navigate_room": {
+          "p": 0.9,
+          "r": 0.6666666666666666,
+          "f1": 0.7659574468085106,
+          "n": 27
+        },
+        "navigate_object": {
+          "p": 0.65,
+          "r": 0.9629629629629629,
+          "f1": 0.7761194029850746,
+          "n": 27
+        },
+        "find_person": {
+          "p": 0.8846153846153846,
+          "r": 0.8518518518518519,
+          "f1": 0.8679245283018868,
+          "n": 27
+        },
+        "deliver_document": {
+          "p": 0.9629629629629629,
+          "r": 0.9629629629629629,
+          "f1": 0.9629629629629629,
+          "n": 27
+        },
+        "combined_command": {
+          "p": 1.0,
+          "r": 0.8518518518518519,
+          "f1": 0.92,
+          "n": 27
+        },
+        "general_command": {
+          "p": 0.7692307692307693,
+          "r": 0.7407407407407407,
+          "f1": 0.7547169811320755,
+          "n": 27
+        }
+      }
+    }
+  },
+  "mcnemar": {
+    "gpu/teks/intent/qwen-rule": {
+      "b": 6,
+      "c": 23,
+      "p": 0.002315700054168701
+    },
+    "gpu/teks/intent/qwen-indobert": {
+      "b": 0,
+      "c": 34,
+      "p": 1.1641532182693481e-10
+    },
+    "gpu/teks/intent/rule-indobert": {
+      "b": 1,
+      "c": 18,
+      "p": 7.62939453125e-05
+    },
+    "gpu/teks/EM/qwen-rule": {
+      "b": 2,
+      "c": 34,
+      "p": 1.941225491464138e-08
+    },
+    "gpu/teks/EM/qwen-indobert": {
+      "b": 2,
+      "c": 34,
+      "p": 1.941225491464138e-08
+    },
+    "gpu/teks/EM/rule-indobert": {
+      "b": 1,
+      "c": 1,
+      "p": 1.0
+    },
+    "gpu/utuh/intent/qwen-rule": {
+      "b": 32,
+      "c": 40,
+      "p": 0.40957939592707177
+    },
+    "gpu/utuh/intent/qwen-indobert": {
+      "b": 9,
+      "c": 47,
+      "p": 2.571572048082338e-07
+    },
+    "gpu/utuh/intent/rule-indobert": {
+      "b": 11,
+      "c": 41,
+      "p": 3.5887916129517805e-05
+    },
+    "gpu/utuh/EM/qwen-rule": {
+      "b": 20,
+      "c": 46,
+      "p": 0.0018582303075658085
+    },
+    "gpu/utuh/EM/qwen-indobert": {
+      "b": 20,
+      "c": 36,
+      "p": 0.044046546102150766
+    },
+    "gpu/utuh/EM/rule-indobert": {
+      "b": 11,
+      "c": 1,
+      "p": 0.00634765625
+    },
+    "gpu/vad/intent/qwen-rule": {
+      "b": 30,
+      "c": 34,
+      "p": 0.7079807541347641
+    },
+    "gpu/vad/intent/qwen-indobert": {
+      "b": 11,
+      "c": 45,
+      "p": 5.37831811014966e-06
+    },
+    "gpu/vad/intent/rule-indobert": {
+      "b": 9,
+      "c": 39,
+      "p": 1.5221826110689564e-05
+    },
+    "gpu/vad/EM/qwen-rule": {
+      "b": 15,
+      "c": 40,
+      "p": 0.0010158471941252854
+    },
+    "gpu/vad/EM/qwen-indobert": {
+      "b": 15,
+      "c": 32,
+      "p": 0.018623836615006432
+    },
+    "gpu/vad/EM/rule-indobert": {
+      "b": 9,
+      "c": 1,
+      "p": 0.021484375
+    },
+    "cpu/teks/intent/qwen-rule": {
+      "b": 6,
+      "c": 18,
+      "p": 0.022655844688415527
+    },
+    "cpu/teks/intent/qwen-indobert": {
+      "b": 0,
+      "c": 29,
+      "p": 3.725290298461914e-09
+    },
+    "cpu/teks/intent/rule-indobert": {
+      "b": 1,
+      "c": 18,
+      "p": 7.62939453125e-05
+    },
+    "cpu/teks/EM/qwen-rule": {
+      "b": 3,
+      "c": 26,
+      "p": 1.5236437320709229e-05
+    },
+    "cpu/teks/EM/qwen-indobert": {
+      "b": 3,
+      "c": 26,
+      "p": 1.5236437320709229e-05
+    },
+    "cpu/teks/EM/rule-indobert": {
+      "b": 1,
+      "c": 1,
+      "p": 1.0
+    },
+    "cpu/utuh/intent/qwen-rule": {
+      "b": 29,
+      "c": 37,
+      "p": 0.3890524605477928
+    },
+    "cpu/utuh/intent/qwen-indobert": {
+      "b": 10,
+      "c": 45,
+      "p": 2.0572645155203517e-06
+    },
+    "cpu/utuh/intent/rule-indobert": {
+      "b": 11,
+      "c": 38,
+      "p": 0.00014197068519905542
+    },
+    "cpu/utuh/EM/qwen-rule": {
+      "b": 18,
+      "c": 40,
+      "p": 0.005354859650800294
+    },
+    "cpu/utuh/EM/qwen-indobert": {
+      "b": 19,
+      "c": 30,
+      "p": 0.15240777196147803
+    },
+    "cpu/utuh/EM/rule-indobert": {
+      "b": 11,
+      "c": 0,
+      "p": 0.0009765625
+    },
+    "cpu/vad/intent/qwen-rule": {
+      "b": 29,
+      "c": 35,
+      "p": 0.5323087760278422
+    },
+    "cpu/vad/intent/qwen-indobert": {
+      "b": 9,
+      "c": 39,
+      "p": 1.5221826110689564e-05
+    },
+    "cpu/vad/intent/rule-indobert": {
+      "b": 13,
+      "c": 37,
+      "p": 0.000936222910851825
+    },
+    "cpu/vad/EM/qwen-rule": {
+      "b": 19,
+      "c": 38,
+      "p": 0.016348103897376145
+    },
+    "cpu/vad/EM/qwen-indobert": {
+      "b": 19,
+      "c": 28,
+      "p": 0.24296021728332556
+    },
+    "cpu/vad/EM/rule-indobert": {
+      "b": 11,
+      "c": 1,
+      "p": 0.00634765625
+    },
+    "gpu-cpu/teks/EM/qwen": {
+      "b": 0,
+      "c": 9,
+      "p": 0.00390625,
+      "json_berbeda": 13
+    },
+    "gpu-cpu/utuh/EM/qwen": {
+      "b": 3,
+      "c": 8,
+      "p": 0.2265625,
+      "json_berbeda": 36
+    },
+    "gpu-cpu/vad/EM/qwen": {
+      "b": 4,
+      "c": 10,
+      "p": 0.1795654296875,
+      "json_berbeda": 43
+    }
+  },
+  "kesalahan": {
+    "gpu/teks/qwen": {
+      "salah_em": 56,
+      "intent": 40,
+      "room": 9,
+      "person": 11,
+      "steps_intent": 1,
+      "document": 2
+    },
+    "gpu/teks/rule": {
+      "salah_em": 24,
+      "intent": 23,
+      "steps_intent": 1
+    },
+    "gpu/teks/indobert": {
+      "salah_em": 24,
+      "steps_jumlah": 12,
+      "intent": 6,
+      "object": 1,
+      "room": 1,
+      "document": 1,
+      "person": 2,
+      "steps_entity": 1
+    },
+    "gpu/utuh/qwen": {
+      "salah_em": 89,
+      "intent": 62,
+      "object": 3,
+      "room": 12,
+      "person": 12,
+      "steps_intent": 2,
+      "document": 3,
+      "json_invalid": 1
+    },
+    "gpu/utuh/rule": {
+      "salah_em": 63,
+      "intent": 55,
+      "room": 5,
+      "person": 4,
+      "steps_intent": 2
+    },
+    "gpu/utuh/indobert": {
+      "salah_em": 73,
+      "object": 7,
+      "intent": 25,
+      "room": 12,
+      "person": 10,
+      "steps_entity": 2,
+      "steps_intent": 3,
+      "steps_jumlah": 13,
+      "document": 5
+    },
+    "gpu/vad/qwen": {
+      "salah_em": 88,
+      "intent": 60,
+      "object": 3,
+      "room": 13,
+      "person": 14,
+      "steps_intent": 2,
+      "document": 3
+    },
+    "gpu/vad/rule": {
+      "salah_em": 63,
+      "intent": 56,
+      "room": 4,
+      "person": 3,
+      "steps_intent": 2
+    },
+    "gpu/vad/indobert": {
+      "salah_em": 71,
+      "object": 7,
+      "intent": 26,
+      "steps_entity": 4,
+      "room": 12,
+      "person": 9,
+      "steps_intent": 2,
+      "document": 4,
+      "steps_jumlah": 13
+    },
+    "gpu/teks/qwen/pasangan": [
+      [
+        "general_command",
+        "navigate_room",
+        13
+      ],
+      [
+        "combined_command",
+        "navigate_room",
+        12
+      ],
+      [
+        "combined_command",
+        "navigate_object",
+        8
+      ],
+      [
+        "combined_command",
+        "find_person",
+        4
+      ],
+      [
+        "combined_command",
+        "deliver_document",
+        2
+      ],
+      [
+        "general_command",
+        "navigate_object",
+        1
+      ]
+    ],
+    "gpu/teks/rule/pasangan": [
+      [
+        "combined_command",
+        "find_person",
+        6
+      ],
+      [
+        "combined_command",
+        "deliver_document",
+        5
+      ],
+      [
+        "combined_command",
+        "navigate_object",
+        4
+      ],
+      [
+        "combined_command",
+        "navigate_room",
+        2
+      ],
+      [
+        "find_person",
+        "general_command",
+        2
+      ],
+      [
+        "navigate_object",
+        "general_command",
+        1
+      ],
+      [
+        "navigate_room",
+        "general_command",
+        1
+      ],
+      [
+        "deliver_document",
+        "navigate_room",
+        1
+      ],
+      [
+        "deliver_document",
+        "find_person",
+        1
+      ]
+    ],
+    "gpu/teks/indobert/pasangan": [
+      [
+        "combined_command",
+        "navigate_room",
+        2
+      ],
+      [
+        "combined_command",
+        "deliver_document",
+        2
+      ],
+      [
+        "combined_command",
+        "navigate_object",
+        2
+      ]
+    ]
+  },
+  "asr": {
+    "qwen": {
+      "benar_teks": 106,
+      "tetap": 69,
+      "jadi_salah": 37,
+      "salah_jadi_benar": 5
+    },
+    "rule": {
+      "benar_teks": 138,
+      "tetap": 97,
+      "jadi_salah": 41,
+      "salah_jadi_benar": 2
+    },
+    "indobert": {
+      "benar_teks": 138,
+      "tetap": 89,
+      "jadi_salah": 49,
+      "salah_jadi_benar": 2
+    }
+  },
+  "pencilan": {
+    "gpu/qwen": [],
+    "gpu/rule": [],
+    "gpu/indobert": [],
+    "cpu/qwen": [
+      {
+        "item": "R01_S48",
+        "t_respons": 16.065884899999855,
+        "t_asr": 8.353661499999816,
+        "t_nlu": 6.512223400000039,
+        "ram_gb": 0.3336830139160156
+      },
+      {
+        "item": "R01_S36",
+        "t_respons": 19.327692900000056,
+        "t_asr": 9.780456999999842,
+        "t_nlu": 8.347235900000214,
+        "ram_gb": 0.44219207763671875
+      },
+      {
+        "item": "R02_S29",
+        "t_respons": 18.109785899999405,
+        "t_asr": 7.731437299999925,
+        "t_nlu": 9.178348599999481,
+        "ram_gb": 0.23896026611328125
+      },
+      {
+        "item": "R02_S51",
+        "t_respons": 26.03704140000009,
+        "t_asr": 5.159755200000291,
+        "t_nlu": 19.6772861999998,
+        "ram_gb": 0.4107818603515625
+      }
+    ],
+    "cpu/rule": [],
+    "cpu/indobert": []
+  }
+}

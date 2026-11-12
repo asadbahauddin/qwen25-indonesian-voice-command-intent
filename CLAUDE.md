@@ -108,7 +108,7 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 | F6 | Uji pendahuluan teks (pilot 36 kalimat, 3 metode) → tabel laporan |
 | F7 | Deployment & benchmark Raspberry Pi 5 (suhu, throttling) |
 | F8 | Alat perekaman dataset responden (daftar kalimat, metadata, consent) |
-| F9 | Evaluasi penuh: WER, EM, F1, confusion matrix, teks vs transkrip, laptop vs RPi 5 |
+| F9 | **Selesai** (12 Nov) | `bench/evaluasi.py`, `bench/analisis_f9.py`, `results/eval_dataset_MSI_20261112_095743.md`, `results/analisis_dataset_MSI_20261112_104423.md`, `Dokumentasi/F9_evaluasi.md` | Set uji 162: H1 tidak tercapai, H2 tidak terdukung (IndoBERT terbaik), H3 tercapai di GPU (CPU 4/162 > 15 s, swap). Kelemahan Qwen: combined_command (recall 0,04 teks). Sensitivitas tanpa 2 item mirip: ≤ 0,7 poin. |
 | F10 | Bahan luaran: grafik untuk artikel/poster, paket dataset + data card untuk HKI |
 
 ## Status Proyek
@@ -170,4 +170,5 @@ Setiap perintah menampilkan (pakai `rich`): transkrip, JSON, tabel latency (t_va
 - F2 dev (`results/vad_dev_MSI_20261112_041005.md`, 54 item + 90 s suasana): th 0,5 terpecah 800 ms 6, 1000 ms 4, 1200 ms 2, 1500 ms 1 (+3 tergabung); pemicu palsu 0.
 - F3 WER pilot (`results/asr_pilot_MSI_20261112_041011.md`, n=36, P01 dibaca): faster GPU+prompt 38,75% (formal 33,77 / semi 39,02 / informal 43,21), faster GPU tanpa prompt 56,25%, openai GPU+prompt 39,58%, openai tanpa prompt 57,50%, faster CPU int8+prompt 39,58% (0,928 s), openai CPU fp32+prompt 39,58% (2,146 s).
 - F9 uji coba pilot (`results/eval_pilot_MSI_20261112_042305.md`, n=36): waktu respons Qwen GPU 2,496 ± 0,407 s (total komputasi 1,384 ± 0,433), CPU 4,880 ± 1,205 s (maks 9,497); WER GPU utuh 38,75% / vad 35,00%; EM vad GPU: Qwen 44,44, rule 63,89, IndoBERT 55,56; intent vad GPU: 80,56 / 69,44 / 91,67.
-- Belum ada WER dataset dan evaluasi set uji.
+- **F9 set uji** (`results/eval_dataset_MSI_20261112_095743.md`, n=162): waktu respons Qwen GPU 2,424 ± 0,528 s (maks 4,34), CPU 5,368 ± 2,791 s (maks 26,04); total komputasi GPU 1,300 ± 0,604. WER GPU utuh 31,44% / vad 30,78%. Intent/EM GPU teks: Qwen 75,31/65,43, rule 85,80/85,19, IndoBERT 96,30/85,19; vad: 62,96/45,68, 65,43/61,11, 83,95/56,17. CPU teks Qwen 78,40/70,99. H1 Qwen formal+semi: GPU vad 62,04%, teks 78,70%.
+- F9 analisis (`results/analisis_dataset_MSI_20261112_104423.md`): Qwen combined_command F1 0,07 (teks); McNemar intent IndoBERT > Qwen p < 0,001 semua masukan; Qwen GPU vs CPU JSON berbeda 13/162 (teks), EM CPU > GPU p = 0,004.
