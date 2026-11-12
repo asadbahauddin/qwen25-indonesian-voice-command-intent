@@ -6,7 +6,7 @@
   {"baris": 5, "gambar": ["lk_datalatih"]},
   {"baris": 6, "gambar": ["rpi5"], "bukti": "Gambar L.2"},
   {"baris": 7, "bukti": "Laporan kemajuan (berkas terpisah)"},
-  {"baris": 8, "desk": "Monitoring dan evaluasi (monev) LPPM, 12–16 Okt. Upaya berulang menghidupkan Raspberry Pi 5: kartu microSD diganti, tetapi tetap tidak dapat booting (kendala terlama, lihat Tabel 3.1). Penyusunan dokumentasi kegiatan untuk laporan kemajuan.",
+  {"baris": 8, "desk": "Monitoring dan evaluasi (monev) LPPM, 12–16 Okt: unggah dokumentasi alat. Upaya berulang menghidupkan Raspberry Pi 5: kartu microSD diganti, tetapi tetap tidak dapat booting (kendala terlama, lihat Tabel 3.1). Penyusunan dokumentasi kegiatan untuk laporan kemajuan.",
    "bukti": "Keterangan peneliti; Tabel 3.1"},
   {"baris": 9, "desk": "Audit dan migrasi lingkungan (conda); uji mikrofon; finalisasi NLU Qwen2.5 dan baseline; uji pilot 36 kalimat; Silero VAD dan pemilihan parameter dari data pengembangan; perbandingan Whisper; pipeline + CLI; transkripsi dan pelabelan; evaluasi set uji dan analisis.",
    "gambar": ["f0", "f1", "koding"], "bukti": "Gambar L.4, L.5, L.9; Lampiran 3"},
