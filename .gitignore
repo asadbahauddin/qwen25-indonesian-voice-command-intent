@@ -37,3 +37,6 @@ Dokumentasi/*.pdf
 
 # data kontak penulis (email/WA) - tidak di-push
 luaran/penulis_lokal.json
+
+# berkas unggahan e-HKI (dibuat ulang dari luaran/buat_berkas_hki.*)
+HKI/

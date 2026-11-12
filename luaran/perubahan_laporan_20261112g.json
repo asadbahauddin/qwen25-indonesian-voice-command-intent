@@ -1,0 +1,16 @@
+[
+  {"cari": "Pada 162 ujaran kalimat bebas dari tiga responden, Qwen2.5 1.5B", "mode": "awal", "aksi": "depan",
+   "teks": "Rumusan masalah 1 (akurasi Qwen2.5; platform laptop): "},
+  {"cari": "Latency end-to-end pipeline pada laptop GPU", "mode": "awal", "aksi": "depan",
+   "teks": "Rumusan masalah 2 (latency end-to-end; platform laptop): "},
+  {"cari": "IndoBERT fine-tuned memberikan akurasi intent tertinggi", "mode": "awal", "aksi": "depan",
+   "teks": "Rumusan masalah 3 (perbandingan metode pada variasi formalitas): "},
+  {"cari": "Whisper base dengan initial prompt domain menghasilkan WER", "mode": "awal", "aksi": "depan",
+   "teks": "Tujuan 1 (akurasi transkripsi): "},
+  {"cari": "commit pertama 9 Okt 2026", "mode": "berisi", "aksi": "ganti",
+   "teks": "Repositori GitHub publik dibuat 11 November 2026; tanggal ini menjadi tanggal pertama kali diumumkan"},
+  {"cari": "Selesai dikumpulkan dan dilabeli; paket dan data card disiapkan", "mode": "persis", "aksi": "ganti",
+   "teks": "Selesai: 162 ujaran berlabel dan data card (Lampiran 7); disimpan untuk penelitian, tidak dipublikasikan terbuka"},
+  {"cari": "CC BY-NC 4.0 (Creative Commons Atribusi–NonKomersial 4.0); versi v1.0.", "mode": "awal", "aksi": "ganti",
+   "teks": "CC BY-NC 4.0 (Creative Commons Atribusi–NonKomersial 4.0); versi v1.0. Dataset tidak dipublikasikan terbuka; berbagi audio di luar tim memerlukan persetujuan tambahan responden (butir 5 lembar persetujuan)."}
+]

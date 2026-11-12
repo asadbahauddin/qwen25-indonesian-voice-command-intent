@@ -212,6 +212,13 @@ def main():
                 run = f'<w:r>{rpr}<w:t xml:space="preserve">{escape(e["teks"])}</w:t></w:r>'
                 if e["aksi"] == "tambah":
                     baru = p[: p.rindex("</w:p>")] + run + "</w:p>"
+                elif e["aksi"] == "depan":       # label tebal di awal paragraf; isi lama tidak diubah
+                    if teks(p).startswith(e["teks"].strip()):
+                        log.append(f"ganti (depan): sudah ada '{e['teks'][:40]}'"); continue
+                    rb = rpr.replace("<w:rPr>", "<w:rPr><w:b/><w:bCs/>", 1) if rpr else "<w:rPr><w:b/></w:rPr>"
+                    run_b = f'<w:r>{rb}<w:t xml:space="preserve">{escape(e["teks"])}</w:t></w:r>'
+                    m_r = re.search(r"<w:r[ >]", p)
+                    baru = p[:m_r.start()] + run_b + p[m_r.start():]
                 else:
                     ppr = re.search(r"<w:pPr>.*?</w:pPr>", p, re.S)
                     baru = p[: p.index(">") + 1] + (ppr.group(0) if ppr else "") + run + "</w:p>"
