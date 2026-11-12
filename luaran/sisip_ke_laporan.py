@@ -179,6 +179,59 @@ def main():
                 log.append("lampiran9: sudah ada, dilewati"); continue
             sis = ambil(lambda t: t == "SISIP_L9_MULAI", lambda t: t == "SISIP_L9_SELESAI", termasuk_awal=False)
             pos = b0 + bl[-1].end()          # akhir isi dokumen (setelah Lampiran 8)
+        elif op.startswith("logbook:"):
+            # Tabel logbook (Lampiran 1) disusun ulang dari spesifikasi JSON: tiap entri memakai baris lama ke-"baris"
+            # (format sel dipertahankan); "baru": true = salinan baris itu. Kolom yang tidak disebut tidak diubah.
+            # "gambar": kunci penanda SISIP_LB_<kunci> pada sumber; gambar + teks "bukti" mengisi kolom Bukti.
+            import json
+            from xml.sax.saxutils import escape
+            spek = json.load(open(op[8:], encoding="utf-8"))
+            tbs = [m for m in re.finditer(r"<w:tbl>.*?</w:tbl>", xl, re.S)
+                   if "Paraf Pembimbing" in m.group(0) and "24–28 Agt 2026" in m.group(0)]
+            if len(tbs) != 1:
+                raise RuntimeError(f"tabel logbook ditemukan {len(tbs)}")
+            tb = tbs[0].group(0)
+            if "<w:drawing" in tb:
+                log.append("logbook: kolom bukti sudah berisi gambar, dilewati"); continue
+            rows = [m.group(0) for m in re.finditer(r"<w:tr[ >].*?</w:tr>", tb, re.S)]
+            r0 = tb.index(rows[0]) + len(rows[0])
+            ps_s = re.findall(r"<w:p[ >].*?</w:p>", body_s, re.S)
+
+            def gbr(k):
+                i = next(i for i, p in enumerate(ps_s) if teks(p) == "SISIP_LB_" + k)
+                return bawa_gambar(ps_s[i + 1])
+
+            def isi_sel(sel, teks_baru=None, gambar=()):
+                tcpr = re.search(r"<w:tcPr>.*?</w:tcPr>", sel, re.S).group(0)
+                p1 = re.search(r"<w:p[ >].*?(</w:p>|/>)", sel[len("<w:tc>") + len(tcpr):], re.S).group(0)
+                ppr = re.search(r"<w:pPr>.*?</w:pPr>", p1, re.S)
+                ppr = ppr.group(0) if ppr else ""
+                rpr = re.search(r"<w:rPr>.*?</w:rPr>", sel, re.S)
+                rpr = rpr.group(0) if rpr else '<w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr>'
+                rpr = re.sub(r"<w:highlight [^>]*/>|<w:b/>|<w:bCs/>", "", rpr)   # format penanda [ISI] tidak dibawa
+                par = [f'<w:p>{ppr}<w:r>{rpr}<w:t xml:space="preserve">{escape(teks_baru)}</w:t></w:r></w:p>'] if teks_baru else []
+                par += [gbr(k) for k in gambar]
+                return f"<w:tc>{tcpr}{''.join(par) or '<w:p/>'}</w:tc>"
+
+            baru_rows = []
+            for e in spek:
+                row = rows[e["baris"]]
+                cells = re.findall(r"<w:tc>.*?</w:tc>", row, re.S)
+                if e.get("baru"):
+                    row = re.sub(r' w14:(paraId|textId)="[^"]+"', "", row)
+                    cells = re.findall(r"<w:tc>.*?</w:tc>", row, re.S)
+                ubah = {0: e.get("no"), 1: e.get("tgl"), 2: e.get("desk")}
+                for ci, t in ubah.items():
+                    if t is not None:
+                        cells[ci] = isi_sel(cells[ci], t)
+                if "bukti" in e or "gambar" in e:
+                    cells[3] = isi_sel(cells[3], e.get("bukti"), e.get("gambar", []))
+                awal = row[:row.index("<w:tc>")]
+                baru_rows.append(awal + "".join(cells) + "</w:tr>")
+            tb_baru = tb[:r0] + "".join(baru_rows) + "</w:tbl>"
+            xl = xl.replace(tb, tb_baru, 1)
+            log.append(f"logbook: {len(baru_rows)} baris disusun ({sum(1 for e in spek if e.get('baru'))} baris baru)")
+            continue
         elif op == "tabel42_satu_opsi":
             # Tabel 4.2: buang kolom "Opsi B: Dataset", lebar kolom digabung ke kolom Program Komputer
             m_t = next((m for m in re.finditer(r"<w:tbl>.*?</w:tbl>", xl, re.S) if "Opsi B: Dataset" in teks(m.group(0))), None)

@@ -1,0 +1,21 @@
+[
+  {"baris": 1, "gambar": ["lk_literatur"]},
+  {"baris": 2, "gambar": ["lk_lingkungan"]},
+  {"baris": 3, "gambar": ["lk_pipeline"]},
+  {"baris": 4, "gambar": ["lk_rule"]},
+  {"baris": 5, "gambar": ["lk_datalatih"]},
+  {"baris": 6, "gambar": ["rpi5"], "bukti": "Gambar L.2"},
+  {"baris": 7, "bukti": "Laporan kemajuan (berkas terpisah)"},
+  {"baris": 8, "desk": "Monitoring dan evaluasi (monev) LPPM, 12–16 Okt. Upaya berulang menghidupkan Raspberry Pi 5: kartu microSD diganti, tetapi tetap tidak dapat booting (kendala terlama, lihat Tabel 3.1). Penyusunan dokumentasi kegiatan untuk laporan kemajuan.",
+   "bukti": "Keterangan peneliti; Tabel 3.1"},
+  {"baris": 9, "desk": "Audit dan migrasi lingkungan (conda); uji mikrofon; finalisasi NLU Qwen2.5 dan baseline; uji pilot 36 kalimat; Silero VAD dan pemilihan parameter dari data pengembangan; perbandingan Whisper; pipeline + CLI; transkripsi dan pelabelan; evaluasi set uji dan analisis.",
+   "gambar": ["f0", "f1", "koding"], "bukti": "Gambar L.4, L.5, L.9; Lampiran 3"},
+  {"baris": 9, "baru": true, "no": "13", "tgl": "11–12 Nov 2026",
+   "desk": "Pengambilan data di Laboratorium Sistem Otomasi: perekaman suara tiga responden (R01–R03) dengan mikrofon lavalier, masing-masing 54 kartu skenario (formal, semi-formal, informal); total 162 ujaran WAV 16 kHz mono.",
+   "gambar": ["r01", "r02", "r03"], "bukti": "Gambar L.6–L.8; Lampiran 4"},
+  {"baris": 9, "baru": true, "no": "13", "tgl": "12 Nov 2026",
+   "desk": "Penyusunan luaran: poster ilmiah A1, draf artikel JoTI, berkas e-HKI (kode sumber dan bukti publikasi), pengajuan hak cipta program komputer melalui e-HKI UTM, dan laporan akhir.",
+   "gambar": ["poster", "hki"], "bukti": "Gambar 4.1; Lampiran 8–9"},
+  {"baris": 10, "desk": "Rencana (belum dilaksanakan): unggah dokumen e-HKI setelah konfirmasi Kepala LPPM; finalisasi artikel bersama pembimbing dan pengiriman ke JoTI; finalisasi laporan akhir; seminar hasil 9–10 Des 2026.",
+   "bukti": "–"}
+]
