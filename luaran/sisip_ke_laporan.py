@@ -156,6 +156,32 @@ def main():
                 log.append("lampiran7: sudah ada, dilewati"); continue
             sis = ambil(lambda t: t == "SISIP_L7_MULAI", lambda t: t == "SISIP_L7_SELESAI", termasuk_awal=False)
             pos = b0 + bl[-1].end()          # akhir isi dokumen (setelah Lampiran 6)
+        elif op == "lampiran8":
+            if "Lampiran 8. Draf Artikel Ilmiah" in xl:
+                log.append("lampiran8: sudah ada, dilewati"); continue
+            sis = ambil(lambda t: t == "SISIP_L8_MULAI", lambda t: t == "SISIP_L8_SELESAI", termasuk_awal=False)
+            pos = b0 + bl[-1].end()          # akhir isi dokumen (setelah Lampiran 7)
+        elif op == "tabel42_satu_opsi":
+            # Tabel 4.2: buang kolom "Opsi B: Dataset", lebar kolom digabung ke kolom Program Komputer
+            m_t = next((m for m in re.finditer(r"<w:tbl>.*?</w:tbl>", xl, re.S) if "Opsi B: Dataset" in teks(m.group(0))), None)
+            if not m_t:
+                log.append("tabel42_satu_opsi: tabel tidak ditemukan / sudah satu opsi"); continue
+            t = m_t.group(0)
+            cols = [int(c) for c in re.findall(r'<w:gridCol w:w="(\d+)"/>', t)]
+            w2 = cols[1] + cols[2]
+            t = re.sub(r"<w:tblGrid>.*?</w:tblGrid>", f'<w:tblGrid><w:gridCol w:w="{cols[0]}"/><w:gridCol w:w="{w2}"/></w:tblGrid>', t, flags=re.S)
+            def baris(m_r):
+                tr = m_r.group(0)
+                tcs = list(re.finditer(r"<w:tc>.*?</w:tc>", tr, re.S))
+                tr = tr[:tcs[2].start()] + tr[tcs[2].end():]                 # hapus sel ke-3
+                tc2 = tcs[1].group(0)
+                tr = tr.replace(tc2, re.sub(r'(<w:tcW w:w=")\d+', lambda q: q.group(1) + str(w2), tc2, count=1), 1)
+                return tr
+            t = re.sub(r"<w:tr[ >].*?</w:tr>", baris, t, flags=re.S)
+            t = t.replace(">Opsi A: Program Komputer<", ">Program Komputer<")
+            xl = xl[:m_t.start()] + t + xl[m_t.end():]
+            log.append("tabel42_satu_opsi: kolom Opsi B dihapus")
+            continue
         elif op == "hapus_vs":
             m_p = next((m for m in re.finditer(r"<w:p[ >].*?</w:p>", xl, re.S) if teks(m.group(0)) == "VSPENGESAHAN"), None)
             if not m_p:

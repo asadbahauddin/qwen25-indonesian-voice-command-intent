@@ -1,0 +1,10 @@
+[
+  {"cari": "Dua jenis ciptaan yang dapat diajukan dari kegiatan ini ditunjukkan pada Tabel 4.2.", "mode": "berisi", "aksi": "ganti",
+   "teks": "Pengajuan dilakukan melalui sistem e-HKI Universitas Trunojoyo Madura (https://hki.trunojoyo.ac.id/) dengan jenis permohonan Lembaga Pendidikan. Ciptaan yang didaftarkan adalah program komputer; rencana pencatatannya ditunjukkan pada Tabel 4.2."},
+  {"cari": "Tabel 4.2. Pilihan Ciptaan untuk Hak Cipta", "mode": "persis", "aksi": "ganti",
+   "teks": "Tabel 4.2. Rencana Pencatatan Hak Cipta Program Komputer"},
+  {"cari": "Keputusan: ciptaan yang didaftarkan adalah Program Komputer (Opsi A)", "mode": "awal", "aksi": "ganti",
+   "teks": "Pencipta: As'ad Bahauddin Ahmad (Ketua Pencipta sekaligus pemohon) dan Vivi Tri Widyaningrum. Biaya pendaftaran ditanggung dari dana pribadi dosen pembimbing. Dataset penelitian dilaporkan sebagai luaran tambahan (Lampiran 7)."},
+  {"cari": "Isi artikel mengikuti Bab II laporan ini", "mode": "berisi", "aksi": "tambah",
+   "teks": " Draf lengkap artikel disajikan pada Lampiran 8."}
+]

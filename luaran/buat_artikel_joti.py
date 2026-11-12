@@ -361,6 +361,12 @@ def main():
     rels_p.write_text(rels, encoding="utf-8")
     new_body = "".join(head) + "".join(gen) + "".join(tail)
     doc_p.write_text(x[:b0] + new_body + x[x.index("</w:body>"):], encoding="utf-8")
+    # header halaman 2 dst. di template berisi nama penulis contoh ("Jerry Anggara") -> penulis pertama.
+    # Volume/nomor/tanggal di header dibiarkan: diisi editor saat terbit.
+    for hdr in (tmp / "word").glob("header*.xml"):
+        hx = hdr.read_text(encoding="utf-8")
+        if ">Jerry Anggara<" in hx:
+            hdr.write_text(hx.replace(">Jerry Anggara<", ">As'ad Bahauddin Ahmad<"), encoding="utf-8")
     ct = tmp / "[Content_Types].xml"
     c = ct.read_text(encoding="utf-8")
     if 'Extension="png"' not in c:
