@@ -187,7 +187,7 @@ def main():
             from xml.sax.saxutils import escape
             spek = json.load(open(op[8:], encoding="utf-8"))
             tbs = [m for m in re.finditer(r"<w:tbl>.*?</w:tbl>", xl, re.S)
-                   if "Paraf Pembimbing" in m.group(0) and "24–28 Agt 2026" in m.group(0)]
+                   if "Paraf Pembimbing" in teks(m.group(0)) and "24–28 Agt 2026" in teks(m.group(0))]
             if len(tbs) != 1:
                 raise RuntimeError(f"tabel logbook ditemukan {len(tbs)}")
             tb = tbs[0].group(0)
