@@ -305,7 +305,7 @@ s.addTable([
   [hdr("Luaran"), hdr("Jenis"), hdr("Status")],
   ["Laporan akhir", "Wajib", st("Draf lengkap (47 hlm, Lampiran 1–9)", C.accent5)],
   ["Artikel ilmiah — Journal of Technology and Informatics (JoTI)", "Wajib", st("Draf selesai; finalisasi bersama pembimbing", C.accent1)],
-  ["Hak cipta program komputer (e-HKI UTM)", "Wajib", st("Diajukan 12 Nov 2026; menunggu konfirmasi LPPM", C.accent1)],
+  ["Hak cipta program komputer (e-HKI UTM)", "Wajib", st("Diajukan, masih eror", C.accent1)],
   ["Poster ilmiah A1", "Tambahan", st("Selesai", C.accent5)],
   ["Dataset 162 ujaran berlabel + data card", "Tambahan", st("Selesai; tidak dipublikasikan terbuka", C.accent5)],
 ], {
