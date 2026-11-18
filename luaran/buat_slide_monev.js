@@ -10,7 +10,7 @@ const ROOT = path.join(__dirname, "..");
 const EV = JSON.parse(fs.readFileSync(path.join(ROOT, "results/eval_dataset_MSI_20261112_095743.json"), "utf-8"));
 const AN = JSON.parse(fs.readFileSync(path.join(ROOT, "results/analisis_dataset_MSI_20261112_104423.json"), "utf-8"));
 const LOGO = (f) => path.join(__dirname, "logo", f);
-const OUT = path.join(__dirname, "slide", "Monev_LPPM_MBKM_Asad.pptx");
+const OUT = process.env.OUT_PPTX || path.join(__dirname, "slide", "Monev_LPPM_MBKM_Asad.pptx");
 
 const id = (x, d = 1) => x.toFixed(d).replace(".", ",");
 const acc = (dev, mk, m, k = "intent_acc", sub = "semua") => EV.akurasi[`${dev}/${mk}/${m}`][sub][k] * 100;
@@ -334,25 +334,35 @@ kd.forEach(([k, d, sol], i) => {
 });
 s.addNotes("Kendala dan solusinya. Penyimpangan platform dari proposal dijelaskan di BAB III laporan akhir.");
 
-// ========== 12. Rencana & penutup ==========
+// ========== 12. Kesimpulan ==========
 pres.addSection({ title: "Penutup" });
 s = pres.addSlide({ masterName: "GELAP", sectionTitle: "Penutup" });
-s.addText("10 / RENCANA TINDAK LANJUT", { placeholder: "tag" });
-s.addText("Menuju seminar hasil 9–10 Desember 2026", { placeholder: "title" });
-const rencana = [["Nov 2026", "Unggah dokumen e-HKI setelah konfirmasi Kepala LPPM"], ["Nov 2026", "Finalisasi artikel bersama pembimbing, kirim ke JoTI"],
-  ["30 Nov–8 Des", "Finalisasi laporan akhir"], ["9–10 Des", "Seminar hasil"]];
-s.addShape(pres.shapes.LINE, { x: 1.05, y: 2.15, w: 0, h: 3.0, line: { color: "2A4466", width: 2 }, objectName: nm("garis_waktu") });
-rencana.forEach(([t, d], i) => {
-  const y = 1.95 + i * 1.0;
-  s.addShape(pres.shapes.OVAL, { x: 0.87, y: y + 0.08, w: 0.36, h: 0.36, fill: { color: i === 3 ? C.accent1 : C.accent4 }, line: { color: HEX.dk2, width: 2 }, objectName: nm("titik_waktu") });
-  teks(s, t, { x: 1.55, y, w: 2.2, h: 0.5, fontFace: MONO, fontSize: 14, bold: true, color: C.accent1, valign: "middle" });
-  teks(s, d, { x: 3.5, y, w: 5.6, h: 0.5, fontSize: 16, color: C.background1, valign: "middle" });
+s.addText("10 / KESIMPULAN", { placeholder: "tag" });
+s.addText("Pipeline offline layak; Qwen2.5 1.5B belum cukup akurat", { placeholder: "title" });
+const kes = [
+  ["RM1 · AKURASI", `${id(acc("gpu", "teks", "qwen"), 2)}%`, `intent accuracy Qwen2.5 pada teks; ${id(acc("gpu", "vad", "qwen"), 2)}% pada pipeline suara`,
+    `Target 80% belum tercapai. Kelemahan utama: perintah majemuk (recall combined_command ${id(recallComb, 2)}).`],
+  ["RM2 · LATENCY", `${id(rG.mean, 2)} s`, `waktu respons laptop GPU; ${id(rC.mean, 2)} s di laptop CPU`,
+    "Seluruh pipeline berjalan offline dan di bawah target 15 s."],
+  ["RM3 · PERBANDINGAN", `${id(acc("gpu", "teks", "indobert"), 2)}%`, "intent accuracy IndoBERT pada teks, tertinggi",
+    `IndoBERT terbaik di semua formalitas; rule-based unggul exact match pada pipeline suara (${id(acc("gpu", "vad", "rule", "exact_match"), 2)}%). Qwen2.5 tidak lebih unggul pada kalimat informal.`],
+];
+kes.forEach(([tag, big, lbl, isi], i) => {
+  const x = 0.7 + i * 4.05;
+  kartu(s, x, 1.8, 3.85, 3.65, C.text1);
+  teks(s, tag, { x: x + 0.3, y: 2.0, w: 3.3, h: 0.3, fontFace: MONO, fontSize: 11, bold: true, color: C.accent1 });
+  teks(s, big, { x: x + 0.3, y: 2.35, w: 3.3, h: 0.75, fontFace: THEME.headFontFace, fontSize: 36, color: C.accent1, valign: "middle" });
+  teks(s, lbl, { x: x + 0.3, y: 3.15, w: 3.3, h: 0.6, fontSize: 12, color: C.accent4 });
+  teks(s, isi, { x: x + 0.3, y: 3.85, w: 3.3, h: 1.45, fontSize: 14, color: C.background1 });
 });
-kartu(s, 9.45, 1.85, 3.2, 3.95, C.background1);
-s.addImage({ path: LOGO("utm.png"), x: 10.55, y: 2.1, w: 1.0, h: 0.99, altText: "Logo Universitas Trunojoyo Madura", objectName: nm("logo") });
-s.addImage({ path: LOGO("kampus_merdeka.png"), x: 10.1, y: 3.3, w: 1.9, h: 1.0, altText: "Logo Kampus Merdeka (MBKM)", objectName: nm("logo") });
-s.addImage({ path: LOGO("mekatronika.png"), x: 10.15, y: 4.5, w: 1.8, h: 0.98, altText: "Logo Teknik Mekatronika UTM", objectName: nm("logo") });
-teks(s, "Terima kasih · github.com/asadbahauddin/qwen25-indonesian-voice-command-intent", { x: 4.0, y: 6.8, w: 8.0, h: 0.35, fontFace: MONO, fontSize: 11, color: C.accent4, align: "right" });
-s.addNotes("Rencana sampai seminar hasil. Terima kasih kepada LPPM UTM dan dosen pembimbing.");
+teks(s, "SARAN", { x: 0.7, y: 5.72, w: 1.2, h: 0.4, fontFace: MONO, fontSize: 12, bold: true, color: C.accent1, valign: "middle" });
+teks(s, "Pemecahan klausa sebelum LLM  ·  LLM dan ASR lebih besar  ·  uji di Raspberry Pi 5  ·  integrasi ke robot",
+  { x: 1.9, y: 5.72, w: 10.7, h: 0.4, fontSize: 14, color: C.background1, valign: "middle" });
+kartu(s, 8.85, 6.5, 3.2, 0.72, C.background1);
+s.addImage({ path: LOGO("utm.png"), x: 9.0, y: 6.56, w: 0.6, h: 0.594, altText: "Logo Universitas Trunojoyo Madura", objectName: nm("logo") });
+s.addImage({ path: LOGO("kampus_merdeka.png"), x: 9.75, y: 6.58, w: 1.05, h: 0.553, altText: "Logo Kampus Merdeka (MBKM)", objectName: nm("logo") });
+s.addImage({ path: LOGO("mekatronika.png"), x: 10.95, y: 6.57, w: 1.0, h: 0.545, altText: "Logo Teknik Mekatronika UTM", objectName: nm("logo") });
+teks(s, "Terima kasih", { x: 4.2, y: 6.6, w: 4.3, h: 0.5, fontFace: THEME.headFontFace, fontSize: 20, color: C.background1, align: "center", valign: "middle" });
+s.addNotes("Kesimpulan menjawab tiga rumusan masalah untuk platform laptop offline. Angka dibaca dari results/eval_dataset_MSI_20261112_095743.json dan results/analisis_dataset_MSI_20261112_104423.json. Tahap berikutnya: unggah dokumen e-HKI, finalisasi artikel JoTI, laporan akhir, seminar hasil 9–10 Des 2026.");
 
 pres.writeFile({ fileName: OUT }).then(async () => { await applyTheme(OUT, THEME); console.log("ditulis", OUT); });
