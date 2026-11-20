@@ -8,7 +8,7 @@ const { Document, Packer, Paragraph, TextRun, ImageRun, AlignmentType, PageBreak
 const ROOT = path.join(__dirname, "..");
 const OUT = path.join(ROOT, "HKI");
 fs.mkdirSync(OUT, { recursive: true });
-const JUDUL = "Program Pemahaman Perintah Suara Robot Berbahasa Indonesia secara Offline Berbasis Whisper dan Qwen2.5";
+const JUDUL = "Sistem Ekstraksi Intent Perintah Suara Berbahasa Indonesia untuk Robot secara Offline Berbasis Whisper dan Qwen2.5";
 const REPO = "https://github.com/asadbahauddin/qwen25-indonesian-voice-command-intent";
 const F = "Times New Roman";
 const T = (t, o = {}) => new TextRun({ text: t, font: o.font || F, size: o.size || 22, bold: o.bold, italics: o.italics });
